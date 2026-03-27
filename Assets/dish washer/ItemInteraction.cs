@@ -1,106 +1,122 @@
 ﻿using UnityEngine;
+using TMPro;
 
 public class ItemInteraction : MonoBehaviour
 {
     [Header("UI")]
     public GameObject interactUI;
     public GameObject infoPanel;
+    public TextMeshProUGUI infoText;
 
-    [Header("Drop Point")]
+    [Header("Item Setting")]
+    [TextArea]
+    public string itemInfo = "ข้อมูลไอเทม";
+
+    [Header("Pickup Setting")]
+    public Transform holdPoint;
     public Transform dropPoint;
 
-    private bool playerInRange = false;
-    private bool isPicked = false;
+    private bool isNear = false;
+    private bool isHolding = false;
+
+    // 👉 เก็บตำแหน่งเริ่มต้น
+    private Vector3 startPos;
+    private Quaternion startRot;
 
     void Start()
     {
-        // ซ่อน UI ตอนเริ่ม
-        if (interactUI != null) interactUI.SetActive(false);
-        if (infoPanel != null) infoPanel.SetActive(false);
+        // 🔥 จำตำแหน่งเริ่มต้น
+        startPos = transform.position;
+        startRot = transform.rotation;
+
+        // 🔥 บังคับสถานะเริ่มต้น
+        isHolding = false;
+
+        // 🔥 ป้องกันติด parent ตั้งแต่แรก
+        transform.SetParent(null);
+
+        // 🔥 เปิด collider
+        GetComponent<Collider>().enabled = true;
+
+        // 🔥 ปิด UI
+        interactUI.SetActive(false);
+        infoPanel.SetActive(false);
+
+        // 🔥 ใส่ข้อความ
+        if (infoText != null)
+            infoText.text = itemInfo;
     }
 
     void Update()
     {
-        // รับปุ่มเฉพาะตอนผู้เล่นอยู่ในระยะ
-        if (!playerInRange) return;
+        if (!isNear) return;
 
-        // เปิด/ปิดข้อมูล
+        // กด E = เปิด/ปิดข้อมูล
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("E pressed");
-
-            if (infoPanel != null)
-                infoPanel.SetActive(!infoPanel.activeSelf);
+            infoPanel.SetActive(!infoPanel.activeSelf);
         }
 
-        // เก็บหรือวางไอเทม
+        // กด F = หยิบ / วาง
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log("F pressed");
-
-            if (!isPicked)
-            {
-                PickupItem();
-            }
+            if (!isHolding)
+                PickUp();
             else
-            {
-                DropItem();
-            }
+                Drop();
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void PickUp()
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player entered");
+        if (holdPoint == null) return;
 
-            playerInRange = true;
+        isHolding = true;
 
-            if (interactUI != null)
-                interactUI.SetActive(true);
-        }
+        transform.SetParent(holdPoint);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+
+        GetComponent<Collider>().enabled = false;
     }
 
-    void OnTriggerExit(Collider other)
+    void Drop()
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player exited");
+        isHolding = false;
 
-            playerInRange = false;
+        transform.SetParent(null);
 
-            // ปิด UI ทั้งหมดเมื่อออกระยะ
-            if (interactUI != null)
-                interactUI.SetActive(false);
-
-            if (infoPanel != null)
-                infoPanel.SetActive(false);
-        }
-    }
-
-    void PickupItem()
-    {
-        Debug.Log("Item picked");
-
-        isPicked = true;
-
-        // ซ่อนไอเทมจากฉาก
-        gameObject.SetActive(false);
-    }
-
-    void DropItem()
-    {
-        Debug.Log("Item dropped");
-
-        isPicked = false;
-
-        // วางกลับที่ตำแหน่งที่กำหนด
         if (dropPoint != null)
         {
             transform.position = dropPoint.position;
         }
+        else
+        {
+            // 👉 ถ้าไม่มี dropPoint กลับที่เดิม
+            transform.position = startPos;
+            transform.rotation = startRot;
+        }
 
-        gameObject.SetActive(true);
+        GetComponent<Collider>().enabled = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isNear = true;
+            interactUI.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isNear = false;
+
+            interactUI.SetActive(false);
+            infoPanel.SetActive(false);
+        }
     }
 }
