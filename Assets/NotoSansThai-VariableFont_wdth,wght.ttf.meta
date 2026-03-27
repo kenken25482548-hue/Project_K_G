@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6fae85c00871d66429d53378ab0b55c0
+guid: 22afce7466d86664abcd4c94df7b7563
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Sarabun
+  - Noto Sans Thai
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

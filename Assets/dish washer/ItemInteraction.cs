@@ -2,25 +2,49 @@
 
 public class ItemInteraction : MonoBehaviour
 {
+    [Header("UI")]
     public GameObject interactUI;
     public GameObject infoPanel;
 
-    bool playerInRange = false;
-    bool infoOpen = false;
+    [Header("Drop Point")]
+    public Transform dropPoint;
+
+    private bool playerInRange = false;
+    private bool isPicked = false;
+
+    void Start()
+    {
+        // ซ่อน UI ตอนเริ่ม
+        if (interactUI != null) interactUI.SetActive(false);
+        if (infoPanel != null) infoPanel.SetActive(false);
+    }
 
     void Update()
     {
-        if (playerInRange)
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                Destroy(gameObject);
-            }
+        // รับปุ่มเฉพาะตอนผู้เล่นอยู่ในระยะ
+        if (!playerInRange) return;
 
-            if (Input.GetKeyDown(KeyCode.E))
+        // เปิด/ปิดข้อมูล
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("E pressed");
+
+            if (infoPanel != null)
+                infoPanel.SetActive(!infoPanel.activeSelf);
+        }
+
+        // เก็บหรือวางไอเทม
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("F pressed");
+
+            if (!isPicked)
             {
-                infoOpen = !infoOpen;
-                infoPanel.SetActive(infoOpen);
+                PickupItem();
+            }
+            else
+            {
+                DropItem();
             }
         }
     }
@@ -29,8 +53,12 @@ public class ItemInteraction : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player entered");
+
             playerInRange = true;
-            interactUI.SetActive(true);
+
+            if (interactUI != null)
+                interactUI.SetActive(true);
         }
     }
 
@@ -38,18 +66,41 @@ public class ItemInteraction : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player exited");
+
             playerInRange = false;
-            interactUI.SetActive(false);
-            infoPanel.SetActive(false);
-            infoOpen = false;
+
+            // ปิด UI ทั้งหมดเมื่อออกระยะ
+            if (interactUI != null)
+                interactUI.SetActive(false);
+
+            if (infoPanel != null)
+                infoPanel.SetActive(false);
         }
     }
-}
-void OnTriggerEnter(Collider other)
-{
-    if (other.CompareTag("Player"))
+
+    void PickupItem()
     {
-        Debug.Log("เข้าเขตไอเทมแล้ว");
-        interactUI.SetActive(true);
+        Debug.Log("Item picked");
+
+        isPicked = true;
+
+        // ซ่อนไอเทมจากฉาก
+        gameObject.SetActive(false);
+    }
+
+    void DropItem()
+    {
+        Debug.Log("Item dropped");
+
+        isPicked = false;
+
+        // วางกลับที่ตำแหน่งที่กำหนด
+        if (dropPoint != null)
+        {
+            transform.position = dropPoint.position;
+        }
+
+        gameObject.SetActive(true);
     }
 }
