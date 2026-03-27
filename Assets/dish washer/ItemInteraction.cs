@@ -1,16 +1,27 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemInteraction : MonoBehaviour
 {
-    public GameObject itemMenu;
+    public GameObject interactUI;
+    public GameObject infoPanel;
 
     bool playerInRange = false;
+    bool infoOpen = false;
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange)
         {
-            itemMenu.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Destroy(gameObject);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                infoOpen = !infoOpen;
+                infoPanel.SetActive(infoOpen);
+            }
         }
     }
 
@@ -19,6 +30,7 @@ public class ItemInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            interactUI.SetActive(true);
         }
     }
 
@@ -27,7 +39,17 @@ public class ItemInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            itemMenu.SetActive(false);
+            interactUI.SetActive(false);
+            infoPanel.SetActive(false);
+            infoOpen = false;
         }
+    }
+}
+void OnTriggerEnter(Collider other)
+{
+    if (other.CompareTag("Player"))
+    {
+        Debug.Log("เข้าเขตไอเทมแล้ว");
+        interactUI.SetActive(true);
     }
 }
