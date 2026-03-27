@@ -3,78 +3,121 @@ using TMPro;
 
 public class ItemInteraction : MonoBehaviour
 {
-    public GameObject interactUI;
-    public GameObject infoPanel;
-    public TextMeshProUGUI infoText;
+    [Header("Player")]
+    public Transform player;
 
-    public string itemInfo = "ข้อมูลไอเทม";
-
+    [Header("Hold Position")]
     public Transform holdPoint;
+
+    [Header("Distance Settings")]
+    public float interactDistance = 3f;
+
+    [Header("UI Choice Panel")]
+    public GameObject choiceUI;
+
+    [Header("Info Panel")]
+    public GameObject infoPanel;
+    public TMP_Text infoText;
+
+    [Header("Item Description")]
+    [TextArea(3, 5)]
+    public string itemDescription;
+
+    [Header("Drop System")]
     public Transform dropPoint;
 
-    private bool playerInRange = false;
-    private bool isHolding = false;
+    private bool isNear = false;
+    private bool isCarrying = false;
 
     void Start()
     {
-        interactUI.SetActive(false);
-        infoPanel.SetActive(false);
+        if (choiceUI != null)
+            choiceUI.SetActive(false);
+
+        if (infoPanel != null)
+            infoPanel.SetActive(false);
     }
 
     void Update()
     {
-        if (playerInRange)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                ToggleInfo();
-            }
+        if (player == null) return;
 
-            if (Input.GetKeyDown(KeyCode.F))
+        float distance = Vector3.Distance(player.position, transform.position);
+
+        // เข้าใกล้ไอเทม
+        if (distance <= interactDistance && !isCarrying)
+        {
+            isNear = true;
+
+            if (choiceUI != null)
+                choiceUI.SetActive(true);
+        }
+        else
+        {
+            isNear = false;
+
+            if (choiceUI != null)
+                choiceUI.SetActive(false);
+        }
+
+        // กด E = เปิด / ปิด Info
+        if (isNear && Input.GetKeyDown(KeyCode.E))
+        {
+            ToggleInfo();
+        }
+
+        // กด F = เก็บไอเทม
+        if (isNear && !isCarrying && Input.GetKeyDown(KeyCode.F))
+        {
+            PickupItem();
+        }
+
+        // ไปถึงจุดวางแล้วกด F
+        if (isCarrying && dropPoint != null)
+        {
+            float dropDistance = Vector3.Distance(player.position, dropPoint.position);
+
+            if (dropDistance <= interactDistance && Input.GetKeyDown(KeyCode.F))
             {
-                PickupItem();
+                DropItem();
             }
         }
     }
 
     void ToggleInfo()
     {
-        infoPanel.SetActive(!infoPanel.activeSelf);
-        infoText.text = itemInfo;
+        if (infoPanel == null) return;
+
+        bool isOpen = infoPanel.activeSelf;
+        infoPanel.SetActive(!isOpen);
+
+        if (infoText != null)
+            infoText.text = itemDescription;
     }
 
     void PickupItem()
     {
-        if (!isHolding)
+        isCarrying = true;
+
+        if (choiceUI != null)
+            choiceUI.SetActive(false);
+
+        // เอาไอเทมไปติดกับผู้เล่น
+        if (holdPoint != null)
         {
-            transform.position = holdPoint.position;
-            transform.parent = holdPoint;
-            isHolding = true;
-        }
-        else
-        {
-            transform.position = dropPoint.position;
-            transform.parent = null;
-            isHolding = false;
+            transform.SetParent(holdPoint);
+            transform.localPosition = Vector3.zero;
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void DropItem()
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-            interactUI.SetActive(true);
-        }
-    }
+        isCarrying = false;
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-            interactUI.SetActive(false);
-            infoPanel.SetActive(false);
-        }
+        // ปล่อยจาก player
+        transform.SetParent(null);
+
+        // วางที่ drop point
+        transform.position = dropPoint.position;
     }
 }
