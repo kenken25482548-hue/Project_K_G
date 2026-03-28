@@ -163,8 +163,7 @@ MonoBehaviour:
   choiceUI: {fileID: 787205389}
   infoPanel: {fileID: 489620881}
   infoText: {fileID: 933576300}
-  itemDescription: 
-  dropPoint: {fileID: 1618684531}
+  itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E25\u0E49\u0E32\u0E07\u0E08\u0E32\u0E19\n\n\u0E43\u0E0A\u0E49\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E21\u0E31\u0E19\u0E1A\u0E19\u0E20\u0E32\u0E0A\u0E19\u0E30\n\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E01\u0E31\u0E1A\u0E04\u0E23\u0E32\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E43\u0E19\u0E2B\u0E49\u0E2D\u0E07\u0E04\u0E23\u0E31\u0E27"
 --- !u!4 &33241599 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 110bee69d17da1d449ea598df3983869, type: 3}
@@ -977,7 +976,6 @@ GameObject:
   - component: {fileID: 802395272}
   - component: {fileID: 802395271}
   - component: {fileID: 802395270}
-  - component: {fileID: 802395274}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1069,21 +1067,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &802395274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 802395269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5407b27ed3d7d74fa418b9430aefe48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InfoUIManager
-  infoPanel: {fileID: 489620881}
-  infoText: {fileID: 933576300}
-  itemImage: {fileID: 738808705}
 --- !u!1 &810416672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1324,7 +1307,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -150.00002, y: 0}
-  m_SizeDelta: {x: 400, y: 135}
+  m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &933576299
 CanvasRenderer:
@@ -1381,15 +1364,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 8
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -2177,7 +2160,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1618684531}
   - component: {fileID: 1618684533}
-  - component: {fileID: 1618684532}
   m_Layer: 0
   m_Name: ItemDroppoint
   m_TagString: Untagged
@@ -2200,18 +2182,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 33241599}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1618684532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618684530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 096a876ebf9482b4589d57da333b223a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DropZone
 --- !u!65 &1618684533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2426,7 +2396,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2026923477}
   - component: {fileID: 2026923479}
-  - component: {fileID: 2026923478}
   m_Layer: 0
   m_Name: ItemDroppoint
   m_TagString: Untagged
@@ -2449,18 +2418,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2027952185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2026923478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2026923476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 096a876ebf9482b4589d57da333b223a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DropZone
 --- !u!65 &2026923479
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2506,7 +2463,6 @@ MonoBehaviour:
   infoPanel: {fileID: 489620881}
   infoText: {fileID: 0}
   itemDescription: 
-  dropPoint: {fileID: 2026923477}
 --- !u!4 &2027952185 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 110bee69d17da1d449ea598df3983869, type: 3}
