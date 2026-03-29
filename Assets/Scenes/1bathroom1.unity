@@ -14635,6 +14635,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 459490227189722511, guid: 2dc65b233ad157245b909f734a1980ed, type: 3}
+      propertyPath: m_Intensity
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2873014965033946555, guid: 2dc65b233ad157245b909f734a1980ed, type: 3}
       propertyPath: m_Name
       value: Point Light
