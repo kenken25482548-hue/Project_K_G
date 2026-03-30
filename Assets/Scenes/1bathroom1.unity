@@ -4753,7 +4753,7 @@ GameObject:
   - component: {fileID: 1185292787}
   - component: {fileID: 1185292786}
   m_Layer: 0
-  m_Name: "\u0E2A\u0E34\u0E48\u0E07\u0E2A\u0E01\u0E1B\u0E23\u0E01"
+  m_Name: Stain1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

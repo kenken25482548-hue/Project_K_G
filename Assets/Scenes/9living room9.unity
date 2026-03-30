@@ -388,7 +388,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6578820714441305087, guid: b105c74bbb4c39840ab8ce5b767483fc, type: 3}
       propertyPath: m_Name
-      value: red+liquid+spill+3d+model (2)
+      value: Stain3
       objectReference: {fileID: 0}
     - target: {fileID: -6246904579976251024, guid: b105c74bbb4c39840ab8ce5b767483fc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1074,7 +1074,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3937957401319295133, guid: 027f196f237d1284cbea2e51853a7539, type: 3}
       propertyPath: m_Name
-      value: abstract+blob+3d+model
+      value: Stain4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1506,7 +1506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3937957401319295133, guid: 027f196f237d1284cbea2e51853a7539, type: 3}
       propertyPath: m_Name
-      value: abstract+blob+3d+model (1)
+      value: Stain5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2634,7 +2634,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6578820714441305087, guid: b105c74bbb4c39840ab8ce5b767483fc, type: 3}
       propertyPath: m_Name
-      value: red+liquid+spill+3d+model (1)
+      value: Stain2
       objectReference: {fileID: 0}
     - target: {fileID: -6246904579976251024, guid: b105c74bbb4c39840ab8ce5b767483fc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3820,7 +3820,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6578820714441305087, guid: b105c74bbb4c39840ab8ce5b767483fc, type: 3}
       propertyPath: m_Name
-      value: red+liquid+spill+3d+model
+      value: Stain1
       objectReference: {fileID: 0}
     - target: {fileID: -6246904579976251024, guid: b105c74bbb4c39840ab8ce5b767483fc, type: 3}
       propertyPath: m_LocalPosition.x

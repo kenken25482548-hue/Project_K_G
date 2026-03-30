@@ -3506,7 +3506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3937957401319295133, guid: 027f196f237d1284cbea2e51853a7539, type: 3}
       propertyPath: m_Name
-      value: "\u0E2A\u0E34\u0E48\u0E07\u0E2A\u0E01\u0E1B\u0E23\u0E01"
+      value: Stain
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
