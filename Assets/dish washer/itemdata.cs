@@ -21,11 +21,17 @@ public class ItemData : MonoBehaviour
     private Renderer[] renderers;
     private Rigidbody rb;
 
+    private Vector3 startPosition;
+    private Quaternion startRotation;
+
     void Awake()
     {
         colliders = GetComponentsInChildren<Collider>(true);
         renderers = GetComponentsInChildren<Renderer>(true);
         rb = GetComponent<Rigidbody>();
+
+        startPosition = transform.position;
+        startRotation = transform.rotation;
     }
 
     public void Pick()
@@ -47,23 +53,33 @@ public class ItemData : MonoBehaviour
         }
     }
 
+    public void ReturnToStart()
+    {
+        isPicked = false;
+
+        transform.position = startPosition;
+        transform.rotation = startRotation;
+
+        foreach (Renderer r in renderers)
+            r.enabled = true;
+
+        foreach (Collider c in colliders)
+            c.enabled = true;
+
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+    }
+
     public void Consume()
     {
         isPicked = false;
         isUsed = true;
 
-        foreach (Renderer r in renderers)
-            r.enabled = false;
-
-        foreach (Collider c in colliders)
-            c.enabled = false;
-
-        if (rb != null)
-        {
-            rb.isKinematic = true;
-            rb.useGravity = false;
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
+        gameObject.SetActive(false);
     }
 }

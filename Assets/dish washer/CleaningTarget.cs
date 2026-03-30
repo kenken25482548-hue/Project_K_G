@@ -3,6 +3,9 @@ using TMPro;
 
 public class CleaningTarget : MonoBehaviour
 {
+    [Header("Required Item")]
+    public string requiredItemName;
+
     [Header("Wrong Popup")]
     public GameObject wrongPopup;
     public TMP_Text wrongPopupText;
@@ -34,7 +37,9 @@ public class CleaningTarget : MonoBehaviour
     {
         if (item == null || isCleared) return;
 
-        if (item.isCorrectTool)
+        bool isCorrect = item.itemName == requiredItemName;
+
+        if (isCorrect)
         {
             isCleared = true;
 
@@ -46,7 +51,7 @@ public class CleaningTarget : MonoBehaviour
         }
         else
         {
-            item.Consume();
+            item.ReturnToStart();
 
             if (wrongPopupText != null)
                 wrongPopupText.text = "อุปกรณ์ไม่ถูกต้อง\nกด E เพื่อปิด";

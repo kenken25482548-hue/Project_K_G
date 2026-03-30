@@ -18,27 +18,15 @@ public class PlayerItemSystem : MonoBehaviour
     public TMP_Text itemNameText;
     public Image itemImage;
 
-    [Header("Dirty Target")]
-    public CleaningTarget cleaningTarget;   // ลาก Cube ที่มี CleaningTarget มาใส่
-
     private ItemData focusedItem;
     private ItemData carriedItem;
+    private CleaningTarget focusedCleaningTarget;
     private bool infoOpen = false;
 
     void Start()
     {
         if (interactUI) interactUI.SetActive(false);
         if (infoPanel) infoPanel.SetActive(false);
-
-        if (cleaningTarget == null)
-        {
-            cleaningTarget = FindObjectOfType<CleaningTarget>();
-
-            if (cleaningTarget == null)
-                Debug.LogError("❌ ไม่พบ CleaningTarget ในฉาก");
-            else
-                Debug.Log("✅ เจอ CleaningTarget: " + cleaningTarget.name);
-        }
     }
 
     void Update()
@@ -58,6 +46,7 @@ public class PlayerItemSystem : MonoBehaviour
         }
         else
         {
+            FindNearestCleaningTarget();
             UpdateUseUI();
             HandleUseInput();
         }
@@ -84,6 +73,29 @@ public class PlayerItemSystem : MonoBehaviour
         }
 
         focusedItem = nearest;
+    }
+
+    void FindNearestCleaningTarget()
+    {
+        CleaningTarget[] allTargets = FindObjectsByType<CleaningTarget>(FindObjectsSortMode.None);
+
+        float closestDistance = Mathf.Infinity;
+        CleaningTarget nearest = null;
+
+        foreach (CleaningTarget target in allTargets)
+        {
+            if (target == null || target.isCleared) continue;
+
+            float distance = Vector3.Distance(player.position, target.transform.position);
+
+            if (distance <= interactDistance && distance < closestDistance)
+            {
+                closestDistance = distance;
+                nearest = target;
+            }
+        }
+
+        focusedCleaningTarget = nearest;
     }
 
     void UpdatePickupUI()
@@ -126,35 +138,24 @@ public class PlayerItemSystem : MonoBehaviour
         if (interactUI == null || interactText == null)
             return;
 
-        if (cleaningTarget == null || carriedItem == null || cleaningTarget.isCleared)
+        if (carriedItem == null || focusedCleaningTarget == null)
         {
             interactUI.SetActive(false);
             return;
         }
 
-        float distance = Vector3.Distance(player.position, cleaningTarget.transform.position);
-
-        if (distance <= interactDistance)
-        {
-            interactUI.SetActive(true);
-            interactText.text = "[F] ใช้ " + carriedItem.itemName;
-        }
-        else
-        {
-            interactUI.SetActive(false);
-        }
+        interactUI.SetActive(true);
+        interactText.text = "[F] ใช้ " + carriedItem.itemName;
     }
 
     void HandleUseInput()
     {
-        if (cleaningTarget == null || carriedItem == null || cleaningTarget.isCleared)
+        if (carriedItem == null || focusedCleaningTarget == null)
             return;
 
-        float distance = Vector3.Distance(player.position, cleaningTarget.transform.position);
-
-        if (distance <= interactDistance && Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            cleaningTarget.TryUseItem(carriedItem);
+            focusedCleaningTarget.TryUseItem(carriedItem);
             carriedItem = null;
 
             if (interactUI) interactUI.SetActive(false);
@@ -168,8 +169,12 @@ public class PlayerItemSystem : MonoBehaviour
         infoOpen = true;
 
         if (infoPanel) infoPanel.SetActive(true);
-        if (infoText) infoText.text = item.itemDescription;
-        if (itemNameText) itemNameText.text = item.itemName;
+
+        if (itemNameText)
+            itemNameText.text = item.itemName;
+
+        if (infoText)
+            infoText.text = item.itemDescription;
 
         if (itemImage != null)
         {
