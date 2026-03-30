@@ -1,19 +1,21 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemData : MonoBehaviour
 {
     [Header("Info")]
     public string itemName;
+
     [TextArea(3, 5)]
     public string itemDescription;
 
-    [Header("Drop")]
-    public Transform dropPoint;
-
-    [Header("Optional Image")]
+    [Header("Image")]
     public Sprite itemSprite;
 
+    [Header("Gameplay")]
+    public bool isCorrectTool = false;
+
     [HideInInspector] public bool isPicked = false;
+    [HideInInspector] public bool isUsed = false;
 
     private Collider[] colliders;
     private Renderer[] renderers;
@@ -26,7 +28,7 @@ public class ItemData : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void HideItem()
+    public void Pick()
     {
         isPicked = true;
 
@@ -45,27 +47,23 @@ public class ItemData : MonoBehaviour
         }
     }
 
-    public void ShowAtDropPoint()
+    public void Consume()
     {
-        if (dropPoint == null) return;
-
-        transform.position = dropPoint.position;
-        transform.rotation = dropPoint.rotation;
+        isPicked = false;
+        isUsed = true;
 
         foreach (Renderer r in renderers)
-            r.enabled = true;
+            r.enabled = false;
 
         foreach (Collider c in colliders)
-            c.enabled = true;
+            c.enabled = false;
 
         if (rb != null)
         {
-            rb.isKinematic = false;
-            rb.useGravity = true;
+            rb.isKinematic = true;
+            rb.useGravity = false;
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
-
-        isPicked = false;
     }
 }

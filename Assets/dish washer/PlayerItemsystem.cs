@@ -1,6 +1,5 @@
-﻿using NUnit.Framework.Interfaces;
+﻿using UnityEngine;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerItemSystem : MonoBehaviour
@@ -16,7 +15,11 @@ public class PlayerItemSystem : MonoBehaviour
     [Header("UI - Info")]
     public GameObject infoPanel;
     public TMP_Text infoText;
+    public TMP_Text itemNameText;
     public Image itemImage;
+
+    [Header("Dirty Target")]
+    public CleaningTarget cleaningTarget;   // ลาก Cube ที่มี CleaningTarget มาใส่
 
     private ItemData focusedItem;
     private ItemData carriedItem;
@@ -26,13 +29,24 @@ public class PlayerItemSystem : MonoBehaviour
     {
         if (interactUI) interactUI.SetActive(false);
         if (infoPanel) infoPanel.SetActive(false);
+
+        if (cleaningTarget == null)
+        {
+            cleaningTarget = FindObjectOfType<CleaningTarget>();
+
+            if (cleaningTarget == null)
+                Debug.LogError("❌ ไม่พบ CleaningTarget ในฉาก");
+            else
+                Debug.Log("✅ เจอ CleaningTarget: " + cleaningTarget.name);
+        }
     }
 
     void Update()
     {
         if (infoOpen)
         {
-            HandleInfoInput();
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape))
+                CloseInfo();
             return;
         }
 
@@ -44,22 +58,24 @@ public class PlayerItemSystem : MonoBehaviour
         }
         else
         {
-            UpdateDropUI();
-            HandleDropInput();
+            UpdateUseUI();
+            HandleUseInput();
         }
     }
 
     void FindNearestItem()
     {
-        ItemData[] allItems = FindObjectsOfType<ItemData>();
+        ItemData[] allItems = FindObjectsByType<ItemData>(FindObjectsSortMode.None);
+
         float closestDistance = Mathf.Infinity;
         ItemData nearest = null;
 
         foreach (ItemData item in allItems)
         {
-            if (item == null || item.isPicked) continue;
+            if (item == null || item.isPicked || item.isUsed) continue;
 
             float distance = Vector3.Distance(player.position, item.transform.position);
+
             if (distance <= interactDistance && distance < closestDistance)
             {
                 closestDistance = distance;
@@ -72,14 +88,16 @@ public class PlayerItemSystem : MonoBehaviour
 
     void UpdatePickupUI()
     {
+        if (interactUI == null || interactText == null) return;
+
         if (focusedItem != null)
         {
-            if (interactUI) interactUI.SetActive(true);
-            if (interactText) interactText.text = "[F] หยิบไอเทม\n[E] ดูข้อมูล";
+            interactUI.SetActive(true);
+            interactText.text = "[F] หยิบไอเทม\n[E] ดูข้อมูล";
         }
         else
         {
-            if (interactUI) interactUI.SetActive(false);
+            interactUI.SetActive(false);
         }
     }
 
@@ -95,45 +113,48 @@ public class PlayerItemSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             carriedItem = focusedItem;
-            carriedItem.HideItem();
+            carriedItem.Pick();
             focusedItem = null;
 
             if (interactUI) interactUI.SetActive(false);
-            if (infoPanel) infoPanel.SetActive(false);
-            infoOpen = false;
+            CloseInfo();
         }
     }
 
-    void UpdateDropUI()
+    void UpdateUseUI()
     {
-        if (carriedItem == null || carriedItem.dropPoint == null)
+        if (interactUI == null || interactText == null)
+            return;
+
+        if (cleaningTarget == null || carriedItem == null || cleaningTarget.isCleared)
         {
-            if (interactUI) interactUI.SetActive(false);
+            interactUI.SetActive(false);
             return;
         }
 
-        float distanceToDrop = Vector3.Distance(player.position, carriedItem.dropPoint.position);
+        float distance = Vector3.Distance(player.position, cleaningTarget.transform.position);
 
-        if (distanceToDrop <= interactDistance)
+        if (distance <= interactDistance)
         {
-            if (interactUI) interactUI.SetActive(true);
-            if (interactText) interactText.text = "[F] วางไอเทม";
+            interactUI.SetActive(true);
+            interactText.text = "[F] ใช้ " + carriedItem.itemName;
         }
         else
         {
-            if (interactUI) interactUI.SetActive(false);
+            interactUI.SetActive(false);
         }
     }
 
-    void HandleDropInput()
+    void HandleUseInput()
     {
-        if (carriedItem == null || carriedItem.dropPoint == null) return;
+        if (cleaningTarget == null || carriedItem == null || cleaningTarget.isCleared)
+            return;
 
-        float distanceToDrop = Vector3.Distance(player.position, carriedItem.dropPoint.position);
+        float distance = Vector3.Distance(player.position, cleaningTarget.transform.position);
 
-        if (distanceToDrop <= interactDistance && Input.GetKeyDown(KeyCode.F))
+        if (distance <= interactDistance && Input.GetKeyDown(KeyCode.F))
         {
-            carriedItem.ShowAtDropPoint();
+            cleaningTarget.TryUseItem(carriedItem);
             carriedItem = null;
 
             if (interactUI) interactUI.SetActive(false);
@@ -148,6 +169,7 @@ public class PlayerItemSystem : MonoBehaviour
 
         if (infoPanel) infoPanel.SetActive(true);
         if (infoText) infoText.text = item.itemDescription;
+        if (itemNameText) itemNameText.text = item.itemName;
 
         if (itemImage != null)
         {
@@ -155,9 +177,12 @@ public class PlayerItemSystem : MonoBehaviour
             {
                 itemImage.sprite = item.itemSprite;
                 itemImage.enabled = true;
+                itemImage.preserveAspect = true;
+                itemImage.color = Color.white;
             }
             else
             {
+                itemImage.sprite = null;
                 itemImage.enabled = false;
             }
         }
@@ -165,17 +190,17 @@ public class PlayerItemSystem : MonoBehaviour
         if (interactUI) interactUI.SetActive(false);
     }
 
-    void HandleInfoInput()
-    {
-        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape))
-        {
-            CloseInfo();
-        }
-    }
-
     public void CloseInfo()
     {
         infoOpen = false;
-        if (infoPanel) infoPanel.SetActive(false);
+
+        if (infoPanel != null)
+            infoPanel.SetActive(false);
+
+        if (itemImage != null)
+        {
+            itemImage.sprite = null;
+            itemImage.enabled = false;
+        }
     }
 }
