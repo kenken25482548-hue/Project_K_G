@@ -3,15 +3,23 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    [Header("Slot Objects")]
-    public GameObject[] slots;
+    [Header("Slot Backgrounds")]
+    public Image[] backgrounds;
 
-    [Header("Slot Images")]
-    public Image[] slotImages;
+    [Header("Slot Icons")]
+    public Image[] icons;
 
-    [Header("Colors")]
-    public Color normalColor = new Color(0.7f, 0.85f, 1f, 0.35f);
-    public Color selectedColor = new Color(0.45f, 0.75f, 1f, 0.95f);
+    [Header("Background Colors")]
+    public Color normalBackgroundColor = new Color(0.15f, 0.35f, 0.55f, 0.35f);
+    public Color selectedBackgroundColor = new Color(0.20f, 0.55f, 0.95f, 0.85f);
+
+    [Header("Icon Colors")]
+    public Color normalIconColor = new Color(1f, 1f, 1f, 0.45f);
+    public Color selectedIconColor = Color.white;
+
+    [Header("Scale")]
+    public Vector3 normalScale = Vector3.one;
+    public Vector3 selectedScale = new Vector3(1.15f, 1.15f, 1f);
 
     private int currentIndex = 0;
 
@@ -31,7 +39,8 @@ public class InventoryUI : MonoBehaviour
 
     void Select(int index)
     {
-        if (index < 0 || index >= slotImages.Length) return;
+        if (backgrounds == null || backgrounds.Length == 0) return;
+        if (index < 0 || index >= backgrounds.Length) return;
 
         currentIndex = index;
         Debug.Log("Selected slot: " + (index + 1));
@@ -40,11 +49,27 @@ public class InventoryUI : MonoBehaviour
 
     void UpdateSlotVisual()
     {
-        for (int i = 0; i < slotImages.Length; i++)
+        for (int i = 0; i < backgrounds.Length; i++)
         {
-            if (slotImages[i] != null)
+            bool isSelected = (i == currentIndex);
+
+            if (backgrounds[i] != null)
             {
-                slotImages[i].color = (i == currentIndex) ? selectedColor : normalColor;
+                backgrounds[i].color = isSelected ? selectedBackgroundColor : normalBackgroundColor;
+            }
+
+            if (icons != null && i < icons.Length && icons[i] != null)
+            {
+                icons[i].color = isSelected ? selectedIconColor : normalIconColor;
+            }
+
+            if (backgrounds[i] != null)
+            {
+                Transform slotTransform = backgrounds[i].transform.parent;
+                if (slotTransform != null)
+                {
+                    slotTransform.localScale = isSelected ? selectedScale : normalScale;
+                }
             }
         }
     }
