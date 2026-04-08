@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CleaningTarget : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class CleaningTarget : MonoBehaviour
 
     public void TryUseItem(ItemData item)
     {
-        if (item == null || isCleared) return;
+        if (item == null || isCleared || item.isUsed) return;
 
         bool isCorrect = item.itemName == requiredItemName;
 
@@ -46,8 +47,10 @@ public class CleaningTarget : MonoBehaviour
             if (dirtObject != null)
                 dirtObject.SetActive(false);
 
-            item.Consume();
+            item.UseOnce();
             CloseWrongPopup();
+
+            CheckLevelFailCondition();
         }
         else
         {
@@ -73,5 +76,40 @@ public class CleaningTarget : MonoBehaviour
             wrongPopup.SetActive(false);
 
         popupOpen = false;
+    }
+
+    void CheckLevelFailCondition()
+    {
+        CleaningTarget[] allTargets = FindObjectsByType<CleaningTarget>(FindObjectsSortMode.None);
+
+        bool hasUnclearedStains = false;
+        foreach (CleaningTarget target in allTargets)
+        {
+            if (target != null && !target.isCleared)
+            {
+                hasUnclearedStains = true;
+                break;
+            }
+        }
+
+        if (!hasUnclearedStains)
+            return;
+
+        ItemData[] allItems = FindObjectsByType<ItemData>(FindObjectsSortMode.None);
+
+        bool hasAnyUsableItemLeft = false;
+        foreach (ItemData data in allItems)
+        {
+            if (data != null && data.HasUsesLeft())
+            {
+                hasAnyUsableItemLeft = true;
+                break;
+            }
+        }
+
+        if (!hasAnyUsableItemLeft)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

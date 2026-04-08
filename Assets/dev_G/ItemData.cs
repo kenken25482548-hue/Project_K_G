@@ -14,8 +14,12 @@ public class ItemData : MonoBehaviour
     [Header("Gameplay")]
     public bool isCorrectTool = false;
 
+    [Min(1)]
+    public int maxUses = 1;
+
     [HideInInspector] public bool isPicked = false;
     [HideInInspector] public bool isUsed = false;
+    [HideInInspector] public int usesLeft;
 
     private Collider[] colliders;
     private Renderer[] renderers;
@@ -32,10 +36,14 @@ public class ItemData : MonoBehaviour
 
         startPosition = transform.position;
         startRotation = transform.rotation;
+
+        usesLeft = maxUses;
     }
 
     public void Pick()
     {
+        if (isUsed) return;
+
         isPicked = true;
 
         foreach (Renderer r in renderers)
@@ -55,6 +63,8 @@ public class ItemData : MonoBehaviour
 
     public void ReturnToStart()
     {
+        if (isUsed) return;
+
         isPicked = false;
 
         transform.position = startPosition;
@@ -75,11 +85,32 @@ public class ItemData : MonoBehaviour
         }
     }
 
-    public void Consume()
+    public void UseOnce()
+    {
+        if (isUsed) return;
+
+        usesLeft--;
+
+        if (usesLeft <= 0)
+        {
+            usesLeft = 0;
+            Deplete();
+        }
+        else
+        {
+            ReturnToStart();
+        }
+    }
+
+    private void Deplete()
     {
         isPicked = false;
         isUsed = true;
-
         gameObject.SetActive(false);
+    }
+
+    public bool HasUsesLeft()
+    {
+        return !isUsed && usesLeft > 0;
     }
 }
