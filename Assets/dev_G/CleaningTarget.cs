@@ -27,6 +27,15 @@ public class CleaningTarget : MonoBehaviour
     private PopupFade popupFade;
     private bool popupOpen = false;
 
+    private float lastPopupCloseTime = -999f;
+
+    public bool IsWrongPopupOpen => popupOpen;
+
+    public bool WasPopupJustClosed(float delay)
+    {
+        return Time.time - lastPopupCloseTime < delay;
+    }
+
     void Awake()
     {
         if (wrongPopup != null)
@@ -53,10 +62,10 @@ public class CleaningTarget : MonoBehaviour
         if (isCleared) return false;
         if (!isDiscovered) return false;
         if (item.isUsed) return false;
+        if (popupOpen) return false;
 
         bool isCorrect = item.itemName == requiredItemName;
 
-        // แบบ B = ใช้ถูกหรือผิดก็ลดจำนวนใช้
         item.UseOnce();
 
         if (isCorrect)
@@ -98,6 +107,7 @@ public class CleaningTarget : MonoBehaviour
             wrongPopup.SetActive(false);
 
         popupOpen = false;
+        lastPopupCloseTime = Time.time;
     }
 
     private void CheckLevelFailCondition()

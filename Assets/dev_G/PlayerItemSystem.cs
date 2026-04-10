@@ -6,7 +6,11 @@ public class PlayerItemSystem : MonoBehaviour
 {
     [Header("Raycast")]
     public Camera raycastCamera;
-    public float interactDistance = 3f;
+    public float interactDistance = 4.5f;
+    public float detectRadius = 0.35f;
+
+    [Header("Popup Input Block")]
+    public float popupCloseBlockTime = 0.2f;
 
     [Header("UI - Interact")]
     public GameObject interactUI;
@@ -41,6 +45,9 @@ public class PlayerItemSystem : MonoBehaviour
     {
         inventory = new ItemData[inventorySize];
 
+        if (raycastCamera == null)
+            raycastCamera = Camera.main;
+
         if (interactUI != null) interactUI.SetActive(false);
         if (infoPanel != null) infoPanel.SetActive(false);
         if (stainInfoPanel != null) stainInfoPanel.SetActive(false);
@@ -50,23 +57,56 @@ public class PlayerItemSystem : MonoBehaviour
             inventoryUI.SetSelectedSlot(currentSlot);
             inventoryUI.RefreshAll(inventory);
         }
-
-        if (raycastCamera == null)
-            raycastCamera = Camera.main;
     }
 
     void Update()
     {
         HandleSlotInput();
+        DetectObject();
 
+        // ถ้า WrongPopup เปิดอยู่ ให้หยุด UI/อินพุตอื่นทั้งหมด
+        if (IsWrongPopupBlocking())
+        {
+            if (interactUI != null)
+                interactUI.SetActive(false);
+            return;
+        }
+
+        // ถ้าเพิ่งปิด WrongPopup ไป อย่าเพิ่งรับ E ต่อทันที
+        if (focusedCleaningTarget != null && focusedCleaningTarget.WasPopupJustClosed(popupCloseBlockTime))
+        {
+            if (interactUI != null)
+            {
+                interactUI.SetActive(true);
+
+                ItemData selectedItem = GetSelectedItem();
+                if (!focusedCleaningTarget.isDiscovered)
+                {
+                    interactText.text = "[E] อ่านข้อมูลคราบ";
+                }
+                else
+                {
+                    if (selectedItem != null)
+                        interactText.text = "[F] ใช้ " + selectedItem.itemName + "\n[E] อ่านข้อมูลคราบ";
+                    else
+                        interactText.text = "[E] อ่านข้อมูลคราบ";
+                }
+            }
+            return;
+        }
+
+        // ถ้า panel ข้อมูลเปิดอยู่ ซ่อน InteractUI เสมอ
         if (itemInfoOpen || stainInfoOpen)
         {
-            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape))
+            if (interactUI != null)
+                interactUI.SetActive(false);
+
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E))
                 CloseAllPanels();
             return;
         }
 
-        DetectObject();
+        UpdateInteractUI();
         HandleInteractionInput();
     }
 
@@ -96,26 +136,44 @@ public class PlayerItemSystem : MonoBehaviour
         focusedCleaningTarget = null;
 
         if (raycastCamera == null)
-        {
-            if (interactUI != null) interactUI.SetActive(false);
             return;
-        }
 
-        Ray ray = new Ray(raycastCamera.transform.position, raycastCamera.transform.forward);
-        RaycastHit hit;
+        Ray ray = raycastCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        RaycastHit[] hits = Physics.SphereCastAll(ray, detectRadius, interactDistance);
 
-        if (Physics.Raycast(ray, out hit, interactDistance))
+        if (hits == null || hits.Length == 0)
+            return;
+
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        for (int i = 0; i < hits.Length; i++)
         {
-            focusedItem = hit.collider.GetComponentInParent<ItemData>();
-            focusedCleaningTarget = hit.collider.GetComponentInParent<CleaningTarget>();
+            Collider col = hits[i].collider;
+            if (col == null) continue;
 
-            UpdateInteractUI();
+            // ข้าม collider ของ player ตัวเอง
+            if (col.transform.root == transform.root)
+                continue;
+
+            ItemData item = col.GetComponentInParent<ItemData>();
+            if (item != null && !item.isPicked && !item.isUsed)
+            {
+                focusedItem = item;
+                return;
+            }
+
+            CleaningTarget stain = col.GetComponentInParent<CleaningTarget>();
+            if (stain != null && !stain.isCleared)
+            {
+                focusedCleaningTarget = stain;
+                return;
+            }
         }
-        else
-        {
-            if (interactUI != null)
-                interactUI.SetActive(false);
-        }
+    }
+
+    bool IsWrongPopupBlocking()
+    {
+        return focusedCleaningTarget != null && focusedCleaningTarget.IsWrongPopupOpen;
     }
 
     void UpdateInteractUI()
@@ -125,28 +183,27 @@ public class PlayerItemSystem : MonoBehaviour
 
         ItemData selectedItem = GetSelectedItem();
 
-        if (focusedItem != null && !focusedItem.isPicked && !focusedItem.isUsed)
+        if (focusedItem != null)
         {
             interactUI.SetActive(true);
             interactText.text = "[F] หยิบไอเทม\n[E] ดูข้อมูล";
             return;
         }
 
-        if (focusedCleaningTarget != null && !focusedCleaningTarget.isCleared)
+        if (focusedCleaningTarget != null)
         {
             interactUI.SetActive(true);
 
             if (!focusedCleaningTarget.isDiscovered)
             {
-                interactText.text = "[E] ตรวจสอบคราบ";
-            }
-            else if (selectedItem != null)
-            {
-                interactText.text = "[F] ใช้ " + selectedItem.itemName + "\n[E] อ่านข้อมูลคราบ";
+                interactText.text = "[E] อ่านข้อมูลคราบ";
             }
             else
             {
-                interactText.text = "[E] อ่านข้อมูลคราบ";
+                if (selectedItem != null)
+                    interactText.text = "[F] ใช้ " + selectedItem.itemName + "\n[E] อ่านข้อมูลคราบ";
+                else
+                    interactText.text = "[E] อ่านข้อมูลคราบ";
             }
 
             return;
@@ -157,7 +214,7 @@ public class PlayerItemSystem : MonoBehaviour
 
     void HandleInteractionInput()
     {
-        if (focusedItem != null && !focusedItem.isPicked && !focusedItem.isUsed)
+        if (focusedItem != null)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -172,7 +229,7 @@ public class PlayerItemSystem : MonoBehaviour
             }
         }
 
-        if (focusedCleaningTarget != null && !focusedCleaningTarget.isCleared)
+        if (focusedCleaningTarget != null)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -219,6 +276,9 @@ public class PlayerItemSystem : MonoBehaviour
         ItemData selectedItem = GetSelectedItem();
         if (selectedItem == null) return;
 
+        // กัน panel ซ้อน
+        CloseAllPanels();
+
         bool useWasCounted = focusedCleaningTarget.TryUseItem(selectedItem);
 
         if (useWasCounted)
@@ -229,13 +289,17 @@ public class PlayerItemSystem : MonoBehaviour
                 inventoryUI.ClearSlot(currentSlot);
         }
 
-        if (interactUI != null)
-            interactUI.SetActive(false);
+        focusedItem = null;
     }
 
     void OpenItemInfo(ItemData item)
     {
         if (item == null) return;
+
+        CloseAllPanels();
+
+        if (interactUI != null)
+            interactUI.SetActive(false);
 
         itemInfoOpen = true;
 
@@ -263,14 +327,16 @@ public class PlayerItemSystem : MonoBehaviour
                 itemImage.enabled = false;
             }
         }
-
-        if (interactUI != null)
-            interactUI.SetActive(false);
     }
 
     void OpenStainInfo(CleaningTarget target)
     {
         if (target == null) return;
+
+        CloseAllPanels();
+
+        if (interactUI != null)
+            interactUI.SetActive(false);
 
         target.Inspect();
         stainInfoOpen = true;
@@ -286,9 +352,6 @@ public class PlayerItemSystem : MonoBehaviour
 
         if (stainStateText != null)
             stainStateText.text = target.isCleared ? "สถานะ: ทำความสะอาดแล้ว" : "สถานะ: ตรวจสอบแล้ว";
-
-        if (interactUI != null)
-            interactUI.SetActive(false);
     }
 
     public void CloseAllPanels()
@@ -309,7 +372,6 @@ public class PlayerItemSystem : MonoBehaviour
         }
     }
 
-    // เผื่อปุ่ม Close เดิมของมึงยังเรียกเมธอดนี้อยู่
     public void CloseInfo()
     {
         CloseAllPanels();
