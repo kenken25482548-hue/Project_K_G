@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class CleaningTarget : MonoBehaviour
 {
     [Header("Stain Info")]
     public string stainName;
 
-    [TextArea(3, 5)]
+    [TextArea(2, 5)]
     public string stainDescription;
 
-    [Header("Required Item (Hidden from player)")]
+    [Header("Required Item")]
     public string requiredItemName;
 
     [Header("Wrong Popup")]
@@ -24,22 +23,37 @@ public class CleaningTarget : MonoBehaviour
     public bool isDiscovered = false;
     public bool isCleared = false;
 
+    public static int totalStains = 0;
+    public static int inspectedStains = 0;
+
     private PopupFade popupFade;
     private bool popupOpen = false;
-
-    private float lastPopupCloseTime = -999f;
+    private float popupJustClosedUntil = -1f;
 
     public bool IsWrongPopupOpen => popupOpen;
 
-    public bool WasPopupJustClosed(float delay)
+    public bool IsPopupRecentlyClosed()
     {
-        return Time.time - lastPopupCloseTime < delay;
+        return Time.time < popupJustClosedUntil;
     }
 
     void Awake()
     {
         if (wrongPopup != null)
             popupFade = wrongPopup.GetComponent<PopupFade>();
+    }
+
+    void OnEnable()
+    {
+        totalStains++;
+    }
+
+    void OnDisable()
+    {
+        totalStains = Mathf.Max(0, totalStains - 1);
+
+        if (isDiscovered)
+            inspectedStains = Mathf.Max(0, inspectedStains - 1);
     }
 
     void Update()
@@ -53,7 +67,12 @@ public class CleaningTarget : MonoBehaviour
     public void Inspect()
     {
         if (isCleared) return;
-        isDiscovered = true;
+
+        if (!isDiscovered)
+        {
+            isDiscovered = true;
+            inspectedStains++;
+        }
     }
 
     public bool TryUseItem(ItemData item)
@@ -66,6 +85,7 @@ public class CleaningTarget : MonoBehaviour
 
         bool isCorrect = item.itemName == requiredItemName;
 
+        // ใช้ผิดหรือถูกก็นับจำนวนใช้
         item.UseOnce();
 
         if (isCorrect)
@@ -82,11 +102,10 @@ public class CleaningTarget : MonoBehaviour
             ShowWrongPopup();
         }
 
-        CheckLevelFailCondition();
         return true;
     }
 
-    private void ShowWrongPopup()
+    void ShowWrongPopup()
     {
         if (wrongPopupText != null)
             wrongPopupText.text = "อุปกรณ์ไม่ถูกต้อง\nการลองใช้ครั้งนี้นับจำนวนการใช้\nกด E เพื่อปิด";
@@ -107,41 +126,8 @@ public class CleaningTarget : MonoBehaviour
             wrongPopup.SetActive(false);
 
         popupOpen = false;
-        lastPopupCloseTime = Time.time;
-    }
 
-    private void CheckLevelFailCondition()
-    {
-        CleaningTarget[] allTargets = FindObjectsByType<CleaningTarget>(FindObjectsSortMode.None);
-
-        bool hasUnclearedStains = false;
-        foreach (CleaningTarget target in allTargets)
-        {
-            if (target != null && !target.isCleared)
-            {
-                hasUnclearedStains = true;
-                break;
-            }
-        }
-
-        if (!hasUnclearedStains)
-            return;
-
-        ItemData[] allItems = FindObjectsByType<ItemData>(FindObjectsSortMode.None);
-
-        bool hasUsableItemLeft = false;
-        foreach (ItemData data in allItems)
-        {
-            if (data != null && data.HasUsesLeft())
-            {
-                hasUsableItemLeft = true;
-                break;
-            }
-        }
-
-        if (!hasUsableItemLeft)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        // กัน E ตัวเดียวกันไปเปิดข้อมูลคราบต่อทันที
+        popupJustClosedUntil = Time.time + 0.25f;
     }
 }

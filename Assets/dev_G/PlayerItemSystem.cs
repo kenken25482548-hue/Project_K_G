@@ -6,11 +6,8 @@ public class PlayerItemSystem : MonoBehaviour
 {
     [Header("Raycast")]
     public Camera raycastCamera;
-    public float interactDistance = 4.5f;
-    public float detectRadius = 0.35f;
-
-    [Header("Popup Input Block")]
-    public float popupCloseBlockTime = 0.2f;
+    public float interactDistance = 4f;
+    public float detectRadius = 0.4f;
 
     [Header("UI - Interact")]
     public GameObject interactUI;
@@ -27,6 +24,9 @@ public class PlayerItemSystem : MonoBehaviour
     public TMP_Text stainNameText;
     public TMP_Text stainDescriptionText;
     public TMP_Text stainStateText;
+
+    [Header("UI - Uses")]
+    public TMP_Text usesText;
 
     [Header("Inventory")]
     public InventoryUI inventoryUI;
@@ -57,45 +57,31 @@ public class PlayerItemSystem : MonoBehaviour
             inventoryUI.SetSelectedSlot(currentSlot);
             inventoryUI.RefreshAll(inventory);
         }
+
+        UpdateUsesUI();
     }
 
     void Update()
     {
         HandleSlotInput();
         DetectObject();
+        UpdateUsesUI();
 
-        // ถ้า WrongPopup เปิดอยู่ ให้หยุด UI/อินพุตอื่นทั้งหมด
-        if (IsWrongPopupBlocking())
+        // ถ้า popup ของใช้ผิดเปิดอยู่ ให้บล็อก UI อื่นทั้งหมด
+        if (focusedCleaningTarget != null && focusedCleaningTarget.IsWrongPopupOpen)
         {
             if (interactUI != null)
                 interactUI.SetActive(false);
             return;
         }
 
-        // ถ้าเพิ่งปิด WrongPopup ไป อย่าเพิ่งรับ E ต่อทันที
-        if (focusedCleaningTarget != null && focusedCleaningTarget.WasPopupJustClosed(popupCloseBlockTime))
+        // ถ้าเพิ่งปิด popup ไป อย่าเพิ่งรับ E ต่อ
+        if (focusedCleaningTarget != null && focusedCleaningTarget.IsPopupRecentlyClosed())
         {
-            if (interactUI != null)
-            {
-                interactUI.SetActive(true);
-
-                ItemData selectedItem = GetSelectedItem();
-                if (!focusedCleaningTarget.isDiscovered)
-                {
-                    interactText.text = "[E] อ่านข้อมูลคราบ";
-                }
-                else
-                {
-                    if (selectedItem != null)
-                        interactText.text = "[F] ใช้ " + selectedItem.itemName + "\n[E] อ่านข้อมูลคราบ";
-                    else
-                        interactText.text = "[E] อ่านข้อมูลคราบ";
-                }
-            }
+            ShowStainPromptOnly();
             return;
         }
 
-        // ถ้า panel ข้อมูลเปิดอยู่ ซ่อน InteractUI เสมอ
         if (itemInfoOpen || stainInfoOpen)
         {
             if (interactUI != null)
@@ -103,23 +89,24 @@ public class PlayerItemSystem : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E))
                 CloseAllPanels();
+
             return;
         }
 
         UpdateInteractUI();
-        HandleInteractionInput();
+        HandleInput();
     }
 
     void HandleSlotInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SetCurrentSlot(0);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SetCurrentSlot(1);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SetCurrentSlot(2);
-        if (Input.GetKeyDown(KeyCode.Alpha4)) SetCurrentSlot(3);
-        if (Input.GetKeyDown(KeyCode.Alpha5)) SetCurrentSlot(4);
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SetSlot(0);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SetSlot(1);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) SetSlot(2);
+        if (Input.GetKeyDown(KeyCode.Alpha4)) SetSlot(3);
+        if (Input.GetKeyDown(KeyCode.Alpha5)) SetSlot(4);
     }
 
-    void SetCurrentSlot(int index)
+    void SetSlot(int index)
     {
         if (inventory == null) return;
         if (index < 0 || index >= inventory.Length) return;
@@ -127,7 +114,9 @@ public class PlayerItemSystem : MonoBehaviour
         currentSlot = index;
 
         if (inventoryUI != null)
-            inventoryUI.SetSelectedSlot(currentSlot);
+            inventoryUI.SetSelectedSlot(index);
+
+        UpdateUsesUI();
     }
 
     void DetectObject()
@@ -146,23 +135,22 @@ public class PlayerItemSystem : MonoBehaviour
 
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
-        for (int i = 0; i < hits.Length; i++)
+        foreach (var hit in hits)
         {
-            Collider col = hits[i].collider;
-            if (col == null) continue;
+            if (hit.collider == null) continue;
 
-            // ข้าม collider ของ player ตัวเอง
-            if (col.transform.root == transform.root)
+            // ไม่ชนตัว player เอง
+            if (hit.collider.transform.root == transform.root)
                 continue;
 
-            ItemData item = col.GetComponentInParent<ItemData>();
+            ItemData item = hit.collider.GetComponentInParent<ItemData>();
             if (item != null && !item.isPicked && !item.isUsed)
             {
                 focusedItem = item;
                 return;
             }
 
-            CleaningTarget stain = col.GetComponentInParent<CleaningTarget>();
+            CleaningTarget stain = hit.collider.GetComponentInParent<CleaningTarget>();
             if (stain != null && !stain.isCleared)
             {
                 focusedCleaningTarget = stain;
@@ -171,22 +159,20 @@ public class PlayerItemSystem : MonoBehaviour
         }
     }
 
-    bool IsWrongPopupBlocking()
-    {
-        return focusedCleaningTarget != null && focusedCleaningTarget.IsWrongPopupOpen;
-    }
-
     void UpdateInteractUI()
     {
         if (interactUI == null || interactText == null)
             return;
 
-        ItemData selectedItem = GetSelectedItem();
-
         if (focusedItem != null)
         {
             interactUI.SetActive(true);
-            interactText.text = "[F] หยิบไอเทม\n[E] ดูข้อมูล";
+
+            if (CleaningTarget.inspectedStains < CleaningTarget.totalStains)
+                interactText.text = "ตรวจคราบให้ครบก่อน!";
+            else
+                interactText.text = "[F] หยิบไอเทม\n[E] ดูข้อมูล";
+
             return;
         }
 
@@ -194,14 +180,16 @@ public class PlayerItemSystem : MonoBehaviour
         {
             interactUI.SetActive(true);
 
+            ItemData item = GetSelectedItem();
+
             if (!focusedCleaningTarget.isDiscovered)
             {
                 interactText.text = "[E] อ่านข้อมูลคราบ";
             }
             else
             {
-                if (selectedItem != null)
-                    interactText.text = "[F] ใช้ " + selectedItem.itemName + "\n[E] อ่านข้อมูลคราบ";
+                if (item != null)
+                    interactText.text = "[F] ใช้ " + item.itemName + "\n[E] อ่านข้อมูลคราบ";
                 else
                     interactText.text = "[E] อ่านข้อมูลคราบ";
             }
@@ -212,7 +200,34 @@ public class PlayerItemSystem : MonoBehaviour
         interactUI.SetActive(false);
     }
 
-    void HandleInteractionInput()
+    void ShowStainPromptOnly()
+    {
+        if (interactUI == null || interactText == null) return;
+
+        if (focusedCleaningTarget != null && !focusedCleaningTarget.isCleared)
+        {
+            interactUI.SetActive(true);
+            interactText.text = "[E] อ่านข้อมูลคราบ";
+        }
+        else
+        {
+            interactUI.SetActive(false);
+        }
+    }
+
+    void UpdateUsesUI()
+    {
+        if (usesText == null) return;
+
+        ItemData item = GetSelectedItem();
+
+        if (item != null)
+            usesText.text = "ใช้ได้อีก: " + item.usesLeft;
+        else
+            usesText.text = "";
+    }
+
+    void HandleInput()
     {
         if (focusedItem != null)
         {
@@ -224,7 +239,7 @@ public class PlayerItemSystem : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                PickupFocusedItem();
+                PickupItem();
                 return;
             }
         }
@@ -239,57 +254,59 @@ public class PlayerItemSystem : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                TryUseSelectedItemOnFocusedStain();
+                TryUseSelectedItemOnStain();
                 return;
             }
         }
     }
 
-    void PickupFocusedItem()
+    void PickupItem()
     {
         if (focusedItem == null) return;
 
-        int emptyIndex = GetFirstEmptySlot();
-        if (emptyIndex == -1)
+        if (CleaningTarget.inspectedStains < CleaningTarget.totalStains)
+        {
+            if (interactText != null)
+                interactText.text = "ตรวจคราบให้ครบก่อน!";
+            return;
+        }
+
+        int slot = GetEmptySlot();
+        if (slot == -1)
         {
             Debug.Log("Inventory เต็ม");
             return;
         }
 
-        inventory[emptyIndex] = focusedItem;
+        inventory[slot] = focusedItem;
         focusedItem.Pick();
 
         if (inventoryUI != null)
-            inventoryUI.SetSlot(emptyIndex, focusedItem);
+            inventoryUI.SetSlot(slot, focusedItem);
 
         focusedItem = null;
-
-        if (interactUI != null)
-            interactUI.SetActive(false);
+        UpdateUsesUI();
     }
 
-    void TryUseSelectedItemOnFocusedStain()
+    void TryUseSelectedItemOnStain()
     {
         if (focusedCleaningTarget == null) return;
         if (!focusedCleaningTarget.isDiscovered) return;
 
-        ItemData selectedItem = GetSelectedItem();
-        if (selectedItem == null) return;
+        ItemData item = GetSelectedItem();
+        if (item == null) return;
 
-        // กัน panel ซ้อน
         CloseAllPanels();
 
-        bool useWasCounted = focusedCleaningTarget.TryUseItem(selectedItem);
+        bool used = focusedCleaningTarget.TryUseItem(item);
+        if (!used) return;
 
-        if (useWasCounted)
-        {
-            inventory[currentSlot] = null;
+        inventory[currentSlot] = null;
 
-            if (inventoryUI != null)
-                inventoryUI.ClearSlot(currentSlot);
-        }
+        if (inventoryUI != null)
+            inventoryUI.ClearSlot(currentSlot);
 
-        focusedItem = null;
+        UpdateUsesUI();
     }
 
     void OpenItemInfo(ItemData item)
@@ -329,29 +346,29 @@ public class PlayerItemSystem : MonoBehaviour
         }
     }
 
-    void OpenStainInfo(CleaningTarget target)
+    void OpenStainInfo(CleaningTarget stain)
     {
-        if (target == null) return;
+        if (stain == null) return;
 
         CloseAllPanels();
 
         if (interactUI != null)
             interactUI.SetActive(false);
 
-        target.Inspect();
+        stain.Inspect();
         stainInfoOpen = true;
 
         if (stainInfoPanel != null)
             stainInfoPanel.SetActive(true);
 
         if (stainNameText != null)
-            stainNameText.text = target.stainName;
+            stainNameText.text = stain.stainName;
 
         if (stainDescriptionText != null)
-            stainDescriptionText.text = target.stainDescription;
+            stainDescriptionText.text = stain.stainDescription;
 
         if (stainStateText != null)
-            stainStateText.text = target.isCleared ? "สถานะ: ทำความสะอาดแล้ว" : "สถานะ: ตรวจสอบแล้ว";
+            stainStateText.text = stain.isCleared ? "สถานะ: ทำความสะอาดแล้ว" : "สถานะ: ตรวจสอบแล้ว";
     }
 
     public void CloseAllPanels()
@@ -359,11 +376,8 @@ public class PlayerItemSystem : MonoBehaviour
         itemInfoOpen = false;
         stainInfoOpen = false;
 
-        if (infoPanel != null)
-            infoPanel.SetActive(false);
-
-        if (stainInfoPanel != null)
-            stainInfoPanel.SetActive(false);
+        if (infoPanel != null) infoPanel.SetActive(false);
+        if (stainInfoPanel != null) stainInfoPanel.SetActive(false);
 
         if (itemImage != null)
         {
@@ -386,11 +400,10 @@ public class PlayerItemSystem : MonoBehaviour
     {
         if (inventory == null) return null;
         if (currentSlot < 0 || currentSlot >= inventory.Length) return null;
-
         return inventory[currentSlot];
     }
 
-    int GetFirstEmptySlot()
+    int GetEmptySlot()
     {
         if (inventory == null) return -1;
 
