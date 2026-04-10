@@ -1,181 +1,252 @@
-﻿using NUnit.Framework.Interfaces;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerItemSystem : MonoBehaviour
 {
-    [Header("Player")]
-    public Transform player;
+    [Header("Raycast")]
+    public Camera raycastCamera;
     public float interactDistance = 3f;
 
     [Header("UI - Interact")]
     public GameObject interactUI;
     public TMP_Text interactText;
 
-    [Header("UI - Info")]
+    [Header("UI - Item Info")]
     public GameObject infoPanel;
     public TMP_Text infoText;
     public TMP_Text itemNameText;
     public Image itemImage;
 
+    [Header("UI - Stain Info")]
+    public GameObject stainInfoPanel;
+    public TMP_Text stainNameText;
+    public TMP_Text stainDescriptionText;
+    public TMP_Text stainStateText;
+
+    [Header("Inventory")]
+    public InventoryUI inventoryUI;
+    public int inventorySize = 5;
+
+    private ItemData[] inventory;
+    private int currentSlot = 0;
+
     private ItemData focusedItem;
-    private ItemData carriedItem;
     private CleaningTarget focusedCleaningTarget;
-    private bool infoOpen = false;
+
+    private bool itemInfoOpen = false;
+    private bool stainInfoOpen = false;
 
     void Start()
     {
-        if (interactUI) interactUI.SetActive(false);
-        if (infoPanel) infoPanel.SetActive(false);
+        inventory = new ItemData[inventorySize];
+
+        if (interactUI != null) interactUI.SetActive(false);
+        if (infoPanel != null) infoPanel.SetActive(false);
+        if (stainInfoPanel != null) stainInfoPanel.SetActive(false);
+
+        if (inventoryUI != null)
+        {
+            inventoryUI.SetSelectedSlot(currentSlot);
+            inventoryUI.RefreshAll(inventory);
+        }
+
+        if (raycastCamera == null)
+            raycastCamera = Camera.main;
     }
 
     void Update()
     {
-        if (infoOpen)
+        HandleSlotInput();
+
+        if (itemInfoOpen || stainInfoOpen)
         {
             if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape))
-                CloseInfo();
+                CloseAllPanels();
             return;
         }
 
-        if (carriedItem == null)
+        DetectObject();
+        HandleInteractionInput();
+    }
+
+    void HandleSlotInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SetCurrentSlot(0);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SetCurrentSlot(1);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) SetCurrentSlot(2);
+        if (Input.GetKeyDown(KeyCode.Alpha4)) SetCurrentSlot(3);
+        if (Input.GetKeyDown(KeyCode.Alpha5)) SetCurrentSlot(4);
+    }
+
+    void SetCurrentSlot(int index)
+    {
+        if (inventory == null) return;
+        if (index < 0 || index >= inventory.Length) return;
+
+        currentSlot = index;
+
+        if (inventoryUI != null)
+            inventoryUI.SetSelectedSlot(currentSlot);
+    }
+
+    void DetectObject()
+    {
+        focusedItem = null;
+        focusedCleaningTarget = null;
+
+        if (raycastCamera == null)
         {
-            FindNearestItem();
-            UpdatePickupUI();
-            HandlePickupInput();
+            if (interactUI != null) interactUI.SetActive(false);
+            return;
+        }
+
+        Ray ray = new Ray(raycastCamera.transform.position, raycastCamera.transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, interactDistance))
+        {
+            focusedItem = hit.collider.GetComponentInParent<ItemData>();
+            focusedCleaningTarget = hit.collider.GetComponentInParent<CleaningTarget>();
+
+            UpdateInteractUI();
         }
         else
         {
-            FindNearestCleaningTarget();
-            UpdateUseUI();
-            HandleUseInput();
+            if (interactUI != null)
+                interactUI.SetActive(false);
         }
     }
 
-    void FindNearestItem()
-    {
-        ItemData[] allItems = FindObjectsByType<ItemData>(FindObjectsSortMode.None);
-
-        float closestDistance = Mathf.Infinity;
-        ItemData nearest = null;
-
-        foreach (ItemData item in allItems)
-        {
-            if (item == null || item.isPicked || item.isUsed) continue;
-
-            float distance = Vector3.Distance(player.position, item.transform.position);
-
-            if (distance <= interactDistance && distance < closestDistance)
-            {
-                closestDistance = distance;
-                nearest = item;
-            }
-        }
-
-        focusedItem = nearest;
-    }
-
-    void FindNearestCleaningTarget()
-    {
-        CleaningTarget[] allTargets = FindObjectsByType<CleaningTarget>(FindObjectsSortMode.None);
-
-        float closestDistance = Mathf.Infinity;
-        CleaningTarget nearest = null;
-
-        foreach (CleaningTarget target in allTargets)
-        {
-            if (target == null || target.isCleared) continue;
-
-            float distance = Vector3.Distance(player.position, target.transform.position);
-
-            if (distance <= interactDistance && distance < closestDistance)
-            {
-                closestDistance = distance;
-                nearest = target;
-            }
-        }
-
-        focusedCleaningTarget = nearest;
-    }
-
-    void UpdatePickupUI()
-    {
-        if (interactUI == null || interactText == null) return;
-
-        if (focusedItem != null)
-        {
-            interactUI.SetActive(true);
-            interactText.text = "[F] หยิบไอเทม\n[E] ดูข้อมูล";
-        }
-        else
-        {
-            interactUI.SetActive(false);
-        }
-    }
-
-    void HandlePickupInput()
-    {
-        if (focusedItem == null) return;
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            OpenInfo(focusedItem);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            carriedItem = focusedItem;
-            carriedItem.Pick();
-            focusedItem = null;
-
-            if (interactUI) interactUI.SetActive(false);
-            CloseInfo();
-        }
-    }
-
-    void UpdateUseUI()
+    void UpdateInteractUI()
     {
         if (interactUI == null || interactText == null)
             return;
 
-        if (carriedItem == null || focusedCleaningTarget == null)
+        ItemData selectedItem = GetSelectedItem();
+
+        if (focusedItem != null && !focusedItem.isPicked && !focusedItem.isUsed)
         {
-            interactUI.SetActive(false);
+            interactUI.SetActive(true);
+            interactText.text = "[F] หยิบไอเทม\n[E] ดูข้อมูล";
             return;
         }
 
-        interactUI.SetActive(true);
-        interactText.text = "[F] ใช้ " + carriedItem.itemName;
+        if (focusedCleaningTarget != null && !focusedCleaningTarget.isCleared)
+        {
+            interactUI.SetActive(true);
+
+            if (!focusedCleaningTarget.isDiscovered)
+            {
+                interactText.text = "[E] ตรวจสอบคราบ";
+            }
+            else if (selectedItem != null)
+            {
+                interactText.text = "[F] ใช้ " + selectedItem.itemName + "\n[E] อ่านข้อมูลคราบ";
+            }
+            else
+            {
+                interactText.text = "[E] อ่านข้อมูลคราบ";
+            }
+
+            return;
+        }
+
+        interactUI.SetActive(false);
     }
 
-    void HandleUseInput()
+    void HandleInteractionInput()
     {
-        if (carriedItem == null || focusedCleaningTarget == null)
-            return;
-
-        if (Input.GetKeyDown(KeyCode.F))
+        if (focusedItem != null && !focusedItem.isPicked && !focusedItem.isUsed)
         {
-            focusedCleaningTarget.TryUseItem(carriedItem);
-            carriedItem = null;
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                OpenItemInfo(focusedItem);
+                return;
+            }
 
-            if (interactUI) interactUI.SetActive(false);
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                PickupFocusedItem();
+                return;
+            }
+        }
+
+        if (focusedCleaningTarget != null && !focusedCleaningTarget.isCleared)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                OpenStainInfo(focusedCleaningTarget);
+                return;
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                TryUseSelectedItemOnFocusedStain();
+                return;
+            }
         }
     }
 
-    void OpenInfo(ItemData item)
+    void PickupFocusedItem()
+    {
+        if (focusedItem == null) return;
+
+        int emptyIndex = GetFirstEmptySlot();
+        if (emptyIndex == -1)
+        {
+            Debug.Log("Inventory เต็ม");
+            return;
+        }
+
+        inventory[emptyIndex] = focusedItem;
+        focusedItem.Pick();
+
+        if (inventoryUI != null)
+            inventoryUI.SetSlot(emptyIndex, focusedItem);
+
+        focusedItem = null;
+
+        if (interactUI != null)
+            interactUI.SetActive(false);
+    }
+
+    void TryUseSelectedItemOnFocusedStain()
+    {
+        if (focusedCleaningTarget == null) return;
+        if (!focusedCleaningTarget.isDiscovered) return;
+
+        ItemData selectedItem = GetSelectedItem();
+        if (selectedItem == null) return;
+
+        bool useWasCounted = focusedCleaningTarget.TryUseItem(selectedItem);
+
+        if (useWasCounted)
+        {
+            inventory[currentSlot] = null;
+
+            if (inventoryUI != null)
+                inventoryUI.ClearSlot(currentSlot);
+        }
+
+        if (interactUI != null)
+            interactUI.SetActive(false);
+    }
+
+    void OpenItemInfo(ItemData item)
     {
         if (item == null) return;
 
-        infoOpen = true;
+        itemInfoOpen = true;
 
-        if (infoPanel) infoPanel.SetActive(true);
+        if (infoPanel != null)
+            infoPanel.SetActive(true);
 
-        if (itemNameText)
+        if (itemNameText != null)
             itemNameText.text = item.itemName;
 
-        if (infoText)
-            infoText.text = item.itemDescription;
+        if (infoText != null)
+            infoText.text = item.itemDescription + "\n\nจำนวนใช้ได้: " + item.usesLeft;
 
         if (itemImage != null)
         {
@@ -193,20 +264,80 @@ public class PlayerItemSystem : MonoBehaviour
             }
         }
 
-        if (interactUI) interactUI.SetActive(false);
+        if (interactUI != null)
+            interactUI.SetActive(false);
     }
 
-    public void CloseInfo()
+    void OpenStainInfo(CleaningTarget target)
     {
-        infoOpen = false;
+        if (target == null) return;
+
+        target.Inspect();
+        stainInfoOpen = true;
+
+        if (stainInfoPanel != null)
+            stainInfoPanel.SetActive(true);
+
+        if (stainNameText != null)
+            stainNameText.text = target.stainName;
+
+        if (stainDescriptionText != null)
+            stainDescriptionText.text = target.stainDescription;
+
+        if (stainStateText != null)
+            stainStateText.text = target.isCleared ? "สถานะ: ทำความสะอาดแล้ว" : "สถานะ: ตรวจสอบแล้ว";
+
+        if (interactUI != null)
+            interactUI.SetActive(false);
+    }
+
+    public void CloseAllPanels()
+    {
+        itemInfoOpen = false;
+        stainInfoOpen = false;
 
         if (infoPanel != null)
             infoPanel.SetActive(false);
+
+        if (stainInfoPanel != null)
+            stainInfoPanel.SetActive(false);
 
         if (itemImage != null)
         {
             itemImage.sprite = null;
             itemImage.enabled = false;
         }
+    }
+
+    // เผื่อปุ่ม Close เดิมของมึงยังเรียกเมธอดนี้อยู่
+    public void CloseInfo()
+    {
+        CloseAllPanels();
+    }
+
+    public void CloseStainInfo()
+    {
+        CloseAllPanels();
+    }
+
+    ItemData GetSelectedItem()
+    {
+        if (inventory == null) return null;
+        if (currentSlot < 0 || currentSlot >= inventory.Length) return null;
+
+        return inventory[currentSlot];
+    }
+
+    int GetFirstEmptySlot()
+    {
+        if (inventory == null) return -1;
+
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            if (inventory[i] == null)
+                return i;
+        }
+
+        return -1;
     }
 }

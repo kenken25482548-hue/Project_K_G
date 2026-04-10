@@ -4,7 +4,13 @@ using UnityEngine.SceneManagement;
 
 public class CleaningTarget : MonoBehaviour
 {
-    [Header("Required Item")]
+    [Header("Stain Info")]
+    public string stainName;
+
+    [TextArea(3, 5)]
+    public string stainDescription;
+
+    [Header("Required Item (Hidden from player)")]
     public string requiredItemName;
 
     [Header("Wrong Popup")]
@@ -15,6 +21,7 @@ public class CleaningTarget : MonoBehaviour
     public GameObject dirtObject;
 
     [Header("State")]
+    public bool isDiscovered = false;
     public bool isCleared = false;
 
     private PopupFade popupFade;
@@ -34,11 +41,23 @@ public class CleaningTarget : MonoBehaviour
         }
     }
 
-    public void TryUseItem(ItemData item)
+    public void Inspect()
     {
-        if (item == null || isCleared || item.isUsed) return;
+        if (isCleared) return;
+        isDiscovered = true;
+    }
+
+    public bool TryUseItem(ItemData item)
+    {
+        if (item == null) return false;
+        if (isCleared) return false;
+        if (!isDiscovered) return false;
+        if (item.isUsed) return false;
 
         bool isCorrect = item.itemName == requiredItemName;
+
+        // แบบ B = ใช้ถูกหรือผิดก็ลดจำนวนใช้
+        item.UseOnce();
 
         if (isCorrect)
         {
@@ -47,25 +66,28 @@ public class CleaningTarget : MonoBehaviour
             if (dirtObject != null)
                 dirtObject.SetActive(false);
 
-            item.UseOnce();
             CloseWrongPopup();
-
-            CheckLevelFailCondition();
         }
         else
         {
-            item.ReturnToStart();
-
-            if (wrongPopupText != null)
-                wrongPopupText.text = "อุปกรณ์ไม่ถูกต้อง\nกด E เพื่อปิด";
-
-            if (popupFade != null)
-                popupFade.Show();
-            else if (wrongPopup != null)
-                wrongPopup.SetActive(true);
-
-            popupOpen = true;
+            ShowWrongPopup();
         }
+
+        CheckLevelFailCondition();
+        return true;
+    }
+
+    private void ShowWrongPopup()
+    {
+        if (wrongPopupText != null)
+            wrongPopupText.text = "อุปกรณ์ไม่ถูกต้อง\nการลองใช้ครั้งนี้นับจำนวนการใช้\nกด E เพื่อปิด";
+
+        if (popupFade != null)
+            popupFade.Show();
+        else if (wrongPopup != null)
+            wrongPopup.SetActive(true);
+
+        popupOpen = true;
     }
 
     public void CloseWrongPopup()
@@ -78,7 +100,7 @@ public class CleaningTarget : MonoBehaviour
         popupOpen = false;
     }
 
-    void CheckLevelFailCondition()
+    private void CheckLevelFailCondition()
     {
         CleaningTarget[] allTargets = FindObjectsByType<CleaningTarget>(FindObjectsSortMode.None);
 
@@ -97,17 +119,17 @@ public class CleaningTarget : MonoBehaviour
 
         ItemData[] allItems = FindObjectsByType<ItemData>(FindObjectsSortMode.None);
 
-        bool hasAnyUsableItemLeft = false;
+        bool hasUsableItemLeft = false;
         foreach (ItemData data in allItems)
         {
             if (data != null && data.HasUsesLeft())
             {
-                hasAnyUsableItemLeft = true;
+                hasUsableItemLeft = true;
                 break;
             }
         }
 
-        if (!hasAnyUsableItemLeft)
+        if (!hasUsableItemLeft)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }

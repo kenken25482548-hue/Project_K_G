@@ -12,8 +12,6 @@ public class ItemData : MonoBehaviour
     public Sprite itemSprite;
 
     [Header("Gameplay")]
-    public bool isCorrectTool = false;
-
     [Min(1)]
     public int maxUses = 1;
 
@@ -37,7 +35,7 @@ public class ItemData : MonoBehaviour
         startPosition = transform.position;
         startRotation = transform.rotation;
 
-        usesLeft = maxUses;
+        usesLeft = Mathf.Max(1, maxUses);
     }
 
     public void Pick()

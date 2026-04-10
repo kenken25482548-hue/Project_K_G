@@ -1,76 +1,125 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
-    [Header("Slot Backgrounds")]
-    public Image[] backgrounds;
+    [Header("UI References")]
+    public Image[] slotBackgrounds;
+    public Image[] slotIcons;
+    public TMP_Text[] slotUseTexts;
 
-    [Header("Slot Icons")]
-    public Image[] icons;
+    [Header("Visual")]
+    public Color normalColor = new Color32(255, 255, 255, 40);
+    public Color selectedColor = new Color32(255, 255, 255, 140);
 
-    [Header("Background Colors")]
-    public Color normalBackgroundColor = new Color(0.15f, 0.35f, 0.55f, 0.35f);
-    public Color selectedBackgroundColor = new Color(0.20f, 0.55f, 0.95f, 0.85f);
-
-    [Header("Icon Colors")]
-    public Color normalIconColor = new Color(1f, 1f, 1f, 0.45f);
-    public Color selectedIconColor = Color.white;
-
-    [Header("Scale")]
     public Vector3 normalScale = Vector3.one;
-    public Vector3 selectedScale = new Vector3(1.15f, 1.15f, 1f);
+    public Vector3 selectedScale = new Vector3(1.1f, 1.1f, 1f);
 
-    private int currentIndex = 0;
+    private int currentSlot = 0;
 
     void Start()
     {
-        UpdateSlotVisual();
+        SetSelectedSlot(0);
     }
 
-    void Update()
+    public void SetSelectedSlot(int index)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) Select(0);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) Select(1);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) Select(2);
-        if (Input.GetKeyDown(KeyCode.Alpha4)) Select(3);
-        if (Input.GetKeyDown(KeyCode.Alpha5)) Select(4);
+        currentSlot = Mathf.Clamp(index, 0, Mathf.Max(0, slotBackgrounds.Length - 1));
+        RefreshSelection();
     }
 
-    void Select(int index)
+    public void SetSlot(int index, ItemData item)
     {
-        if (backgrounds == null || backgrounds.Length == 0) return;
-        if (index < 0 || index >= backgrounds.Length) return;
+        if (!IsValidIndex(index)) return;
 
-        currentIndex = index;
-        Debug.Log("Selected slot: " + (index + 1));
-        UpdateSlotVisual();
-    }
-
-    void UpdateSlotVisual()
-    {
-        for (int i = 0; i < backgrounds.Length; i++)
+        if (slotIcons != null && index < slotIcons.Length && slotIcons[index] != null)
         {
-            bool isSelected = (i == currentIndex);
-
-            if (backgrounds[i] != null)
+            if (item != null && item.itemSprite != null)
             {
-                backgrounds[i].color = isSelected ? selectedBackgroundColor : normalBackgroundColor;
+                slotIcons[index].sprite = item.itemSprite;
+                slotIcons[index].enabled = true;
+                slotIcons[index].color = Color.white;
+                slotIcons[index].preserveAspect = true;
             }
-
-            if (icons != null && i < icons.Length && icons[i] != null)
+            else
             {
-                icons[i].color = isSelected ? selectedIconColor : normalIconColor;
-            }
-
-            if (backgrounds[i] != null)
-            {
-                Transform slotTransform = backgrounds[i].transform.parent;
-                if (slotTransform != null)
-                {
-                    slotTransform.localScale = isSelected ? selectedScale : normalScale;
-                }
+                slotIcons[index].sprite = null;
+                slotIcons[index].enabled = false;
             }
         }
+
+        if (slotUseTexts != null && index < slotUseTexts.Length && slotUseTexts[index] != null)
+        {
+            if (item != null)
+                slotUseTexts[index].text = item.usesLeft.ToString();
+            else
+                slotUseTexts[index].text = "";
+        }
+    }
+
+    public void ClearSlot(int index)
+    {
+        if (!IsValidIndex(index)) return;
+
+        if (slotIcons != null && index < slotIcons.Length && slotIcons[index] != null)
+        {
+            slotIcons[index].sprite = null;
+            slotIcons[index].enabled = false;
+        }
+
+        if (slotUseTexts != null && index < slotUseTexts.Length && slotUseTexts[index] != null)
+        {
+            slotUseTexts[index].text = "";
+        }
+    }
+
+    public void RefreshSlot(int index, ItemData item)
+    {
+        if (item == null)
+            ClearSlot(index);
+        else
+            SetSlot(index, item);
+    }
+
+    public void RefreshAll(ItemData[] inventory)
+    {
+        int max = 0;
+
+        if (inventory != null)
+            max = inventory.Length;
+        else
+            max = 0;
+
+        for (int i = 0; i < max; i++)
+        {
+            RefreshSlot(i, inventory[i]);
+        }
+    }
+
+    private void RefreshSelection()
+    {
+        if (slotBackgrounds == null) return;
+
+        for (int i = 0; i < slotBackgrounds.Length; i++)
+        {
+            if (slotBackgrounds[i] == null) continue;
+
+            if (i == currentSlot)
+            {
+                slotBackgrounds[i].color = selectedColor;
+                slotBackgrounds[i].transform.localScale = selectedScale;
+            }
+            else
+            {
+                slotBackgrounds[i].color = normalColor;
+                slotBackgrounds[i].transform.localScale = normalScale;
+            }
+        }
+    }
+
+    private bool IsValidIndex(int index)
+    {
+        return index >= 0 && slotBackgrounds != null && index < slotBackgrounds.Length;
     }
 }
