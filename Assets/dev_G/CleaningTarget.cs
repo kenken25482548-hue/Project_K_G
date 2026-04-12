@@ -1,46 +1,33 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CleaningTarget : MonoBehaviour
 {
-    [Header("Stain Info")]
     public string stainName;
-
-    [TextArea(2, 5)]
     public string stainDescription;
 
-    [Header("Required Item")]
     public string requiredItemName;
 
-    [Header("Wrong Popup")]
     public GameObject wrongPopup;
     public TMP_Text wrongPopupText;
 
-    [Header("Correct Result")]
     public GameObject dirtObject;
 
-    [Header("State")]
     public bool isDiscovered = false;
     public bool isCleared = false;
 
     public static int totalStains = 0;
     public static int inspectedStains = 0;
 
-    private PopupFade popupFade;
     private bool popupOpen = false;
-    private float popupJustClosedUntil = -1f;
+    private float popupCloseTime = 0f;
 
     public bool IsWrongPopupOpen => popupOpen;
 
     public bool IsPopupRecentlyClosed()
     {
-        return Time.time < popupJustClosedUntil;
-    }
-
-    void Awake()
-    {
-        if (wrongPopup != null)
-            popupFade = wrongPopup.GetComponent<PopupFade>();
+        return Time.time < popupCloseTime;
     }
 
     void OnEnable()
@@ -56,18 +43,8 @@ public class CleaningTarget : MonoBehaviour
             inspectedStains = Mathf.Max(0, inspectedStains - 1);
     }
 
-    void Update()
-    {
-        if (popupOpen && Input.GetKeyDown(KeyCode.E))
-        {
-            CloseWrongPopup();
-        }
-    }
-
     public void Inspect()
     {
-        if (isCleared) return;
-
         if (!isDiscovered)
         {
             isDiscovered = true;
@@ -78,56 +55,95 @@ public class CleaningTarget : MonoBehaviour
     public bool TryUseItem(ItemData item)
     {
         if (item == null) return false;
-        if (isCleared) return false;
         if (!isDiscovered) return false;
+        if (isCleared) return false;
         if (item.isUsed) return false;
-        if (popupOpen) return false;
-
-        bool isCorrect = item.itemName == requiredItemName;
 
         // ใช้ผิดหรือถูกก็นับจำนวนใช้
         item.UseOnce();
 
-        if (isCorrect)
+        if (item.itemName == requiredItemName)
         {
             isCleared = true;
 
             if (dirtObject != null)
                 dirtObject.SetActive(false);
 
-            CloseWrongPopup();
+            ClosePopupIfOpen();
         }
         else
         {
-            ShowWrongPopup();
+            ShowPopup();
         }
 
+        CheckFail();
         return true;
     }
 
-    void ShowWrongPopup()
+    void ShowPopup()
     {
         if (wrongPopupText != null)
             wrongPopupText.text = "อุปกรณ์ไม่ถูกต้อง\nการลองใช้ครั้งนี้นับจำนวนการใช้\nกด E เพื่อปิด";
 
-        if (popupFade != null)
-            popupFade.Show();
-        else if (wrongPopup != null)
+        if (wrongPopup != null)
             wrongPopup.SetActive(true);
 
         popupOpen = true;
     }
 
-    public void CloseWrongPopup()
+    void ClosePopupIfOpen()
     {
-        if (popupFade != null)
-            popupFade.Hide();
-        else if (wrongPopup != null)
+        if (wrongPopup != null)
             wrongPopup.SetActive(false);
 
         popupOpen = false;
+    }
 
-        // กัน E ตัวเดียวกันไปเปิดข้อมูลคราบต่อทันที
-        popupJustClosedUntil = Time.time + 0.25f;
+    void Update()
+    {
+        if (popupOpen && Input.GetKeyDown(KeyCode.E))
+        {
+            if (wrongPopup != null)
+                wrongPopup.SetActive(false);
+
+            popupOpen = false;
+            popupCloseTime = Time.time + 0.25f;
+        }
+    }
+
+    void CheckFail()
+    {
+        CleaningTarget[] stains = FindObjectsByType<CleaningTarget>(FindObjectsSortMode.None);
+        ItemData[] items = FindObjectsByType<ItemData>(FindObjectsSortMode.None);
+
+        bool hasUnclearedStain = false;
+        foreach (var stain in stains)
+        {
+            if (stain != null && !stain.isCleared)
+            {
+                hasUnclearedStain = true;
+                break;
+            }
+        }
+
+        // ถ้าไม่มีคราบเหลือ = ยังไม่ใช่แพ้
+        if (!hasUnclearedStain)
+            return;
+
+        bool hasUsableItemLeft = false;
+        foreach (var item in items)
+        {
+            if (item != null && !item.isUsed && item.usesLeft > 0)
+            {
+                hasUsableItemLeft = true;
+                break;
+            }
+        }
+
+        // ถ้ายังมีคราบเหลือ แต่ไม่มีของใช้แล้ว = รีด่าน
+        if (!hasUsableItemLeft)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }
