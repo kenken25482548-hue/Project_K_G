@@ -239,6 +239,23 @@ public class PlayerItemSystem : MonoBehaviour
     {
         if (focusedItem != null)
         {
+            bool allStainsInspected = CleaningTarget.inspectedStains >= CleaningTarget.totalStains;
+
+            // ยังตรวจคราบไม่ครบ = ห้ามทั้งดูข้อมูลและห้ามหยิบ
+            if (!allStainsInspected)
+            {
+                if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.F))
+                {
+                    if (interactUI != null)
+                        interactUI.SetActive(true);
+
+                    if (interactText != null)
+                        interactText.text = "ตรวจคราบให้ครบก่อน!";
+                }
+
+                return;
+            }
+
             if (Input.GetKeyDown(KeyCode.E))
             {
                 OpenItemInfo(focusedItem);
