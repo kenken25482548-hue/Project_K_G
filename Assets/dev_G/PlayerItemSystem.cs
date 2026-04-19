@@ -32,12 +32,6 @@ public class PlayerItemSystem : MonoBehaviour
     public InventoryUI inventoryUI;
     public int inventorySize = 5;
 
-    [Header("SFX")]
-    public AudioSource sfxSource;
-    public AudioClip pickupSfx;
-    public AudioClip openInfoSfx;
-    public AudioClip slotChangeSfx;
-
     private ItemData[] inventory;
     private int currentSlot = 0;
 
@@ -73,7 +67,6 @@ public class PlayerItemSystem : MonoBehaviour
         DetectObject();
         UpdateUsesUI();
 
-        // ถ้า popup ของใช้ผิดเปิดอยู่ ให้บล็อก UI อื่นทั้งหมด
         if (focusedCleaningTarget != null && focusedCleaningTarget.IsWrongPopupOpen)
         {
             if (interactUI != null)
@@ -81,7 +74,6 @@ public class PlayerItemSystem : MonoBehaviour
             return;
         }
 
-        // ถ้าเพิ่งปิด popup ไป อย่าเพิ่งรับ E ต่อ
         if (focusedCleaningTarget != null && focusedCleaningTarget.IsPopupRecentlyClosed())
         {
             ShowStainPromptOnly();
@@ -123,7 +115,7 @@ public class PlayerItemSystem : MonoBehaviour
         if (inventoryUI != null)
             inventoryUI.SetSelectedSlot(index);
 
-        PlaySfx(slotChangeSfx);
+        GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.slotChangeSfx : null, 0.9f);
         UpdateUsesUI();
     }
 
@@ -147,7 +139,6 @@ public class PlayerItemSystem : MonoBehaviour
         {
             if (hit.collider == null) continue;
 
-            // ไม่ชนตัว player เอง
             if (hit.collider.transform.root == transform.root)
                 continue;
 
@@ -241,7 +232,6 @@ public class PlayerItemSystem : MonoBehaviour
         {
             bool allStainsInspected = CleaningTarget.inspectedStains >= CleaningTarget.totalStains;
 
-            // ยังตรวจคราบไม่ครบ = ห้ามทั้งดูข้อมูลและห้ามหยิบ
             if (!allStainsInspected)
             {
                 if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.F))
@@ -309,7 +299,7 @@ public class PlayerItemSystem : MonoBehaviour
         if (inventoryUI != null)
             inventoryUI.SetSlot(slot, focusedItem);
 
-        PlaySfx(pickupSfx);
+        GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.pickupSfx : null, 1f);
 
         focusedItem = null;
         UpdateUsesUI();
@@ -372,7 +362,7 @@ public class PlayerItemSystem : MonoBehaviour
             }
         }
 
-        PlaySfx(openInfoSfx);
+        GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.openInfoSfx : null, 1f);
     }
 
     void OpenStainInfo(CleaningTarget stain)
@@ -399,7 +389,7 @@ public class PlayerItemSystem : MonoBehaviour
         if (stainStateText != null)
             stainStateText.text = stain.isCleared ? "สถานะ: ทำความสะอาดแล้ว" : "สถานะ: ตรวจสอบแล้ว";
 
-        PlaySfx(openInfoSfx);
+        GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.openInfoSfx : null, 1f);
     }
 
     public void CloseAllPanels()
@@ -445,11 +435,5 @@ public class PlayerItemSystem : MonoBehaviour
         }
 
         return -1;
-    }
-
-    void PlaySfx(AudioClip clip)
-    {
-        if (sfxSource == null || clip == null) return;
-        sfxSource.PlayOneShot(clip);
     }
 }

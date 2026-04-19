@@ -19,12 +19,6 @@ public class CleaningTarget : MonoBehaviour
     [Header("Correct Result")]
     public GameObject dirtObject;
 
-    [Header("SFX")]
-    public AudioSource sfxSource;
-    public AudioClip correctUseSfx;
-    public AudioClip wrongUseSfx;
-    public AudioClip closePopupSfx;
-
     [Header("State")]
     public bool isDiscovered = false;
     public bool isCleared = false;
@@ -91,7 +85,6 @@ public class CleaningTarget : MonoBehaviour
 
         bool isCorrect = item.itemName == requiredItemName;
 
-        // ใช้ผิดหรือถูกก็นับจำนวนใช้
         item.UseOnce();
 
         if (isCorrect)
@@ -101,12 +94,12 @@ public class CleaningTarget : MonoBehaviour
             if (dirtObject != null)
                 dirtObject.SetActive(false);
 
-            PlaySfx(correctUseSfx);
+            GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.correctUseSfx : null, 1f);
             CloseWrongPopup();
         }
         else
         {
-            PlaySfx(wrongUseSfx);
+            GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.wrongUseSfx : null, 1f);
             ShowWrongPopup();
         }
 
@@ -129,7 +122,9 @@ public class CleaningTarget : MonoBehaviour
     public void CloseWrongPopup()
     {
         if (popupOpen)
-            PlaySfx(closePopupSfx);
+        {
+            GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.closePopupSfx : null, 0.9f);
+        }
 
         if (popupFade != null)
             popupFade.Hide();
@@ -137,14 +132,6 @@ public class CleaningTarget : MonoBehaviour
             wrongPopup.SetActive(false);
 
         popupOpen = false;
-
-        // กัน E ตัวเดียวกันไปเปิดข้อมูลคราบต่อทันที
         popupJustClosedUntil = Time.time + 0.25f;
-    }
-
-    void PlaySfx(AudioClip clip)
-    {
-        if (sfxSource == null || clip == null) return;
-        sfxSource.PlayOneShot(clip);
     }
 }

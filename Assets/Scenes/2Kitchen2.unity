@@ -10069,11 +10069,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CleaningTarget
   stainName: "\u0E22\u0E38\u0E07\u0E25\u0E32\u0E22\u0E27\u0E32\u0E22\u0E23\u0E49\u0E32\u0E22"
   stainDescription: "\u0E42\u0E14\u0E19\u0E22\u0E32\u0E01\u0E31\u0E19\u0E22\u0E38\u0E07\u0E42\u0E14\u0E19\u0E04\u0E38\u0E21\u0E01\u0E33\u0E40\u0E19\u0E34\u0E14"
-  requiredItemName: 
+  requiredItemName: "\u0E22\u0E32\u0E44\u0E25\u0E48\u0E41\u0E21\u0E25\u0E07"
   wrongPopup: {fileID: 647321479}
   wrongPopupText: {fileID: 1926349856}
   dirtObject: {fileID: 169773909}
-  sfxSource: {fileID: 42584285}
+  sfxSource: {fileID: 1134011123}
   correctUseSfx: {fileID: 8300000, guid: 75c919527d5388945a84a02a05095023, type: 3}
   wrongUseSfx: {fileID: 8300000, guid: 3588a320ea9459047a3ba314eb4efd14, type: 3}
   closePopupSfx: {fileID: 8300000, guid: e424948ae8d11194ab429a93bc3e1dab, type: 3}
@@ -10709,7 +10709,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 647321479}
   wrongPopupText: {fileID: 1926349856}
   dirtObject: {fileID: 1195123522}
-  sfxSource: {fileID: 42584285}
+  sfxSource: {fileID: 1195123526}
   correctUseSfx: {fileID: 8300000, guid: 75c919527d5388945a84a02a05095023, type: 3}
   wrongUseSfx: {fileID: 8300000, guid: 3588a320ea9459047a3ba314eb4efd14, type: 3}
   closePopupSfx: {fileID: 8300000, guid: e424948ae8d11194ab429a93bc3e1dab, type: 3}
@@ -11054,7 +11054,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 647321479}
   wrongPopupText: {fileID: 1926349856}
   dirtObject: {fileID: 653197135}
-  sfxSource: {fileID: 42584285}
+  sfxSource: {fileID: 1216505394}
   correctUseSfx: {fileID: 8300000, guid: 75c919527d5388945a84a02a05095023, type: 3}
   wrongUseSfx: {fileID: 8300000, guid: 3588a320ea9459047a3ba314eb4efd14, type: 3}
   closePopupSfx: {fileID: 8300000, guid: e424948ae8d11194ab429a93bc3e1dab, type: 3}
@@ -13804,7 +13804,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 647321479}
   wrongPopupText: {fileID: 1926349856}
   dirtObject: {fileID: 1712359173}
-  sfxSource: {fileID: 42584285}
+  sfxSource: {fileID: 1712359177}
   correctUseSfx: {fileID: 8300000, guid: 75c919527d5388945a84a02a05095023, type: 3}
   wrongUseSfx: {fileID: 8300000, guid: 3588a320ea9459047a3ba314eb4efd14, type: 3}
   closePopupSfx: {fileID: 8300000, guid: e424948ae8d11194ab429a93bc3e1dab, type: 3}
