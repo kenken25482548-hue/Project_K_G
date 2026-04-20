@@ -344,7 +344,7 @@ public class PlayerItemSystem : MonoBehaviour
             itemNameText.text = item.itemName;
 
         if (infoText != null)
-            infoText.text = item.itemDescription + "\n\nจำนวนใช้ได้: " + item.usesLeft;
+            infoText.text = item.itemDescription + "\nจำนวนใช้ได้: " + item.usesLeft;
 
         if (itemImage != null)
         {
