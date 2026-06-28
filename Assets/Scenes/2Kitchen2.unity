@@ -13554,6 +13554,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5021157603950299104, guid: f9d12290495243843a1b44940085dc20, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1758054510}
+    - targetCorrespondingSourceObject: {fileID: 5021157603950299104, guid: f9d12290495243843a1b44940085dc20, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1758054511}
   m_SourcePrefab: {fileID: -4161369568681901532, guid: f9d12290495243843a1b44940085dc20, type: 3}
 --- !u!1 &1758054508 stripped
 GameObject:
@@ -13580,12 +13583,31 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8922812, y: 0.99999994, z: 0.9720394}
-  m_Center: {x: -0.11020314, y: 0, z: -0.030609567}
+  m_Size: {x: 1.9677252, y: 0.99999994, z: 0.9720394}
+  m_Center: {x: 0.42751884, y: 0, z: -0.030609567}
+--- !u!114 &1758054511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758054508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6219b7ef170ad4eab7e492968b0478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: "\u0E22\u0E32\u0E44\u0E25\u0E48\u0E41\u0E21\u0E25\u0E07"
+  itemDescription: "\u0E1B\u0E49\u0E2D\u0E07\u0E01\u0E31\u0E19\u0E41\u0E21\u0E25\u0E07\u0E41\u0E25\u0E30\u0E01\u0E33\u0E08\u0E31\u0E14\u0E41\u0E21\u0E25\u0E07"
+  itemSprite: {fileID: 0}
+  maxUses: 1
+  isPicked: 0
+  isUsed: 0
+  usesLeft: 0
 --- !u!1001 &1767156367
 PrefabInstance:
   m_ObjectHideFlags: 0

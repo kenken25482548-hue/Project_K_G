@@ -108,6 +108,9 @@ public class CleaningTarget : MonoBehaviour
 
     void ShowWrongPopup()
     {
+        if (wrongPopup != null)
+            wrongPopup.SetActive(true); // ← เพิ่มบรรทัดนี้
+
         if (wrongPopupText != null)
             wrongPopupText.text = "อุปกรณ์ไม่ถูกต้อง\nการลองใช้ครั้งนี้นับจำนวนการใช้\nกด E เพื่อปิด";
 

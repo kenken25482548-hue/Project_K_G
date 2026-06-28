@@ -130,11 +130,13 @@ public class LevelFlowManager : MonoBehaviour
 
         if (nextIndex < SceneManager.sceneCountInBuildSettings)
         {
-            SceneManager.LoadScene(nextIndex);
+            PlayerPrefs.SetInt("NextScene", nextIndex);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("9Loadingscene9");
         }
         else
         {
-            Debug.Log("ไม่มีด่านถัดไปแล้ว");
+            SceneManager.LoadScene("Credits"); // ← ตรงนี้ต้องตรงกับชื่อใน Build Profiles
         }
     }
 
