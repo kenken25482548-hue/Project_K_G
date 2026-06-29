@@ -17,6 +17,10 @@ public class MainMenuUI : MonoBehaviour
 
     void Start()
     {
+        // ปลดล็อก Cursor ทุกครั้งที่เข้า MainMenu
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         audioSource = GetComponent<AudioSource>();
 
         // เปิดเพลง BGM

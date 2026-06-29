@@ -4978,8 +4978,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.7969973, y: 3.4236653, z: 2.532946}
-  m_Center: {x: -0.3371349, y: 0.08764856, z: 0.55647504}
+  m_Size: {x: 3.7969973, y: 3.4236653, z: 3.2271154}
+  m_Center: {x: -0.3371349, y: 0.08764856, z: 0.9035618}
 --- !u!114 &10821121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4992,9 +4992,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c7568582292dc4484d03b0cd13168c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CleaningTarget
-  stainName: 
-  stainDescription: 
-  requiredItemName: 
+  stainName: "\u0E04\u0E23\u0E32\u0E1A\u0E19\u0E49\u0E33\u0E2D\u0E31\u0E14\u0E25\u0E21"
+  stainDescription: "\u0E04\u0E23\u0E32\u0E1A\u0E08\u0E32\u0E01\u0E19\u0E49\u0E33\u0E2D\u0E31\u0E14\u0E25\u0E21\u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E14\u0E37\u0E48\u0E21\u0E17\u0E35\u0E48\u0E21\u0E35\u0E19\u0E49\u0E33\u0E15\u0E32\u0E25
+    \u0E40\u0E21\u0E37\u0E48\u0E2D\u0E41\u0E2B\u0E49\u0E07\u0E08\u0E30\u0E40\u0E01\u0E34\u0E14\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2B\u0E19\u0E35\u0E22\u0E27\u0E41\u0E25\u0E30\u0E14\u0E31\u0E01\u0E08\u0E31\u0E1A\u0E1D\u0E38\u0E48\u0E19"
+  requiredItemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E16\u0E39\u0E1E\u0E37\u0E49\u0E19"
   wrongPopup: {fileID: 878454557}
   wrongPopupText: {fileID: 878454556}
   dirtObject: {fileID: 10821116}
@@ -5227,9 +5228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c7568582292dc4484d03b0cd13168c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CleaningTarget
-  stainName: 
-  stainDescription: 
-  requiredItemName: 
+  stainName: "\u0E04\u0E23\u0E32\u0E1A\u0E19\u0E49\u0E33\u0E25\u0E32\u0E22"
+  stainDescription: "\u0E04\u0E23\u0E32\u0E1A\u0E17\u0E35\u0E48\u0E40\u0E01\u0E34\u0E14\u0E08\u0E32\u0E01\u0E19\u0E49\u0E33\u0E25\u0E32\u0E22\u0E02\u0E2D\u0E07\u0E04\u0E19\u0E2B\u0E23\u0E37\u0E2D\u0E2A\u0E31\u0E15\u0E27\u0E4C\u0E40\u0E25\u0E35\u0E49\u0E22\u0E07
+    \u0E2B\u0E32\u0E01\u0E1B\u0E25\u0E48\u0E2D\u0E22\u0E17\u0E34\u0E49\u0E07\u0E44\u0E27\u0E49\u0E2D\u0E32\u0E08\u0E2A\u0E30\u0E2A\u0E21\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E41\u0E25\u0E30\u0E2A\u0E48\u0E07\u0E01\u0E25\u0E34\u0E48\u0E19\u0E44\u0E21\u0E48\u0E1E\u0E36\u0E07\u0E1B\u0E23\u0E30\u0E2A\u0E07\u0E04\u0E4C"
+  requiredItemName: "\u0E19\u0E49\u0E33"
   wrongPopup: {fileID: 878454557}
   wrongPopupText: {fileID: 878454556}
   dirtObject: {fileID: 55395060}
@@ -5240,6 +5242,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4860276692040879404, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
   m_PrefabInstance: {fileID: 1791180265}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &59226659
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1791180268}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.021202445
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.06999999
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.020985365
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_Name
+      value: tripo_convert_af3a1051-f226-402d-972d-c2d61be3bd5b (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
 --- !u!1 &97170327
 GameObject:
   m_ObjectHideFlags: 0
@@ -5474,10 +5537,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6219b7ef170ad4eab7e492968b0478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: 
-  itemDescription: 
-  itemSprite: {fileID: 0}
-  maxUses: 1
+  itemName: "\u0E19\u0E49\u0E33"
+  itemDescription: "\u0E19\u0E49\u0E33\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E25\u0E49\u0E32\u0E07\u0E04\u0E23\u0E32\u0E1A\u0E17\u0E31\u0E48\u0E27\u0E44\u0E1B
+    \u0E40\u0E0A\u0E48\u0E19 \u0E1D\u0E38\u0E48\u0E19 \u0E04\u0E23\u0E32\u0E1A\u0E19\u0E49\u0E33
+    \u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E2A\u0E01\u0E1B\u0E23\u0E01\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E1D\u0E31\u0E07\u0E41\u0E19\u0E48\u0E19"
+  itemSprite: {fileID: 21300000, guid: e39d1bb586c778e47a4e9e7523d7557a, type: 3}
+  maxUses: 2
   isPicked: 0
   isUsed: 0
   usesLeft: 0
@@ -5837,6 +5902,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 538304155828260665, guid: 13cbe1e75a1337c42bf62efe533d0ff9, type: 3}
+--- !u!4 &315769245 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+  m_PrefabInstance: {fileID: 59226659}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &353029176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6065,7 +6135,7 @@ PrefabInstance:
     - target: {fileID: 8133640495144411851, guid: ec5561f24503281488ea363e33cba3cf, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 86cf2635909a42d4596f5fe8b7148232, type: 2}
+      objectReference: {fileID: 2100000, guid: 7b44720da8fe15c43b441036354b68c8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6143,7 +6213,7 @@ PrefabInstance:
     - target: {fileID: 8133640495144411851, guid: ec5561f24503281488ea363e33cba3cf, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 86cf2635909a42d4596f5fe8b7148232, type: 2}
+      objectReference: {fileID: 2100000, guid: 85888ac398a9f3445bab53d9df9e5ced, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6625,10 +6695,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6219b7ef170ad4eab7e492968b0478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: 
-  itemDescription: 
-  itemSprite: {fileID: 0}
-  maxUses: 1
+  itemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E16\u0E39\u0E1E\u0E37\u0E49\u0E19"
+  itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E1E\u0E37\u0E49\u0E19\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E2A\u0E01\u0E1B\u0E23\u0E01\u0E04\u0E23\u0E32\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E40\u0E2B\u0E19\u0E35\u0E22\u0E27"
+  itemSprite: {fileID: 21300000, guid: af72077f8a6a8d14aa6af82996d70725, type: 3}
+  maxUses: 3
   isPicked: 0
   isUsed: 0
   usesLeft: 0
@@ -6884,9 +6954,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6219b7ef170ad4eab7e492968b0478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: 
-  itemDescription: 
-  itemSprite: {fileID: 0}
+  itemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E1F\u0E2D\u0E01\u0E02\u0E32\u0E27"
+  itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E1B\u0E23\u0E30\u0E2A\u0E34\u0E17\u0E18\u0E34\u0E20\u0E32\u0E1E\u0E2A\u0E39\u0E07\u0E43\u0E0A\u0E49\u0E01\u0E33\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E40\u0E2B\u0E25\u0E37\u0E2D\u0E07"
+  itemSprite: {fileID: 21300000, guid: e2049b3ee671ae343be3ab937eebc1e8, type: 3}
   maxUses: 1
   isPicked: 0
   isUsed: 0
@@ -16600,9 +16670,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c7568582292dc4484d03b0cd13168c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CleaningTarget
-  stainName: 
-  stainDescription: 
-  requiredItemName: 
+  stainName: "\u0E04\u0E23\u0E32\u0E1A\u0E1B\u0E31\u0E2A\u0E32\u0E27\u0E30\u0E2A\u0E38\u0E19\u0E31\u0E02"
+  stainDescription: "\u0E04\u0E23\u0E32\u0E1A\u0E17\u0E35\u0E48\u0E40\u0E01\u0E34\u0E14\u0E08\u0E32\u0E01\u0E1B\u0E31\u0E2A\u0E2A\u0E32\u0E27\u0E30\u0E02\u0E2D\u0E07\u0E2A\u0E38\u0E19\u0E31\u0E02
+    \u0E2D\u0E32\u0E08\u0E2A\u0E48\u0E07\u0E01\u0E25\u0E34\u0E48\u0E19\u0E44\u0E21\u0E48\u0E1E\u0E36\u0E07\u0E1B\u0E23\u0E30\u0E2A\u0E07\u0E04\u0E4C\u0E41\u0E25\u0E30\u0E40\u0E1B\u0E47\u0E19\u0E41\u0E2B\u0E25\u0E48\u0E07\u0E2A\u0E30\u0E2A\u0E21\u0E02\u0E2D\u0E07\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04"
+  requiredItemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E16\u0E39\u0E1E\u0E37\u0E49\u0E19"
   wrongPopup: {fileID: 878454557}
   wrongPopupText: {fileID: 878454556}
   dirtObject: {fileID: 877431543}
@@ -16656,9 +16727,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5117707677837205586, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 5117707677837205586, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 5407971000893356176, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5486476249735062042, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 21583e98a2dfe784fa79f5b9e9bb189e, type: 3}
+    - target: {fileID: 6050198486560607524, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 600
+      objectReference: {fileID: 0}
     - target: {fileID: 6050614670818498740, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
       propertyPath: m_Name
       value: UI_System (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681722025204662245, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: ed550dd6649fa1e49942b8cf36f7b5dd, type: 3}
+    - target: {fileID: 7942205809769247825, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8580842374542277238, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827142318708543365, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16998,9 +17105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c7568582292dc4484d03b0cd13168c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CleaningTarget
-  stainName: 
-  stainDescription: 
-  requiredItemName: 
+  stainName: "\u0E04\u0E23\u0E32\u0E1A\u0E19\u0E49\u0E33\u0E2B\u0E01\u0E1A\u0E19\u0E42\u0E15\u0E4A\u0E30"
+  stainDescription: "\u0E04\u0E23\u0E32\u0E1A\u0E08\u0E32\u0E01\u0E19\u0E49\u0E33\u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E14\u0E37\u0E48\u0E21\u0E17\u0E35\u0E48\u0E2B\u0E01\u0E1A\u0E19\u0E42\u0E15\u0E4A\u0E30
+    \u0E2B\u0E32\u0E01\u0E1B\u0E25\u0E48\u0E2D\u0E22\u0E17\u0E34\u0E49\u0E07\u0E44\u0E27\u0E49\u0E2D\u0E32\u0E08\u0E17\u0E33\u0E43\u0E2B\u0E49\u0E40\u0E01\u0E34\u0E14\u0E23\u0E2D\u0E22\u0E14\u0E48\u0E32\u0E07
+    \u0E04\u0E27\u0E32\u0E21\u0E0A\u0E37\u0E49\u0E19 "
+  requiredItemName: "\u0E19\u0E49\u0E33"
   wrongPopup: {fileID: 878454557}
   wrongPopupText: {fileID: 878454556}
   dirtObject: {fileID: 885466630}
@@ -17653,9 +17762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6219b7ef170ad4eab7e492968b0478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: 
-  itemDescription: 
-  itemSprite: {fileID: 0}
+  itemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E40\u0E0A\u0E47\u0E14\u0E01\u0E23\u0E30\u0E08\u0E01"
+  itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E39\u0E15\u0E23\u0E1E\u0E34\u0E40\u0E28\u0E29\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E01\u0E23\u0E30\u0E08\u0E01\u0E0A\u0E48\u0E27\u0E22\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E23\u0E2D\u0E22\u0E19\u0E34\u0E49\u0E27\u0E21\u0E37\u0E2D\u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E19\u0E49\u0E33 "
+  itemSprite: {fileID: 21300000, guid: 0bd740a6b8e0be3439548aac1865a66b, type: 3}
   maxUses: 1
   isPicked: 0
   isUsed: 0
@@ -23285,8 +23394,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.4087625, y: 6.2640953, z: 2.4569278}
-  m_Center: {x: -0.19689491, y: 0.23077124, z: 0.5184663}
+  m_Size: {x: 5.4087625, y: 6.2640953, z: 4.5727625}
+  m_Center: {x: -0.19689491, y: 0.23077124, z: 1.5763868}
 --- !u!114 &1519330665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23299,9 +23408,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c7568582292dc4484d03b0cd13168c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CleaningTarget
-  stainName: 
-  stainDescription: 
-  requiredItemName: 
+  stainName: "\u0E04\u0E23\u0E32\u0E1A\u0E1D\u0E38\u0E48\u0E19\u0E1A\u0E19\u0E1E\u0E37\u0E49\u0E19"
+  stainDescription: "\u0E1D\u0E38\u0E48\u0E19\u0E25\u0E30\u0E2D\u0E2D\u0E07\u0E17\u0E35\u0E48\u0E2A\u0E30\u0E2A\u0E21\u0E1A\u0E19\u0E1E\u0E37\u0E49\u0E19\u0E08\u0E32\u0E01\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E43\u0E19\u0E0A\u0E35\u0E27\u0E34\u0E15\u0E1B\u0E23\u0E30\u0E08\u0E33\u0E27\u0E31\u0E19
+    \u0E2A\u0E01\u0E1B\u0E23\u0E01 \u0E41\u0E25\u0E30\u0E2D\u0E32\u0E08\u0E01\u0E48\u0E2D\u0E43\u0E2B\u0E49\u0E40\u0E01\u0E34\u0E14\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E41\u0E1E\u0E49\u0E2B\u0E32\u0E01\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E23\u0E31\u0E1A\u0E01\u0E32\u0E23\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E40\u0E1B\u0E47\u0E19\u0E1B\u0E23\u0E30\u0E08\u0E33"
+  requiredItemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E16\u0E39\u0E1E\u0E37\u0E49\u0E19"
   wrongPopup: {fileID: 878454557}
   wrongPopupText: {fileID: 878454556}
   dirtObject: {fileID: 1519330660}
@@ -28864,6 +28974,10 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 56781202}
+    - target: {fileID: 399479471021781064, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 974238578668270715, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
       propertyPath: GroundLayers.m_Bits
       value: 1
@@ -28932,13 +29046,20 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -1.7788
       objectReference: {fileID: 0}
+    - target: {fileID: 5777780407979046064, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
     - target: {fileID: 8047161636021232021, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
       propertyPath: m_Name
       value: NestedParentArmature_Unpack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 490576248761790154, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 315769245}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 974238578668270704, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
       insertIndex: -1
@@ -28977,6 +29098,11 @@ MonoBehaviour:
   usesText: {fileID: 878454555}
   inventoryUI: {fileID: 878454568}
   inventorySize: 5
+--- !u!4 &1791180268 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 490576248761790154, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+  m_PrefabInstance: {fileID: 1791180265}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1795632025
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29230,7 +29356,7 @@ PrefabInstance:
     - target: {fileID: 8133640495144411851, guid: ec5561f24503281488ea363e33cba3cf, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 86cf2635909a42d4596f5fe8b7148232, type: 2}
+      objectReference: {fileID: 2100000, guid: 85888ac398a9f3445bab53d9df9e5ced, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29736,7 +29862,7 @@ PrefabInstance:
     - target: {fileID: 8133640495144411851, guid: ec5561f24503281488ea363e33cba3cf, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 86cf2635909a42d4596f5fe8b7148232, type: 2}
+      objectReference: {fileID: 2100000, guid: 7b44720da8fe15c43b441036354b68c8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

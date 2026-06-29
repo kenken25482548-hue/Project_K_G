@@ -8806,7 +8806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19"
   itemDescription: "\u0E43\u0E0A\u0E49\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E19\u0E49\u0E33\u0E21\u0E31\u0E19\u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19\u0E2A\u0E30\u0E2A\u0E21\u0E1A\u0E19\u0E1E\u0E37\u0E49\u0E19\u0E1C\u0E34\u0E27\u0E43\u0E19\u0E04\u0E23\u0E31\u0E27\u0E44\u0E14\u0E49\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E21\u0E35\u0E1B\u0E23\u0E30\u0E2A\u0E34\u0E17\u0E18\u0E34\u0E20\u0E32\u0E1E"
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: d3d925e9fd2de6d4083f575d261582e0, type: 3}
   maxUses: 3
   isPicked: 0
   isUsed: 0
@@ -9344,7 +9344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E19\u0E49\u0E33\u0E15\u0E32\u0E25"
   itemDescription: "\u0E27\u0E31\u0E15\u0E16\u0E38\u0E14\u0E34\u0E1A\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E44\u0E21\u0E48\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E01\u0E31\u0E1A\u0E01\u0E32\u0E23\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E2A\u0E01\u0E1B\u0E23\u0E01"
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 5a4d8b109fbc4a14a8e5ff9e4cbf616f, type: 3}
   maxUses: 1
   isPicked: 0
   isUsed: 0
@@ -9983,6 +9983,72 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 731816445588782719, guid: a651fa2b8ba9c2f4783e8e0f58c7eac6, type: 3}
+--- !u!1001 &1148569681
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1568861528}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.019563079
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.010642052
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_Name
+      value: tripo_convert_af3a1051-f226-402d-972d-c2d61be3bd5b (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+--- !u!4 &1148569682 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+  m_PrefabInstance: {fileID: 1148569681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1153301477
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12484,6 +12550,10 @@ PrefabInstance:
       propertyPath: Target.CustomLookAtTarget
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 399479471021781064, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 974238578668270715, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
       propertyPath: GroundLayers.m_Bits
       value: 1
@@ -12580,6 +12650,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.90999985
       objectReference: {fileID: 0}
+    - target: {fileID: 5777780407979046064, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
     - target: {fileID: 8047161636021232021, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
       propertyPath: m_Name
       value: NestedParentArmature_Unpack
@@ -12588,7 +12662,10 @@ PrefabInstance:
     - {fileID: 3203261902030644825, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
     - {fileID: 3956721139175848739, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 490576248761790154, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1148569682}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5542111180780342642, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
       insertIndex: -1
@@ -12600,6 +12677,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1528655660}
   m_SourcePrefab: {fileID: 100100000, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+--- !u!4 &1568861528 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 490576248761790154, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
+  m_PrefabInstance: {fileID: 1568861527}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1575054459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12954,7 +13036,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E25\u0E49\u0E32\u0E07\u0E08\u0E32\u0E19"
   itemDescription: "\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E25\u0E49\u0E32\u0E07\u0E04\u0E23\u0E32\u0E1A\u0E21\u0E31\u0E19\u0E41\u0E25\u0E30\u0E2A\u0E34\u0E48\u0E07\u0E2A\u0E01\u0E1B\u0E23\u0E01\u0E1A\u0E19\u0E20\u0E32\u0E0A\u0E19\u0E30\u0E2B\u0E23\u0E37\u0E2D\u0E1E\u0E37\u0E49\u0E19\u0E1C\u0E34\u0E27\u0E04\u0E23\u0E31\u0E27\u0E1A\u0E32\u0E07\u0E1B\u0E23\u0E30\u0E40\u0E20\u0E17"
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: b9554712cea235949b04bbc6c6b5ec96, type: 3}
   maxUses: 1
   isPicked: 0
   isUsed: 0
@@ -13205,7 +13287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E19\u0E49\u0E33"
   itemDescription: "\u0E43\u0E0A\u0E49\u0E25\u0E49\u0E32\u0E07\u0E04\u0E23\u0E32\u0E1A\u0E17\u0E31\u0E48\u0E27\u0E44\u0E1B\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E1D\u0E31\u0E07\u0E41\u0E19\u0E48\u0E19\u0E1A\u0E19\u0E1E\u0E37\u0E49\u0E19\u0E1C\u0E34\u0E27\u0E15\u0E48\u0E32\u0E07\u0E46"
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: e39d1bb586c778e47a4e9e7523d7557a, type: 3}
   maxUses: 2
   isPicked: 0
   isUsed: 0
@@ -13603,7 +13685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E22\u0E32\u0E44\u0E25\u0E48\u0E41\u0E21\u0E25\u0E07"
   itemDescription: "\u0E1B\u0E49\u0E2D\u0E07\u0E01\u0E31\u0E19\u0E41\u0E21\u0E25\u0E07\u0E41\u0E25\u0E30\u0E01\u0E33\u0E08\u0E31\u0E14\u0E41\u0E21\u0E25\u0E07"
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: b7b8f6531c5798245926859ee2a45564, type: 3}
   maxUses: 1
   isPicked: 0
   isUsed: 0
@@ -13656,6 +13738,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5407971000893356176, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5486476249735062042, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 21583e98a2dfe784fa79f5b9e9bb189e, type: 3}
     - target: {fileID: 5670068140347497345, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
       propertyPath: m_SizeDelta.x
       value: 350
@@ -13671,6 +13761,14 @@ PrefabInstance:
     - target: {fileID: 6050614670818498740, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
       propertyPath: m_Name
       value: UI_System (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681722025204662245, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: f0b4cfa9040573141a184e3c43a1cd05, type: 3}
+    - target: {fileID: 7942205809769247825, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

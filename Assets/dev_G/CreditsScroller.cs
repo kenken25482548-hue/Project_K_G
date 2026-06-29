@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
 
 public class CreditsScroller : MonoBehaviour
 {
@@ -15,6 +14,10 @@ public class CreditsScroller : MonoBehaviour
 
     void Start()
     {
+        // ปลดล็อก Cursor ตั้งแต่เข้าหน้า Credits
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         if (backButton != null)
             backButton.onClick.AddListener(GoToMainMenu);
     }
@@ -33,6 +36,8 @@ public class CreditsScroller : MonoBehaviour
 
     void GoToMainMenu()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene("0Mainmenu0");
     }
 }
