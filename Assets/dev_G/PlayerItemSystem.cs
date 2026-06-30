@@ -183,14 +183,14 @@ public class PlayerItemSystem : MonoBehaviour
 
             if (!focusedCleaningTarget.isDiscovered)
             {
-                interactText.text = "[E] อ่านข้อมูลคราบ";
+                interactText.text = "[E] สังเกตุคราบสกปรก";
             }
             else
             {
                 if (item != null)
-                    interactText.text = "[F] ใช้ " + item.itemName + "\n[E] อ่านข้อมูลคราบ";
+                    interactText.text = "[F] ใช้ " + item.itemName + "\n[E] สังเกตุคราบสกปรก";
                 else
-                    interactText.text = "[E] อ่านข้อมูลคราบ";
+                    interactText.text = "[E] สังเกตุคราบสกปรก";
             }
 
             return;
@@ -206,7 +206,7 @@ public class PlayerItemSystem : MonoBehaviour
         if (focusedCleaningTarget != null && !focusedCleaningTarget.isCleared)
         {
             interactUI.SetActive(true);
-            interactText.text = "[E] อ่านข้อมูลคราบ";
+            interactText.text = "[E] สังเกตุคราบสกปรก";
         }
         else
         {

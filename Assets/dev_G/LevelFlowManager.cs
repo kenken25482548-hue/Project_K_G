@@ -102,7 +102,7 @@ public class LevelFlowManager : MonoBehaviour
             levelFailPanel.SetActive(true);
 
         if (failSubText != null)
-            failSubText.text = "ภารกิจไม่สำเร็จ\nล้างคราบได้ " + clearedCount + " / " + totalCount + "\nไอเทมหมดแล้ว\n\nกด R เพื่อเริ่มใหม่";
+            failSubText.text = "ภารกิจไม่สำเร็จ\nล้างคราบได้ " + clearedCount + " / " + totalCount + "\nไอเทมหมดแล้ว\nกด R เพื่อเริ่มใหม่";
 
         GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.failSfx : null, 1f);
     }

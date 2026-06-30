@@ -1885,6 +1885,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 554704163018715480, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1178566907247704667, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1178566907247704667, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.47058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 1178566907247704667, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1847573540711847067, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 2772822376523998882, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.91819
@@ -1931,7 +1951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5117707677837205586, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 250
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5407971000893356176, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -1941,6 +1961,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 21583e98a2dfe784fa79f5b9e9bb189e, type: 3}
+    - target: {fileID: 5670068140347497345, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 440
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670068140347497345, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670068140347497345, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670068140347497345, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -29
+      objectReference: {fileID: 0}
     - target: {fileID: 6050614670818498740, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
       propertyPath: m_Name
       value: UI_System (1)
@@ -1960,6 +1996,10 @@ PrefabInstance:
     - target: {fileID: 8497868593110909785, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
       propertyPath: m_fontSizeBase
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8580842374542277238, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 8580842374542277238, guid: 292daa37e0ebd0f42b64e1494039d5af, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3997,7 +4037,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E19\u0E49\u0E33\u0E21\u0E31\u0E19"
-  itemDescription: "\u0E43\u0E0A\u0E49\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23"
+  itemDescription: "\u0E44\u0E21\u0E48\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E01\u0E31\u0E1A\u0E01\u0E32\u0E23\u0E25\u0E49\u0E32\u0E07\u0E04\u0E23\u0E32\u0E1A\u0E17\u0E31\u0E48\u0E27\u0E44\u0E1B
+    \u0E04\u0E27\u0E23\u0E43\u0E0A\u0E49\u0E01\u0E31\u0E1A\u0E07\u0E32\u0E19\u0E40\u0E09\u0E1E\u0E32\u0E30\u0E17\u0E32\u0E07\u0E40\u0E17\u0E48\u0E32\u0E19\u0E31\u0E49\u0E19"
   itemSprite: {fileID: 21300000, guid: cd5ef88fe9c38b642bc0a3259e69c49d, type: 3}
   maxUses: 1
   isPicked: 0
@@ -6156,7 +6197,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E40\u0E0A\u0E47\u0E14\u0E01\u0E23\u0E30\u0E08\u0E01"
-  itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E39\u0E15\u0E23\u0E1E\u0E34\u0E40\u0E28\u0E29\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E01\u0E23\u0E30\u0E08\u0E01\u0E0A\u0E48\u0E27\u0E22\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E23\u0E2D\u0E22\u0E19\u0E34\u0E49\u0E27\u0E21\u0E37\u0E2D\u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E19\u0E49\u0E33"
+  itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E39\u0E15\u0E23\u0E1E\u0E34\u0E40\u0E28\u0E29\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E01\u0E23\u0E30\u0E08\u0E01\u0E0A\u0E48\u0E27\u0E22
+    \u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E23\u0E2D\u0E22\u0E19\u0E34\u0E49\u0E27\u0E21\u0E37\u0E2D\u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E19\u0E49\u0E33"
   itemSprite: {fileID: 21300000, guid: 0bd740a6b8e0be3439548aac1865a66b, type: 3}
   maxUses: 2
   isPicked: 0
