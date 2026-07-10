@@ -168,7 +168,7 @@ public class PlayerItemSystem : MonoBehaviour
             interactUI.SetActive(true);
 
             if (CleaningTarget.inspectedStains < CleaningTarget.totalStains)
-                interactText.text = "ตรวจคราบให้ครบก่อน!";
+                interactText.text = "สำรวจสิ่งสกปรกให้ครบก่อน!";
             else
                 interactText.text = "[F] หยิบไอเทม\n[E] ดูข้อมูล";
 
