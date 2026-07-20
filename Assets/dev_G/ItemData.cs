@@ -44,6 +44,10 @@ public class ItemData : MonoBehaviour
 
         isPicked = true;
 
+        InteractionZone interactionZone = GetComponent<InteractionZone>();
+        if (interactionZone != null)
+            interactionZone.DisableZone();
+
         foreach (Renderer r in renderers)
             r.enabled = false;
 

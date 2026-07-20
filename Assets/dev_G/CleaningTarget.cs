@@ -91,11 +91,16 @@ public class CleaningTarget : MonoBehaviour
         {
             isCleared = true;
 
-            if (dirtObject != null)
-                dirtObject.SetActive(false);
+            HideDirtVisual();
+
+            InteractionZone interactionZone = GetComponent<InteractionZone>();
+            if (interactionZone != null)
+                interactionZone.DisableZone();
 
             GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.correctUseSfx : null, 1f);
-            CloseWrongPopup();
+
+            if (popupOpen)
+                CloseWrongPopup();
         }
         else
         {
@@ -104,6 +109,32 @@ public class CleaningTarget : MonoBehaviour
         }
 
         return true;
+    }
+
+    void HideDirtVisual()
+    {
+        if (dirtObject == null)
+            return;
+
+        if (dirtObject != gameObject)
+        {
+            dirtObject.SetActive(false);
+            return;
+        }
+
+        Renderer[] dirtRenderers = dirtObject.GetComponentsInChildren<Renderer>(true);
+        for (int i = 0; i < dirtRenderers.Length; i++)
+            dirtRenderers[i].enabled = false;
+
+        ParticleSystem[] dirtParticles = dirtObject.GetComponentsInChildren<ParticleSystem>(true);
+        for (int i = 0; i < dirtParticles.Length; i++)
+            dirtParticles[i].Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        UnityEngine.Rendering.Universal.DecalProjector[] dirtDecals =
+            dirtObject.GetComponentsInChildren<UnityEngine.Rendering.Universal.DecalProjector>(true);
+
+        for (int i = 0; i < dirtDecals.Length; i++)
+            dirtDecals[i].enabled = false;
     }
 
     void ShowWrongPopup()

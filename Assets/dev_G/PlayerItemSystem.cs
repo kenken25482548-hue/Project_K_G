@@ -124,6 +124,9 @@ public class PlayerItemSystem : MonoBehaviour
         focusedItem = null;
         focusedCleaningTarget = null;
 
+        if (FocusNearestInteractionZone())
+            return;
+
         if (raycastCamera == null)
             return;
 
@@ -142,6 +145,10 @@ public class PlayerItemSystem : MonoBehaviour
             if (hit.collider.transform.root == transform.root)
                 continue;
 
+            InteractionZone interactionZone = hit.collider.GetComponentInParent<InteractionZone>();
+            if (interactionZone != null && !interactionZone.IsPlayerInside)
+                continue;
+
             ItemData item = hit.collider.GetComponentInParent<ItemData>();
             if (item != null && !item.isPicked && !item.isUsed)
             {
@@ -156,6 +163,40 @@ public class PlayerItemSystem : MonoBehaviour
                 return;
             }
         }
+    }
+
+    bool FocusNearestInteractionZone()
+    {
+        InteractionZone[] zones = FindObjectsOfType<InteractionZone>();
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < zones.Length; i++)
+        {
+            InteractionZone zone = zones[i];
+            if (zone == null || !zone.IsPlayerInside) continue;
+
+            float distance = Vector3.SqrMagnitude(zone.transform.position - transform.position);
+            if (distance >= closestDistance) continue;
+
+            ItemData item = zone.GetComponentInParent<ItemData>();
+            if (item != null && !item.isPicked && !item.isUsed)
+            {
+                closestDistance = distance;
+                focusedItem = item;
+                focusedCleaningTarget = null;
+                continue;
+            }
+
+            CleaningTarget stain = zone.GetComponentInParent<CleaningTarget>();
+            if (stain != null && !stain.isCleared)
+            {
+                closestDistance = distance;
+                focusedCleaningTarget = stain;
+                focusedItem = null;
+            }
+        }
+
+        return focusedItem != null || focusedCleaningTarget != null;
     }
 
     void UpdateInteractUI()

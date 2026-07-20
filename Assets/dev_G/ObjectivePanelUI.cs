@@ -38,13 +38,13 @@ public class ObjectivePanelUI : MonoBehaviour
 
     void RefreshStainList()
     {
-        stains = FindObjectsOfType<CleaningTarget>(true);
+        stains = FindObjectsOfType<CleaningTarget>();
     }
 
     void UpdateObjectiveUI()
     {
-        int total = CleaningTarget.totalStains;
-        int inspected = CleaningTarget.inspectedStains;
+        int total = stains != null ? stains.Length : 0;
+        int inspected = GetInspectedCount();
         int cleared = GetClearedCount();
 
         bool allInspected = total > 0 && inspected >= total;
@@ -94,6 +94,21 @@ public class ObjectivePanelUI : MonoBehaviour
             {
                 count++;
             }
+        }
+
+        return count;
+    }
+
+    int GetInspectedCount()
+    {
+        int count = 0;
+
+        if (stains == null) return 0;
+
+        for (int i = 0; i < stains.Length; i++)
+        {
+            if (stains[i] != null && stains[i].isDiscovered)
+                count++;
         }
 
         return count;
