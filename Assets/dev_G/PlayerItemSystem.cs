@@ -67,6 +67,11 @@ public class PlayerItemSystem : MonoBehaviour
         DetectObject();
         UpdateUsesUI();
 
+        if ((itemInfoOpen || stainInfoOpen) && focusedItem == null && focusedCleaningTarget == null)
+        {
+            CloseAllPanels();
+        }
+
         if (focusedCleaningTarget != null && focusedCleaningTarget.IsWrongPopupOpen)
         {
             if (interactUI != null)
@@ -146,7 +151,7 @@ public class PlayerItemSystem : MonoBehaviour
                 continue;
 
             InteractionZone interactionZone = hit.collider.GetComponentInParent<InteractionZone>();
-            if (interactionZone != null && !interactionZone.IsPlayerInside)
+            if (interactionZone != null && !interactionZone.IsPositionInside(transform.position))
                 continue;
 
             ItemData item = hit.collider.GetComponentInParent<ItemData>();
@@ -173,7 +178,7 @@ public class PlayerItemSystem : MonoBehaviour
         for (int i = 0; i < zones.Length; i++)
         {
             InteractionZone zone = zones[i];
-            if (zone == null || !zone.IsPlayerInside) continue;
+            if (zone == null || !zone.IsPositionInside(transform.position)) continue;
 
             float distance = Vector3.SqrMagnitude(zone.transform.position - transform.position);
             if (distance >= closestDistance) continue;
