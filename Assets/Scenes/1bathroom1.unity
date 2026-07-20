@@ -19354,6 +19354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: tripo_convert_af3a1051-f226-402d-972d-c2d61be3bd5b (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 12d3eb626cf9ac94096bf30964dc4c5f, type: 3}
       propertyPath: m_Controller
       value: 
