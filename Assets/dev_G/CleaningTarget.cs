@@ -113,6 +113,10 @@ public class CleaningTarget : MonoBehaviour
 
     void HideDirtVisual()
     {
+        StainMarkerBlueZone[] stainMarkers = GetComponentsInChildren<StainMarkerBlueZone>(true);
+        for (int i = 0; i < stainMarkers.Length; i++)
+            stainMarkers[i].gameObject.SetActive(false);
+
         if (dirtObject == null)
             return;
 

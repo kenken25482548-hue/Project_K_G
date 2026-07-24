@@ -21,9 +21,9 @@ public sealed class StainMarkerBlueZone : MonoBehaviour
     [SerializeField, Range(0f, 0.2f)] private float innerScalePulse = 0.065f;
 
     [Header("Glow")]
-    [SerializeField, Range(0f, 1f)] private float outerMinimumAlpha = 0.52f;
-    [SerializeField, Range(0f, 1f)] private float innerMinimumAlpha = 0.16f;
-    [SerializeField, Range(0f, 2f)] private float lightPulseAmount = 0.28f;
+    [SerializeField, Range(0f, 1f)] private float outerMinimumAlpha = 0.10f;
+    [SerializeField, Range(0f, 1f)] private float innerMinimumAlpha = 0.02f;
+    [SerializeField, Range(0f, 2f)] private float lightPulseAmount = 0.02f;
 
     private Vector3 outerBaseScale;
     private Vector3 innerBaseScale;

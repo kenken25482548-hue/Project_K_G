@@ -115,7 +115,7 @@ SpriteRenderer:
   m_SortingOrder: 21
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: d71b963c8ef8a1e458fe52f6e6f5de1c, type: 3}
-  m_Color: {r: 0.35, g: 0.72, b: 1, a: 0.3}
+  m_Color: {r: 0.93, g: 0.94, b: 0.95, a: 0.06}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -206,7 +206,7 @@ SpriteRenderer:
   m_SortingOrder: 20
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: d71b963c8ef8a1e458fe52f6e6f5de1c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.82}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.18}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -271,9 +271,9 @@ MonoBehaviour:
   pulseSpeed: 1.35
   outerScalePulse: 0.035
   innerScalePulse: 0.065
-  outerMinimumAlpha: 0.52
-  innerMinimumAlpha: 0.16
-  lightPulseAmount: 0.28
+  outerMinimumAlpha: 0.1
+  innerMinimumAlpha: 0.02
+  lightPulseAmount: 0.02
 --- !u!1 &5713077649346974348
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,9 +316,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 2
-  m_Color: {r: 0.08, g: 0.42, b: 1, a: 1}
-  m_Intensity: 0.72
-  m_Range: 1.45
+  m_Color: {r: 0.86, g: 0.87, b: 0.88, a: 1}
+  m_Intensity: 0.03
+  m_Range: 0.85
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}

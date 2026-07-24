@@ -816,6 +816,10 @@ PrefabInstance:
       propertyPath: radius
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 4263078821475400076, guid: aca0e706d523851439c837e7f63950fc, type: 3}
+      propertyPath: stainEffectOpacity
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -15900,7 +15904,7 @@ MonoBehaviour:
   itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E2A\u0E1A\u0E39\u0E48
     \u0E04\u0E23\u0E32\u0E1A\u0E2B\u0E34\u0E19\u0E1B\u0E39\u0E19 \u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E40\u0E2B\u0E25\u0E37\u0E2D\u0E07\u0E2A\u0E30\u0E2A\u0E21\u0E1A\u0E19\u0E2A\u0E38\u0E02\u0E20\u0E31\u0E13\u0E11\u0E4C"
   itemSprite: {fileID: 21300000, guid: af72077f8a6a8d14aa6af82996d70725, type: 3}
-  maxUses: 2
+  maxUses: 4
   isPicked: 0
   isUsed: 0
   usesLeft: 0
@@ -19315,7 +19319,7 @@ MonoBehaviour:
   itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E23\u0E2D\u0E22\u0E40\u0E17\u0E49\u0E32
     \u0E1D\u0E38\u0E48\u0E19 \u0E40\u0E2A\u0E49\u0E19\u0E1C\u0E21 \u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E2A\u0E01\u0E1B\u0E23\u0E01\u0E17\u0E35\u0E48\u0E2A\u0E30\u0E2A\u0E21\u0E1A\u0E19\u0E1E\u0E37\u0E49\u0E19"
   itemSprite: {fileID: 21300000, guid: af72077f8a6a8d14aa6af82996d70725, type: 3}
-  maxUses: 4
+  maxUses: 2
   isPicked: 0
   isUsed: 0
   usesLeft: 0
