@@ -1,0 +1,158 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &743781154734704291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2194413446830872063}
+  - component: {fileID: 6769568008258089407}
+  - component: {fileID: 2387974457298255339}
+  - component: {fileID: 2664746830233343926}
+  m_Layer: 0
+  m_Name: Stain_Kitchen_BurntGrease_Stove
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2194413446830872063
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743781154734704291}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4559712865459257160}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6769568008258089407
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743781154734704291}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2387974457298255339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743781154734704291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c7568582292dc4484d03b0cd13168c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CleaningTarget
+  stainName: "\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19\u0E44\u0E2B\u0E21\u0E49\u0E40\u0E01\u0E32\u0E30\u0E40\u0E15\u0E32"
+  stainDescription: "\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19\u0E41\u0E25\u0E30\u0E40\u0E28\u0E29\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E44\u0E2B\u0E21\u0E49\u0E15\u0E34\u0E14\u0E41\u0E19\u0E48\u0E19\u0E1A\u0E19\u0E40\u0E15\u0E32
+    \u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E19\u0E49\u0E33\u0E22\u0E32\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19"
+  requiredItemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19"
+  wrongPopup: {fileID: 0}
+  wrongPopupText: {fileID: 0}
+  dirtObject: {fileID: 1667549591713152046}
+  isDiscovered: 0
+  isCleared: 0
+--- !u!114 &2664746830233343926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743781154734704291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8c0de50babcfc4bbbb6622fe2c04df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionZone
+  radius: 1.5
+  visualStyle: 3
+  stainEffectDiameter: 0.75
+  stainEffectHeight: 0.035
+  stainEffectOpacity: 0.9
+  itemBeaconColor: {r: 1, g: 0.82, b: 0.12, a: 0.9}
+  itemBeaconHeight: 1.25
+--- !u!1 &1667549591713152046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4559712865459257160}
+  - component: {fileID: 7095419359215675324}
+  m_Layer: 0
+  m_Name: DecalVisual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4559712865459257160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667549591713152046}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2194413446830872063}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7095419359215675324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667549591713152046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.DecalProjector
+  m_Material: {fileID: 2100000, guid: b1273f8f27becb74394dac342c3b1007, type: 2}
+  m_DrawDistance: 1000
+  m_FadeScale: 0.9
+  m_StartAngleFade: 180
+  m_EndAngleFade: 180
+  m_UVScale: {x: 1, y: 1}
+  m_UVBias: {x: 0, y: 0}
+  m_RenderingLayerMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ScaleMode: 0
+  m_Offset: {x: 0, y: 0, z: 0.5}
+  m_Size: {x: 1.2, y: 1.2, z: 0.18}
+  m_FadeFactor: 0.82
+  version: 1
+  m_DecalLayerMask: 1
