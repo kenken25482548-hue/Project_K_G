@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -18,8 +19,12 @@ public class MainMenuUI : MonoBehaviour
     public AudioClip bgmClip;
 
     private const string PremiumRootName = "AAA_MainMenu";
-    private const string BackgroundResourcePath = "UI/MainMenu_AAA_Background";
-    private const string UiFontResourcePath = "Fonts & Materials/MiPancake SDF";
+    private const string BackgroundResourcePath = "UI/MainMenu_Character_Background";
+    private const string BackgroundVideoResourcePath = "UI/MainMenu_AAA_Background_Animated";
+    private const bool UseAnimatedBackgroundVideo = false;
+    private const string FallbackFontResourcePath = "Fonts & Materials/MiPancake SDF";
+    private const string UiFontResourcePath = "UI/Fonts/Kanit-SemiBold SDF";
+    private const string TitleFontResourcePath = "UI/Fonts/ChakraPetch-Bold SDF";
 
     private readonly Color cyan = new Color(0.25f, 0.80f, 1f, 1f);
     private readonly Color warmWhite = new Color(0.93f, 0.97f, 1f, 1f);
@@ -28,6 +33,7 @@ public class MainMenuUI : MonoBehaviour
 
     private AudioSource audioSource;
     private TMP_FontAsset uiFont;
+    private TMP_FontAsset titleFont;
     private GameObject premiumRoot;
     private GameObject howToPlayPanel;
     private Button startButton;
@@ -42,7 +48,15 @@ public class MainMenuUI : MonoBehaviour
         Cursor.visible = true;
 
         audioSource = GetComponent<AudioSource>();
+        TMP_FontAsset fallbackFont = Resources.Load<TMP_FontAsset>(FallbackFontResourcePath);
         uiFont = Resources.Load<TMP_FontAsset>(UiFontResourcePath);
+        titleFont = Resources.Load<TMP_FontAsset>(TitleFontResourcePath);
+
+        if (uiFont == null)
+            uiFont = fallbackFont;
+
+        if (titleFont == null)
+            titleFont = uiFont;
 
         if (bgmClip != null && audioSource != null)
         {
@@ -138,11 +152,46 @@ public class MainMenuUI : MonoBehaviour
             Debug.LogWarning($"MainMenuUI: ไม่พบภาพ Resources/{BackgroundResourcePath}");
         }
 
+        VideoClip animatedBackground = UseAnimatedBackgroundVideo
+            ? Resources.Load<VideoClip>(BackgroundVideoResourcePath)
+            : null;
+        if (animatedBackground != null)
+        {
+            MainMenuBackgroundVideo videoBackground =
+                backgroundObject.AddComponent<MainMenuBackgroundVideo>();
+            videoBackground.Configure(background, animatedBackground);
+        }
+        else if (UseAnimatedBackgroundVideo)
+        {
+            Debug.LogWarning(
+                $"MainMenuUI: ไม่พบวิดีโอ Resources/{BackgroundVideoResourcePath}");
+        }
+
         GameObject shadeObject = CreateUiObject("CinematicShade", parent);
         Stretch(shadeObject.GetComponent<RectTransform>());
         Image shade = shadeObject.AddComponent<Image>();
         shade.color = new Color(0.005f, 0.012f, 0.025f, 0.16f);
         shade.raycastTarget = false;
+
+        GameObject motionObject = CreateUiObject("CinematicMotion", parent);
+        Stretch(motionObject.GetComponent<RectTransform>());
+
+        GameObject sweepObject = CreateUiObject("MovingLightSweep", motionObject.transform);
+        RectTransform sweepRect = sweepObject.GetComponent<RectTransform>();
+        sweepRect.anchorMin = new Vector2(0f, 0.5f);
+        sweepRect.anchorMax = new Vector2(0f, 0.5f);
+        sweepRect.pivot = new Vector2(0.5f, 0.5f);
+        sweepRect.anchoredPosition = new Vector2(-420f, 0f);
+        sweepRect.sizeDelta = new Vector2(330f, 1450f);
+        sweepRect.localRotation = Quaternion.Euler(0f, 0f, -12f);
+
+        RawImage sweepImage = sweepObject.AddComponent<RawImage>();
+        sweepImage.color = new Color(0.18f, 0.76f, 1f, 0.10f);
+        sweepImage.raycastTarget = false;
+
+        MainMenuBackgroundMotion backgroundMotion =
+            motionObject.AddComponent<MainMenuBackgroundMotion>();
+        backgroundMotion.Configure(background, sweepImage);
     }
 
     void BuildMainPanel(Transform parent)
@@ -154,22 +203,7 @@ public class MainMenuUI : MonoBehaviour
         panelRect.offsetMin = Vector2.zero;
         panelRect.offsetMax = Vector2.zero;
 
-        Image panelImage = leftPanel.AddComponent<Image>();
-        panelImage.color = new Color(0.006f, 0.018f, 0.035f, 0.63f);
-        panelImage.raycastTarget = false;
-
-        GameObject separator = CreateUiObject("PanelSeparator", leftPanel.transform);
-        RectTransform separatorRect = separator.GetComponent<RectTransform>();
-        separatorRect.anchorMin = new Vector2(1f, 0f);
-        separatorRect.anchorMax = new Vector2(1f, 1f);
-        separatorRect.pivot = new Vector2(1f, 0.5f);
-        separatorRect.anchoredPosition = Vector2.zero;
-        separatorRect.sizeDelta = new Vector2(2f, 0f);
-        Image separatorImage = separator.AddComponent<Image>();
-        separatorImage.color = new Color(cyan.r, cyan.g, cyan.b, 0.22f);
-        separatorImage.raycastTarget = false;
-
-        CreateText(
+        TextMeshProUGUI operationLabel = CreateText(
             leftPanel.transform,
             "OperationLabel",
             "CLEANING OPERATIONS  /  01",
@@ -182,67 +216,58 @@ public class MainMenuUI : MonoBehaviour
             TextAlignmentOptions.Left,
             FontStyles.Bold,
             3f);
+        operationLabel.font = titleFont;
 
         TextMeshProUGUI title = CreateText(
             leftPanel.transform,
             "GameTitle",
-            "CLEAN &\nLEARN",
-            76f,
+            "CLEAN & LEARN",
+            72f,
             warmWhite,
             new Vector2(0f, 1f),
             new Vector2(0f, 1f),
             new Vector2(98f, -172f),
-            new Vector2(700f, 190f),
+            new Vector2(740f, 105f),
             TextAlignmentOptions.TopLeft,
             FontStyles.Bold,
             1.5f);
-        title.lineSpacing = -16f;
+        title.font = titleFont;
+        title.enableWordWrapping = false;
 
         CreateText(
             leftPanel.transform,
             "Tagline",
             "สำรวจคราบ  เลือกให้ถูก  แล้วจัดการทุกจุด",
-            25f,
+            23f,
             mutedWhite,
             new Vector2(0f, 1f),
             new Vector2(0f, 1f),
-            new Vector2(104f, -377f),
-            new Vector2(700f, 45f),
+            new Vector2(104f, -292f),
+            new Vector2(730f, 45f),
             TextAlignmentOptions.Left);
-
-        GameObject accentRule = CreateUiObject("AccentRule", leftPanel.transform);
-        RectTransform ruleRect = accentRule.GetComponent<RectTransform>();
-        ruleRect.anchorMin = new Vector2(0f, 1f);
-        ruleRect.anchorMax = new Vector2(0f, 1f);
-        ruleRect.pivot = new Vector2(0f, 1f);
-        ruleRect.anchoredPosition = new Vector2(104f, -433f);
-        ruleRect.sizeDelta = new Vector2(82f, 4f);
-        Image ruleImage = accentRule.AddComponent<Image>();
-        ruleImage.color = cyan;
-        ruleImage.raycastTarget = false;
 
         startButton = CreateMenuButton(
             leftPanel.transform,
             "StartGameButton",
-            "เริ่มภารกิจ",
+            "START MISSION",
             "01",
-            new Vector2(104f, -495f),
+            new Vector2(104f, -375f),
             StartGame);
 
         howToButton = CreateMenuButton(
             leftPanel.transform,
             "HowToPlayButton",
-            "วิธีการเล่น",
+            "HOW TO PLAY",
             "02",
-            new Vector2(104f, -580f),
+            new Vector2(104f, -460f),
             OpenHowToPlay);
 
         CreateMenuButton(
             leftPanel.transform,
             "QuitGameButton",
-            "ออกจากเกม",
+            "QUIT GAME",
             "03",
-            new Vector2(104f, -665f),
+            new Vector2(104f, -545f),
             QuitGame);
 
         CreateText(
@@ -354,6 +379,9 @@ public class MainMenuUI : MonoBehaviour
             TextAlignmentOptions.Left,
             FontStyles.Bold);
         buttonLabel.raycastTarget = false;
+
+        MenuButtonHoverMotion hoverMotion = buttonObject.AddComponent<MenuButtonHoverMotion>();
+        hoverMotion.Configure(new Vector2(16f, 0f), 1.025f, 15f);
 
         return button;
     }
@@ -593,6 +621,9 @@ public class MainMenuUI : MonoBehaviour
             Vector2.zero,
             TextAlignmentOptions.Center,
             FontStyles.Bold);
+
+        MenuButtonHoverMotion hoverMotion = buttonObject.AddComponent<MenuButtonHoverMotion>();
+        hoverMotion.Configure(new Vector2(6f, 0f), 1.035f, 16f);
 
         return button;
     }

@@ -21,6 +21,12 @@ public class ObjectivePanelUI : MonoBehaviour
 
     void Start()
     {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "1bathroom1" &&
+            GetComponent<BathroomHudPolish>() == null)
+        {
+            gameObject.AddComponent<BathroomHudPolish>();
+        }
+
         RefreshStainList();
         UpdateObjectiveUI();
     }

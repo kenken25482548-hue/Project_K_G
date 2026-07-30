@@ -1365,6 +1365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuUI
   firstSceneName: 1bathroom1
+  loadingSceneName: 9Loadingscene9
   hoverSound: {fileID: 8300000, guid: 6383d989f4c349e4dbd7f87d57e8a70c, type: 3}
   clickSound: {fileID: 8300000, guid: f4b363c39a7ff154abc8256199b857e4, type: 3}
   bgmClip: {fileID: 8300000, guid: 44a5fe28c7696d142801ba822fe52730, type: 3}
