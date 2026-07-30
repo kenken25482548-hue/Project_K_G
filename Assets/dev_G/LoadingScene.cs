@@ -1,43 +1,73 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadingScene : MonoBehaviour
 {
+    private const string NextSceneKey = "NextScene";
+    private const int DefaultFirstLevelIndex = 2;
+
     [Header("UI")]
     public Slider loadingBar;
     public TMP_Text loadingText;
 
     void Start()
     {
-        int nextScene = PlayerPrefs.GetInt("NextScene", 2);
+        Time.timeScale = 1f;
+
+        int nextScene = PlayerPrefs.GetInt(NextSceneKey, DefaultFirstLevelIndex);
+
+        if (nextScene < 0 ||
+            nextScene >= SceneManager.sceneCountInBuildSettings ||
+            nextScene == SceneManager.GetActiveScene().buildIndex)
+        {
+            Debug.LogWarning(
+                $"NextScene index {nextScene} ไม่ถูกต้อง ใช้ด่านแรก index {DefaultFirstLevelIndex} แทน");
+            nextScene = DefaultFirstLevelIndex;
+        }
+
+        if (loadingBar != null)
+            loadingBar.value = 0f;
+
+        if (loadingText != null)
+            loadingText.text = "กำลังโหลด... 0%";
+
         StartCoroutine(LoadLevel(nextScene));
     }
 
     IEnumerator LoadLevel(int sceneIndex)
     {
-        AsyncOperation op = SceneManager.LoadSceneAsync(sceneIndex);
-        op.allowSceneActivation = false;
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
 
-        float fakeProgress = 0f;
-
-        while (!op.isDone)
+        if (operation == null)
         {
-            float realProgress = Mathf.Clamp01(op.progress / 0.9f);
-            fakeProgress = Mathf.MoveTowards(fakeProgress, realProgress, Time.deltaTime * 0.5f);
+            Debug.LogError($"ไม่สามารถโหลด Scene index {sceneIndex} ได้");
+            yield break;
+        }
+
+        operation.allowSceneActivation = false;
+        float displayedProgress = 0f;
+
+        while (!operation.isDone)
+        {
+            float realProgress = Mathf.Clamp01(operation.progress / 0.9f);
+            displayedProgress = Mathf.MoveTowards(
+                displayedProgress,
+                realProgress,
+                Time.unscaledDeltaTime * 0.5f);
 
             if (loadingBar != null)
-                loadingBar.value = fakeProgress;
+                loadingBar.value = displayedProgress;
 
             if (loadingText != null)
-                loadingText.text = "กำลังโหลด... " + Mathf.Round(fakeProgress * 100) + "%";
+                loadingText.text = $"กำลังโหลด... {Mathf.RoundToInt(displayedProgress * 100f)}%";
 
-            if (fakeProgress >= 1f)
+            if (displayedProgress >= 1f)
             {
-                yield return new WaitForSeconds(0.5f);
-                op.allowSceneActivation = true;
+                yield return new WaitForSecondsRealtime(0.5f);
+                operation.allowSceneActivation = true;
             }
 
             yield return null;

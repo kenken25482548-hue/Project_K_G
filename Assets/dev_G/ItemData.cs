@@ -21,6 +21,7 @@ public class ItemData : MonoBehaviour
 
     private Collider[] colliders;
     private Renderer[] renderers;
+    private ItemMarkerGoldenOrbit[] itemMarkers;
     private Rigidbody rb;
 
     private Vector3 startPosition;
@@ -30,6 +31,7 @@ public class ItemData : MonoBehaviour
     {
         colliders = GetComponentsInChildren<Collider>(true);
         renderers = GetComponentsInChildren<Renderer>(true);
+        itemMarkers = GetComponentsInChildren<ItemMarkerGoldenOrbit>(true);
         rb = GetComponent<Rigidbody>();
 
         startPosition = transform.position;
@@ -47,6 +49,8 @@ public class ItemData : MonoBehaviour
         InteractionZone interactionZone = GetComponent<InteractionZone>();
         if (interactionZone != null)
             interactionZone.DisableZone();
+
+        SetItemMarkersActive(false);
 
         foreach (Renderer r in renderers)
             r.enabled = false;
@@ -74,6 +78,8 @@ public class ItemData : MonoBehaviour
 
         foreach (Renderer r in renderers)
             r.enabled = true;
+
+        SetItemMarkersActive(true);
 
         foreach (Collider c in colliders)
             c.enabled = true;
@@ -114,5 +120,17 @@ public class ItemData : MonoBehaviour
     public bool HasUsesLeft()
     {
         return !isUsed && usesLeft > 0;
+    }
+
+    private void SetItemMarkersActive(bool active)
+    {
+        if (itemMarkers == null || itemMarkers.Length == 0)
+            itemMarkers = GetComponentsInChildren<ItemMarkerGoldenOrbit>(true);
+
+        foreach (ItemMarkerGoldenOrbit marker in itemMarkers)
+        {
+            if (marker != null)
+                marker.gameObject.SetActive(active);
+        }
     }
 }

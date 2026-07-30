@@ -5212,7 +5212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3543048675319490572, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
       propertyPath: jump
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4753359620310878892, guid: c708a3b79cd542b42bbfedb17e213bc1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -16099,7 +16099,7 @@ MonoBehaviour:
   itemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E25\u0E49\u0E32\u0E07\u0E2B\u0E49\u0E2D\u0E07\u0E19\u0E49\u0E33"
   itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E2A\u0E1A\u0E39\u0E48
     \u0E04\u0E23\u0E32\u0E1A\u0E2B\u0E34\u0E19\u0E1B\u0E39\u0E19 \u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E40\u0E2B\u0E25\u0E37\u0E2D\u0E07\u0E2A\u0E30\u0E2A\u0E21\u0E1A\u0E19\u0E2A\u0E38\u0E02\u0E20\u0E31\u0E13\u0E11\u0E4C"
-  itemSprite: {fileID: 21300000, guid: af72077f8a6a8d14aa6af82996d70725, type: 3}
+  itemSprite: {fileID: 21300000, guid: e40f16a37ccc0114882f1236896f1ff0, type: 3}
   maxUses: 4
   isPicked: 0
   isUsed: 0
