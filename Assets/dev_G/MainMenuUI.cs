@@ -20,6 +20,7 @@ public class MainMenuUI : MonoBehaviour
 
     private const string PremiumRootName = "AAA_MainMenu";
     private const string BackgroundResourcePath = "UI/MainMenu_Character_Background";
+    private const string LevelAtlasResourcePath = "UI/LevelSelect_RoomAtlas";
     private const string BackgroundVideoResourcePath = "UI/MainMenu_AAA_Background_Animated";
     private const bool UseAnimatedBackgroundVideo = false;
     private const string FallbackFontResourcePath = "Fonts & Materials/MiPancake SDF";
@@ -36,10 +37,17 @@ public class MainMenuUI : MonoBehaviour
     private TMP_FontAsset titleFont;
     private GameObject premiumRoot;
     private GameObject howToPlayPanel;
+    private GameObject levelSelectPanel;
     private Button startButton;
     private Button howToButton;
     private Button closeHowToButton;
+    private Button resetSaveButton;
     private bool isStartingGame;
+    private bool waitingForResetConfirmation;
+    private readonly Button[] levelButtons = new Button[4];
+    private readonly RawImage[] levelThumbnails = new RawImage[4];
+    private readonly string[] levelSceneNames = { "1bathroom1", "2Kitchen2", "3iving room3", "4bedroom4" };
+    private readonly string[] levelLabels = { "BATHROOM", "KITCHEN", "LIVING ROOM", "BEDROOM" };
 
     void Start()
     {
@@ -87,6 +95,9 @@ public class MainMenuUI : MonoBehaviour
         {
             CloseHowToPlay();
         }
+
+        if (levelSelectPanel != null && levelSelectPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+            CloseLevelSelect();
     }
 
     void BuildPremiumMenu()
@@ -114,6 +125,7 @@ public class MainMenuUI : MonoBehaviour
         BuildBackground(premiumRoot.transform);
         BuildMainPanel(premiumRoot.transform);
         BuildHowToPlayPanel(premiumRoot.transform);
+        BuildLevelSelectPanel(premiumRoot.transform);
     }
 
     Canvas FindMainCanvas()
@@ -533,6 +545,186 @@ public class MainMenuUI : MonoBehaviour
         howToPlayPanel.SetActive(false);
     }
 
+    void BuildLevelSelectPanel(Transform parent)
+    {
+        levelSelectPanel = CreateUiObject("LevelSelectPanel", parent);
+        Stretch(levelSelectPanel.GetComponent<RectTransform>());
+
+        Image shade = levelSelectPanel.AddComponent<Image>();
+        shade.color = new Color(0.004f, 0.014f, 0.030f, 0.97f);
+
+        CreateText(levelSelectPanel.transform, "LevelSelectTitle", "เลือกด่าน", 58f, cyan,
+            new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(78f, -86f),
+            new Vector2(500f, 80f), TextAlignmentOptions.Left, FontStyles.Bold).font = uiFont;
+        CreateText(levelSelectPanel.transform, "LevelSelectSub", "SELECT A MISSION", 20f, mutedWhite,
+            new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(84f, 52f),
+            new Vector2(400f, 38f), TextAlignmentOptions.Left, FontStyles.Bold, 3f).font = titleFont;
+
+        for (int i = 0; i < levelButtons.Length; i++)
+            levelButtons[i] = CreateLevelCard(levelSelectPanel.transform, i);
+
+        CreateCompactButton(levelSelectPanel.transform, "BackToMenu", "BACK", new Vector2(1f, 0f),
+            new Vector2(-90f, 58f), new Vector2(130f, 48f), CloseLevelSelect);
+
+        resetSaveButton = CreateCompactButton(levelSelectPanel.transform, "ResetSaveButton", "RESET SAVE", new Vector2(1f, 0f),
+            new Vector2(-116f, 122f), new Vector2(190f, 48f), RequestResetSave);
+
+        levelSelectPanel.SetActive(false);
+    }
+
+    Button CreateLevelCard(Transform parent, int levelIndex)
+    {
+        GameObject card = CreateUiObject("MissionCard_" + (levelIndex + 1), parent);
+        RectTransform rect = card.GetComponent<RectTransform>();
+        float cardWidth = 0.205f;
+        float gap = 0.025f;
+        float left = 0.06f + levelIndex * (cardWidth + gap);
+        rect.anchorMin = new Vector2(left, 0.25f);
+        rect.anchorMax = new Vector2(left + cardWidth, 0.73f);
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+
+        Image image = card.AddComponent<Image>();
+        image.color = new Color(0.025f, 0.095f, 0.15f, 0.97f);
+        Outline outline = card.AddComponent<Outline>();
+        outline.effectColor = new Color(cyan.r, cyan.g, cyan.b, 0.72f);
+        outline.effectDistance = new Vector2(1.4f, -1.4f);
+
+        Button button = card.AddComponent<Button>();
+        button.targetGraphic = image;
+        int selectedIndex = levelIndex;
+        button.onClick.AddListener(() => SelectLevel(selectedIndex));
+        AddHoverSound(button);
+        MenuButtonHoverMotion hover = card.AddComponent<MenuButtonHoverMotion>();
+        hover.Configure(new Vector2(0f, 8f), 1.025f, 14f);
+
+        GameObject thumbnailObject = CreateUiObject("Thumbnail", card.transform);
+        RectTransform thumbnailRect = thumbnailObject.GetComponent<RectTransform>();
+        thumbnailRect.anchorMin = new Vector2(0f, 0.20f);
+        thumbnailRect.anchorMax = new Vector2(1f, 1f);
+        thumbnailRect.offsetMin = new Vector2(8f, 0f);
+        thumbnailRect.offsetMax = new Vector2(-8f, -8f);
+        RawImage thumbnail = thumbnailObject.AddComponent<RawImage>();
+        thumbnail.texture = Resources.Load<Texture2D>(LevelAtlasResourcePath);
+        thumbnail.uvRect = GetLevelThumbnailUv(levelIndex);
+        thumbnail.color = Color.white;
+        thumbnail.raycastTarget = false;
+        thumbnail.transform.SetAsFirstSibling();
+        levelThumbnails[levelIndex] = thumbnail;
+
+        CreateText(card.transform, "Number", "0" + (levelIndex + 1), 39f, cyan,
+            new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(24f, 27f),
+            new Vector2(88f, 58f), TextAlignmentOptions.Left, FontStyles.Bold).font = titleFont;
+        CreateText(card.transform, "Name", levelLabels[levelIndex], 23f, warmWhite,
+            new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(104f, 26f),
+            new Vector2(-20f, 66f), TextAlignmentOptions.Left, FontStyles.Bold).font = titleFont;
+        TextMeshProUGUI state = CreateText(card.transform, "State", "", 20f, cyan,
+            new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero,
+            new Vector2(240f, 54f), TextAlignmentOptions.Center, FontStyles.Bold);
+        state.font = uiFont;
+
+        return button;
+    }
+
+    static Rect GetLevelThumbnailUv(int levelIndex)
+    {
+        switch (levelIndex)
+        {
+            case 0: return new Rect(0f, 0.5f, 0.5f, 0.5f); // bathroom, top-left
+            case 1: return new Rect(0.5f, 0.5f, 0.5f, 0.5f); // kitchen, top-right
+            case 2: return new Rect(0f, 0f, 0.5f, 0.5f); // living room, bottom-left
+            default: return new Rect(0.5f, 0f, 0.5f, 0.5f); // bedroom, bottom-right
+        }
+    }
+
+    void OpenLevelSelect()
+    {
+        if (levelSelectPanel == null) return;
+        PlayClick();
+        waitingForResetConfirmation = false;
+        SetResetSaveLabel("RESET SAVE");
+        UpdateLevelCards();
+        levelSelectPanel.SetActive(true);
+        if (EventSystem.current != null && levelButtons[0] != null)
+            EventSystem.current.SetSelectedGameObject(levelButtons[0].gameObject);
+    }
+
+    void CloseLevelSelect()
+    {
+        if (levelSelectPanel == null) return;
+        waitingForResetConfirmation = false;
+        SetResetSaveLabel("RESET SAVE");
+        PlayClick();
+        levelSelectPanel.SetActive(false);
+        if (EventSystem.current != null && startButton != null)
+            EventSystem.current.SetSelectedGameObject(startButton.gameObject);
+    }
+
+    void RequestResetSave()
+    {
+        if (!waitingForResetConfirmation)
+        {
+            waitingForResetConfirmation = true;
+            SetResetSaveLabel("CONFIRM RESET?");
+            return;
+        }
+
+        GameProgress.ResetProgress();
+        waitingForResetConfirmation = false;
+        SetResetSaveLabel("SAVE RESET!");
+        UpdateLevelCards();
+    }
+
+    void SetResetSaveLabel(string label)
+    {
+        if (resetSaveButton == null) return;
+        TMP_Text text = resetSaveButton.transform.Find("Label")?.GetComponent<TMP_Text>();
+        if (text != null) text.text = label;
+    }
+
+    void UpdateLevelCards()
+    {
+        for (int i = 0; i < levelButtons.Length; i++)
+        {
+            Button button = levelButtons[i];
+            if (button == null) continue;
+            bool unlocked = GameProgress.IsUnlocked(i);
+            button.interactable = unlocked;
+            Image image = button.GetComponent<Image>();
+            if (image != null) image.color = unlocked
+                ? new Color(0.025f, 0.13f, 0.20f, 0.70f)
+                : new Color(0.016f, 0.04f, 0.07f, 0.82f);
+            if (levelThumbnails[i] != null)
+                levelThumbnails[i].color = unlocked
+                    ? new Color(1f, 1f, 1f, 1f)
+                    : new Color(0.24f, 0.31f, 0.40f, 0.68f);
+            TMP_Text state = button.transform.Find("State").GetComponent<TMP_Text>();
+            if (state != null)
+            {
+                state.text = unlocked ? "READY" : "LOCKED";
+                state.color = unlocked ? new Color(0.35f, 1f, 0.73f, 1f) : mutedWhite;
+            }
+        }
+    }
+
+    void SelectLevel(int levelIndex)
+    {
+        if (!GameProgress.IsUnlocked(levelIndex) || isStartingGame) return;
+        isStartingGame = true;
+        PlayClick();
+        int sceneIndex = FindSceneBuildIndex(levelSceneNames[levelIndex]);
+        int loadingIndex = FindSceneBuildIndex(loadingSceneName);
+        if (sceneIndex < 0 || loadingIndex < 0)
+        {
+            isStartingGame = false;
+            Debug.LogError("Level Select: missing gameplay or loading scene in Build Settings.");
+            return;
+        }
+        PlayerPrefs.SetInt("NextScene", sceneIndex);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(loadingIndex);
+    }
+
     void CreateInstructionRow(
         Transform parent,
         Vector2 anchoredPosition,
@@ -772,16 +964,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void StartGame()
     {
-        if (isStartingGame)
-            return;
-
-        isStartingGame = true;
-        PlayClick();
-
-        if (startButton != null)
-            startButton.interactable = false;
-
-        Invoke(nameof(LoadScene), 0.2f);
+        OpenLevelSelect();
     }
 
     public void QuitGame()

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 
 public class CleaningTarget : MonoBehaviour
 {
@@ -18,6 +20,9 @@ public class CleaningTarget : MonoBehaviour
 
     [Header("Correct Result")]
     public GameObject dirtObject;
+
+    [Header("Clear Visual")]
+    [Min(0.05f)] public float clearFadeDuration = 0.55f;
 
     [Header("State")]
     public bool isDiscovered = false;
@@ -58,6 +63,9 @@ public class CleaningTarget : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsPaused)
+            return;
+
         if (popupOpen && Input.GetKeyDown(KeyCode.E))
         {
             CloseWrongPopup();
@@ -120,25 +128,63 @@ public class CleaningTarget : MonoBehaviour
         if (dirtObject == null)
             return;
 
-        if (dirtObject != gameObject)
+        StartCoroutine(FadeAndHideDirt(dirtObject));
+    }
+
+    IEnumerator FadeAndHideDirt(GameObject target)
+    {
+        Renderer[] renderers = target.GetComponentsInChildren<Renderer>(true);
+        UnityEngine.Rendering.Universal.DecalProjector[] decals =
+            target.GetComponentsInChildren<UnityEngine.Rendering.Universal.DecalProjector>(true);
+        ParticleSystem[] particles = target.GetComponentsInChildren<ParticleSystem>(true);
+
+        List<Material> fadeMaterials = new List<Material>();
+        List<Color> originalColors = new List<Color>();
+        for (int i = 0; i < renderers.Length; i++)
         {
-            dirtObject.SetActive(false);
-            return;
+            foreach (Material material in renderers[i].materials)
+            {
+                if (material == null) continue;
+                if (material.HasProperty("_BaseColor"))
+                {
+                    fadeMaterials.Add(material);
+                    originalColors.Add(material.GetColor("_BaseColor"));
+                }
+                else if (material.HasProperty("_Color"))
+                {
+                    fadeMaterials.Add(material);
+                    originalColors.Add(material.GetColor("_Color"));
+                }
+            }
         }
 
-        Renderer[] dirtRenderers = dirtObject.GetComponentsInChildren<Renderer>(true);
-        for (int i = 0; i < dirtRenderers.Length; i++)
-            dirtRenderers[i].enabled = false;
+        float elapsed = 0f;
+        while (elapsed < clearFadeDuration)
+        {
+            float alpha = 1f - elapsed / clearFadeDuration;
+            for (int i = 0; i < decals.Length; i++)
+                if (decals[i] != null) decals[i].fadeFactor = alpha;
+            for (int i = 0; i < fadeMaterials.Count; i++)
+            {
+                Color faded = originalColors[i];
+                faded.a *= alpha;
+                if (fadeMaterials[i].HasProperty("_BaseColor")) fadeMaterials[i].SetColor("_BaseColor", faded);
+                else fadeMaterials[i].SetColor("_Color", faded);
+            }
 
-        ParticleSystem[] dirtParticles = dirtObject.GetComponentsInChildren<ParticleSystem>(true);
-        for (int i = 0; i < dirtParticles.Length; i++)
-            dirtParticles[i].Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
 
-        UnityEngine.Rendering.Universal.DecalProjector[] dirtDecals =
-            dirtObject.GetComponentsInChildren<UnityEngine.Rendering.Universal.DecalProjector>(true);
+        for (int i = 0; i < particles.Length; i++)
+            if (particles[i] != null) particles[i].Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        for (int i = 0; i < decals.Length; i++)
+            if (decals[i] != null) decals[i].enabled = false;
+        for (int i = 0; i < renderers.Length; i++)
+            if (renderers[i] != null) renderers[i].enabled = false;
 
-        for (int i = 0; i < dirtDecals.Length; i++)
-            dirtDecals[i].enabled = false;
+        if (target != gameObject)
+            target.SetActive(false);
     }
 
     void ShowWrongPopup()

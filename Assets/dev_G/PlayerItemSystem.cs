@@ -63,6 +63,9 @@ public class PlayerItemSystem : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsPaused)
+            return;
+
         HandleSlotInput();
         DetectObject();
         UpdateUsesUI();

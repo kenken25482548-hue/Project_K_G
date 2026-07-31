@@ -28,6 +28,9 @@ public class LevelFlowManager : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenuUI.IsPaused)
+            return;
+
         if (levelEnded)
         {
             HandleEndInput();
@@ -86,6 +89,9 @@ public class LevelFlowManager : MonoBehaviour
 
     void ShowLevelComplete(int clearedCount, int totalCount)
     {
+        // Gameplay scenes are build indices 2-5, while progress uses mission indices 0-3.
+        GameProgress.UnlockLevel(Mathf.Max(0, SceneManager.GetActiveScene().buildIndex - 2));
+
         if (levelCompletePanel != null)
             levelCompletePanel.SetActive(true);
 

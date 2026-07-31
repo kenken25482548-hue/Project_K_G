@@ -5,7 +5,7 @@ public static class GameProgress
     // บันทึกว่าผ่านด่านไหนแล้ว
     public static void UnlockLevel(int levelIndex)
     {
-        int current = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        int current = PlayerPrefs.GetInt("UnlockedLevel", 0);
         if (levelIndex + 1 > current)
         {
             PlayerPrefs.SetInt("UnlockedLevel", levelIndex + 1);
@@ -16,7 +16,7 @@ public static class GameProgress
     // เช็คว่าด่านนี้เล่นได้ไหม
     public static bool IsUnlocked(int levelIndex)
     {
-        int unlocked = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        int unlocked = PlayerPrefs.GetInt("UnlockedLevel", 0);
         return levelIndex <= unlocked;
     }
 

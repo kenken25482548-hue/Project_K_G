@@ -21,7 +21,13 @@ public class ObjectivePanelUI : MonoBehaviour
 
     void Start()
     {
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "1bathroom1" &&
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        bool isGameplayLevel = sceneName == "1bathroom1" ||
+                               sceneName == "2Kitchen2" ||
+                               sceneName == "3iving room3" ||
+                               sceneName == "4bedroom4";
+
+        if (isGameplayLevel &&
             GetComponent<BathroomHudPolish>() == null)
         {
             gameObject.AddComponent<BathroomHudPolish>();
