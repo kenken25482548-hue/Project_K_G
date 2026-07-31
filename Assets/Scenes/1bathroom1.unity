@@ -1920,6 +1920,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 6967706478272747382}
   wrongPopupText: {fileID: 1613039240759600098}
   dirtObject: {fileID: 322471153}
+  clearFadeDuration: 0.55
   isDiscovered: 0
   isCleared: 0
 --- !u!114 &322471158
@@ -2520,6 +2521,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 6967706478272747382}
   wrongPopupText: {fileID: 1613039240759600098}
   dirtObject: {fileID: 382800885}
+  clearFadeDuration: 0.55
   isDiscovered: 0
   isCleared: 0
 --- !u!114 &382800890
@@ -4790,8 +4792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E19\u0E49\u0E33\u0E21\u0E31\u0E19"
-  itemDescription: "\u0E02\u0E2D\u0E07\u0E40\u0E2B\u0E25\u0E27\u0E25\u0E37\u0E48\u0E19\u0E17\u0E35\u0E48\u0E0A\u0E48\u0E27\u0E22\u0E40\u0E04\u0E25\u0E37\u0E2D\u0E1A\u0E1E\u0E37\u0E49\u0E19\u0E1C\u0E34\u0E27\u0E41\u0E25\u0E30\u0E25\u0E14\u0E01\u0E32\u0E23\u0E40\u0E2A\u0E35\u0E22\u0E14\u0E2A\u0E35
-    \u0E41\u0E15\u0E48\u0E2D\u0E32\u0E08\u0E17\u0E34\u0E49\u0E07\u0E04\u0E23\u0E32\u0E1A\u0E21\u0E31\u0E19\u0E40\u0E2D\u0E32\u0E44\u0E27\u0E49"
+  itemDescription: "\u0E02\u0E2D\u0E07\u0E40\u0E2B\u0E25\u0E27\u0E25\u0E37\u0E48\u0E19\u0E17\u0E35\u0E48\u0E0A\u0E48\u0E27\u0E22\u0E40\u0E04\u0E25\u0E37\u0E2D\u0E1A\u0E1E\u0E37\u0E49\u0E19\u0E1C\u0E34\u0E27\u0E41\u0E25\u0E30\n\u0E25\u0E14\u0E01\u0E32\u0E23\u0E40\u0E2A\u0E35\u0E22\u0E14\u0E2A\u0E35"
   itemSprite: {fileID: 21300000, guid: cd5ef88fe9c38b642bc0a3259e69c49d, type: 3}
   maxUses: 1
   isPicked: 0
@@ -5722,6 +5723,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 6967706478272747382}
   wrongPopupText: {fileID: 1613039240759600098}
   dirtObject: {fileID: 856895018}
+  clearFadeDuration: 0.55
   isDiscovered: 0
   isCleared: 0
 --- !u!65 &856895020
@@ -13012,6 +13014,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 6967706478272747382}
   wrongPopupText: {fileID: 1613039240759600098}
   dirtObject: {fileID: 1185292785}
+  clearFadeDuration: 0.55
   isDiscovered: 0
   isCleared: 0
 --- !u!65 &1185292790
@@ -13640,6 +13643,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 6967706478272747382}
   wrongPopupText: {fileID: 1613039240759600098}
   dirtObject: {fileID: 1238078222}
+  clearFadeDuration: 0.55
   isDiscovered: 0
   isCleared: 0
 --- !u!65 &1238078226
@@ -15898,6 +15902,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 6967706478272747382}
   wrongPopupText: {fileID: 1613039240759600098}
   dirtObject: {fileID: 1444528585}
+  clearFadeDuration: 0.55
   isDiscovered: 0
   isCleared: 0
 --- !u!65 &1444528592
@@ -17253,6 +17258,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 6967706478272747382}
   wrongPopupText: {fileID: 1613039240759600098}
   dirtObject: {fileID: 1099216233}
+  clearFadeDuration: 0.55
   isDiscovered: 0
   isCleared: 0
 --- !u!65 &1563347751
@@ -18679,6 +18685,7 @@ MonoBehaviour:
   wrongPopup: {fileID: 6967706478272747382}
   wrongPopupText: {fileID: 1613039240759600098}
   dirtObject: {fileID: 595869570}
+  clearFadeDuration: 0.55
   isDiscovered: 0
   isCleared: 0
 --- !u!65 &1753848358
