@@ -46,6 +46,15 @@ public class GameSFXManager : MonoBehaviour
         Instance.sfxSource.PlayOneShot(clip, volume);
     }
 
+    // Correct/wrong item feedback must never stack when the player presses a key quickly.
+    public static void PlayUseFeedback(AudioClip clip)
+    {
+        if (Instance == null || Instance.sfxSource == null || clip == null) return;
+
+        Instance.sfxSource.Stop();
+        Instance.sfxSource.PlayOneShot(clip, 1.7f);
+    }
+
     public void SetBGMVolume(float value)
     {
         if (bgmSource != null)

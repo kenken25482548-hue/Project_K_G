@@ -105,14 +105,14 @@ public class CleaningTarget : MonoBehaviour
             if (interactionZone != null)
                 interactionZone.DisableZone();
 
-            GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.correctUseSfx : null, 1f);
+            GameSFXManager.PlayUseFeedback(GameSFXManager.Instance != null ? GameSFXManager.Instance.correctUseSfx : null);
 
             if (popupOpen)
                 CloseWrongPopup();
         }
         else
         {
-            GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.wrongUseSfx : null, 1f);
+            GameSFXManager.PlayUseFeedback(GameSFXManager.Instance != null ? GameSFXManager.Instance.wrongUseSfx : null);
             ShowWrongPopup();
         }
 
