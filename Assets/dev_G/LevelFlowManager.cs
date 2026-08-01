@@ -89,8 +89,10 @@ public class LevelFlowManager : MonoBehaviour
 
     void ShowLevelComplete(int clearedCount, int totalCount)
     {
-        // Gameplay scenes are build indices 2-5, while progress uses mission indices 0-3.
-        GameProgress.UnlockLevel(Mathf.Max(0, SceneManager.GetActiveScene().buildIndex - 2));
+        // Keep progress independent from build indices: the launch intro scene is before the menu.
+        string[] missionScenes = { "1bathroom1", "2Kitchen2", "3iving room3", "4bedroom4" };
+        int missionIndex = System.Array.IndexOf(missionScenes, SceneManager.GetActiveScene().name);
+        GameProgress.UnlockLevel(Mathf.Max(0, missionIndex));
 
         if (levelCompletePanel != null)
             levelCompletePanel.SetActive(true);

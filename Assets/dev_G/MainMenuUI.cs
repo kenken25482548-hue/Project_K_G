@@ -56,21 +56,13 @@ public class MainMenuUI : MonoBehaviour
         Cursor.visible = true;
 
         audioSource = GetComponent<AudioSource>();
-        TMP_FontAsset fallbackFont = Resources.Load<TMP_FontAsset>(FallbackFontResourcePath);
-        uiFont = Resources.Load<TMP_FontAsset>(UiFontResourcePath);
-        titleFont = Resources.Load<TMP_FontAsset>(TitleFontResourcePath);
-
-        if (uiFont == null)
-            uiFont = fallbackFont;
-
-        if (titleFont == null)
-            titleFont = uiFont;
+        LoadFonts();
 
         if (bgmClip != null && audioSource != null)
         {
             audioSource.clip = bgmClip;
             audioSource.loop = true;
-            audioSource.volume = 0.5f;
+            audioSource.volume = 0.25f;
             audioSource.Play();
         }
 
@@ -112,12 +104,12 @@ public class MainMenuUI : MonoBehaviour
         Transform existingRoot = targetCanvas.transform.Find(PremiumRootName);
         if (existingRoot != null)
         {
+            HideLegacyMenuChildren(targetCanvas.transform, existingRoot);
             premiumRoot = existingRoot.gameObject;
             return;
         }
 
-        for (int i = 0; i < targetCanvas.transform.childCount; i++)
-            targetCanvas.transform.GetChild(i).gameObject.SetActive(false);
+        HideLegacyMenuChildren(targetCanvas.transform, null);
 
         premiumRoot = CreateUiObject(PremiumRootName, targetCanvas.transform);
         Stretch(premiumRoot.GetComponent<RectTransform>());
@@ -128,16 +120,46 @@ public class MainMenuUI : MonoBehaviour
         BuildLevelSelectPanel(premiumRoot.transform);
     }
 
+    void HideLegacyMenuChildren(Transform canvasRoot, Transform keepRoot)
+    {
+        for (int i = 0; i < canvasRoot.childCount; i++)
+        {
+            Transform child = canvasRoot.GetChild(i);
+            if (child != keepRoot)
+                child.gameObject.SetActive(false);
+        }
+    }
+
     Canvas FindMainCanvas()
     {
         Canvas[] canvases = FindObjectsOfType<Canvas>();
         foreach (Canvas canvas in canvases)
         {
-            if (canvas.isRootCanvas && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+            if (canvas.gameObject.scene == gameObject.scene &&
+                canvas.isRootCanvas && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
                 return canvas;
         }
 
+        foreach (Canvas canvas in canvases)
+            if (canvas.gameObject.scene == gameObject.scene)
+                return canvas;
+
         return canvases.Length > 0 ? canvases[0] : null;
+    }
+
+    void LoadFonts()
+    {
+        if (uiFont != null && titleFont != null) return;
+
+        TMP_FontAsset fallbackFont = Resources.Load<TMP_FontAsset>(FallbackFontResourcePath);
+        uiFont = Resources.Load<TMP_FontAsset>(UiFontResourcePath);
+        titleFont = Resources.Load<TMP_FontAsset>(TitleFontResourcePath);
+
+        if (uiFont == null)
+            uiFont = fallbackFont;
+
+        if (titleFont == null)
+            titleFont = uiFont;
     }
 
     void BuildBackground(Transform parent)
@@ -204,6 +226,7 @@ public class MainMenuUI : MonoBehaviour
         MainMenuBackgroundMotion backgroundMotion =
             motionObject.AddComponent<MainMenuBackgroundMotion>();
         backgroundMotion.Configure(background, sweepImage);
+
     }
 
     void BuildMainPanel(Transform parent)

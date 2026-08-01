@@ -28,6 +28,16 @@ public class GameSFXManager : MonoBehaviour
         }
 
         Instance = this;
+
+        // One shared correct-item voice/SFX for every gameplay scene.
+        AudioClip sharedCorrectItemClip = Resources.Load<AudioClip>("Audio/CorrectItemUsed");
+        if (sharedCorrectItemClip != null)
+            correctUseSfx = sharedCorrectItemClip;
+
+        // One shared wrong-item voice/SFX for every gameplay scene.
+        AudioClip sharedWrongItemClip = Resources.Load<AudioClip>("Audio/WrongItemUsed");
+        if (sharedWrongItemClip != null)
+            wrongUseSfx = sharedWrongItemClip;
     }
 
     public static void PlaySfx(AudioClip clip, float volume = 1f)
