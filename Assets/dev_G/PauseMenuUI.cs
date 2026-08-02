@@ -100,12 +100,14 @@ public class PauseMenuUI : MonoBehaviour
     // Builds a single visual style in every gameplay scene, even if the old pause UI differs.
     private void BuildThemedPauseMenu()
     {
-        if (pauseOverlay.transform.Find("ThemedPausePanel") != null)
-            return;
+        LoadThaiPauseFont();
 
-        uiFont = Resources.Load<TMP_FontAsset>("UI/Fonts/Kanit-SemiBold SDF");
-        if (uiFont == null)
-            uiFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
+        Transform existingPanel = pauseOverlay.transform.Find("ThemedPausePanel");
+        if (existingPanel != null)
+        {
+            ApplyThaiFont(existingPanel);
+            return;
+        }
 
         for (int i = 0; i < pauseOverlay.transform.childCount; i++)
             pauseOverlay.transform.GetChild(i).gameObject.SetActive(false);
@@ -127,16 +129,40 @@ public class PauseMenuUI : MonoBehaviour
 
         Accent(panel.transform, new Vector2(0f, 1f), new Vector2(1f, 1f), Vector2.zero, new Vector2(0f, 5f));
         Text(panel.transform, "Eyebrow", "SYSTEM MENU  /  PAUSED", 17f, cyan, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -47f), new Vector2(520f, 34f), TextAlignmentOptions.Center, FontStyles.Bold);
-        Text(panel.transform, "Title", "หยุดเกมชั่วคราว", 42f, white, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -94f), new Vector2(560f, 60f), TextAlignmentOptions.Center, FontStyles.Bold);
-        Text(panel.transform, "Hint", "ESC เพื่อเล่นต่อ", 18f, new Color(0.66f, 0.77f, 0.85f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -137f), new Vector2(450f, 28f), TextAlignmentOptions.Center);
+        Text(panel.transform, "Title", "GAME PAUSED", 42f, white, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -94f), new Vector2(560f, 60f), TextAlignmentOptions.Center, FontStyles.Bold);
+        Text(panel.transform, "Hint", "PRESS ESC TO RESUME", 18f, new Color(0.66f, 0.77f, 0.85f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -137f), new Vector2(450f, 28f), TextAlignmentOptions.Center);
 
-        ThemedButton(panel.transform, "Resume", "เล่นต่อ", new Vector2(0f, 67f), ResumeGame, true);
-        ThemedButton(panel.transform, "Restart", "เริ่มด่านใหม่", new Vector2(0f, 2f), RestartLevel, false);
-        ThemedButton(panel.transform, "MainMenu", "กลับหน้าหลัก", new Vector2(0f, -63f), ReturnToMainMenu, false);
+        ThemedButton(panel.transform, "Resume", "RESUME", new Vector2(0f, 67f), ResumeGame, true);
+        ThemedButton(panel.transform, "Restart", "RESTART LEVEL", new Vector2(0f, 2f), RestartLevel, false);
+        ThemedButton(panel.transform, "MainMenu", "RETURN TO MAIN MENU", new Vector2(0f, -63f), ReturnToMainMenu, false);
 
         Text(panel.transform, "AudioLabel", "AUDIO SETTINGS", 16f, cyan, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 133f), new Vector2(450f, 30f), TextAlignmentOptions.Center, FontStyles.Bold, 2f);
-        CreateSliderRow(panel.transform, "เพลง", new Vector2(0f, 88f), true);
+        CreateSliderRow(panel.transform, "MUSIC", new Vector2(0f, 88f), true);
         CreateSliderRow(panel.transform, "SFX", new Vector2(0f, 48f), false);
+    }
+
+    private void LoadThaiPauseFont()
+    {
+        uiFont = Resources.Load<TMP_FontAsset>("UI/Fonts/ChakraPetch-SemiBold SDF");
+        if (uiFont == null)
+        {
+            Font tahoma = Font.CreateDynamicFontFromOSFont("Tahoma", 90);
+            if (tahoma != null)
+                uiFont = TMP_FontAsset.CreateFontAsset(tahoma);
+        }
+        if (uiFont == null)
+            uiFont = Resources.Load<TMP_FontAsset>("UI/Fonts/Kanit-SemiBold SDF");
+    }
+
+    private void ApplyThaiFont(Transform panel)
+    {
+        TextMeshProUGUI[] labels = panel.GetComponentsInChildren<TextMeshProUGUI>(true);
+        foreach (TextMeshProUGUI label in labels)
+        {
+            label.font = uiFont;
+            label.fontStyle = FontStyles.Normal;
+            label.characterSpacing = 0f;
+        }
     }
 
     private void CreateSliderRow(Transform parent, string label, Vector2 position, bool isBgm)
@@ -207,7 +233,7 @@ public class PauseMenuUI : MonoBehaviour
             rect.offsetMin = position;
             rect.offsetMax = dimensions;
         }
-        TextMeshProUGUI text = item.AddComponent<TextMeshProUGUI>(); text.font = uiFont; text.text = content; text.fontSize = size; text.color = color; text.fontStyle = style; text.alignment = alignment; text.characterSpacing = spacing; text.raycastTarget = false; return text;
+        TextMeshProUGUI text = item.AddComponent<TextMeshProUGUI>(); text.font = uiFont; text.text = content; text.fontSize = size; text.color = color; text.fontStyle = FontStyles.Normal; text.alignment = alignment; text.characterSpacing = spacing; text.raycastTarget = false; return text;
     }
 
     private GameObject UiObject(string name, Transform parent)

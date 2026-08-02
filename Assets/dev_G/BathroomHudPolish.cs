@@ -262,6 +262,59 @@ public class BathroomHudPolish : MonoBehaviour
         BathroomHudUsesDisplay display = badgeObject.GetComponent<BathroomHudUsesDisplay>();
         if (display == null) display = badgeObject.AddComponent<BathroomHudUsesDisplay>();
         display.Configure(playerItems.usesText, newText);
+
+        CreateItemInfoBadge(badgeRect, playerItems.usesText.font);
+    }
+
+    void CreateItemInfoBadge(RectTransform usesBadgeRect, TMP_FontAsset font)
+    {
+        if (usesBadgeRect == null) return;
+
+        Transform existing = usesBadgeRect.parent.Find("ItemInfoBadge");
+        GameObject badgeObject;
+        if (existing == null)
+        {
+            badgeObject = new GameObject("ItemInfoBadge", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            badgeObject.layer = LayerMask.NameToLayer("UI");
+            badgeObject.transform.SetParent(usesBadgeRect.parent, false);
+            Image badgeImage = badgeObject.GetComponent<Image>();
+            badgeImage.sprite = roundedSprite;
+            badgeImage.type = Image.Type.Sliced;
+            badgeImage.color = new Color(0.015f, 0.10f, 0.17f, 0.96f);
+            badgeImage.raycastTarget = false;
+        }
+        else
+        {
+            badgeObject = existing.gameObject;
+        }
+
+        RectTransform badgeRect = badgeObject.GetComponent<RectTransform>();
+        badgeRect.anchorMin = badgeRect.anchorMax = new Vector2(0.5f, 0.5f);
+        badgeRect.pivot = new Vector2(0.5f, 0.5f);
+        badgeRect.sizeDelta = new Vector2(148f, 58f);
+        badgeRect.anchoredPosition = usesBadgeRect.anchoredPosition +
+                                     new Vector2(usesBadgeRect.sizeDelta.x * 0.5f + 10f + badgeRect.sizeDelta.x * 0.5f, 0f);
+
+        Transform textTransform = badgeObject.transform.Find("InfoText");
+        TextMeshProUGUI text;
+        if (textTransform == null)
+        {
+            GameObject textObject = new GameObject("InfoText", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            textObject.layer = LayerMask.NameToLayer("UI");
+            textObject.transform.SetParent(badgeObject.transform, false);
+            text = textObject.GetComponent<TextMeshProUGUI>();
+        }
+        else
+        {
+            text = textTransform.GetComponent<TextMeshProUGUI>();
+        }
+
+        Stretch(text.rectTransform, 0f);
+        text.font = font;
+        text.text = "[Q]  INFO";
+        text.alignment = TextAlignmentOptions.Center;
+        text.enableWordWrapping = false;
+        StyleText(text, 18f, Cyan);
     }
 
     void StyleInteractionUI()

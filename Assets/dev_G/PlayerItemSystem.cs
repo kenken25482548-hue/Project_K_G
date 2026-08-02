@@ -40,6 +40,7 @@ public class PlayerItemSystem : MonoBehaviour
 
     private bool itemInfoOpen = false;
     private bool stainInfoOpen = false;
+    private bool keepItemInfoOpenWithoutFocus;
 
     void Start()
     {
@@ -70,7 +71,8 @@ public class PlayerItemSystem : MonoBehaviour
         DetectObject();
         UpdateUsesUI();
 
-        if ((itemInfoOpen || stainInfoOpen) && focusedItem == null && focusedCleaningTarget == null)
+        if ((itemInfoOpen || stainInfoOpen) && focusedItem == null && focusedCleaningTarget == null &&
+            !keepItemInfoOpenWithoutFocus)
         {
             CloseAllPanels();
         }
@@ -88,12 +90,23 @@ public class PlayerItemSystem : MonoBehaviour
             return;
         }
 
+        // Reopen the description of the currently selected inventory item anywhere in the level.
+        if (!itemInfoOpen && !stainInfoOpen && Input.GetKeyDown(KeyCode.Q))
+        {
+            ItemData selectedItem = GetSelectedItem();
+            if (selectedItem != null)
+            {
+                OpenItemInfo(selectedItem, true);
+                return;
+            }
+        }
+
         if (itemInfoOpen || stainInfoOpen)
         {
             if (interactUI != null)
                 interactUI.SetActive(false);
 
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Q))
                 CloseAllPanels();
 
             return;
@@ -375,7 +388,7 @@ public class PlayerItemSystem : MonoBehaviour
         UpdateUsesUI();
     }
 
-    void OpenItemInfo(ItemData item)
+    void OpenItemInfo(ItemData item, bool keepOpenWithoutFocus = false)
     {
         if (item == null) return;
 
@@ -385,6 +398,7 @@ public class PlayerItemSystem : MonoBehaviour
             interactUI.SetActive(false);
 
         itemInfoOpen = true;
+        keepItemInfoOpenWithoutFocus = keepOpenWithoutFocus;
 
         if (infoPanel != null)
             infoPanel.SetActive(true);
@@ -445,6 +459,7 @@ public class PlayerItemSystem : MonoBehaviour
     {
         itemInfoOpen = false;
         stainInfoOpen = false;
+        keepItemInfoOpenWithoutFocus = false;
 
         if (infoPanel != null) infoPanel.SetActive(false);
         if (stainInfoPanel != null) stainInfoPanel.SetActive(false);
