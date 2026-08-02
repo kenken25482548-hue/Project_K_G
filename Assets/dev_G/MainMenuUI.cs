@@ -44,6 +44,8 @@ public class MainMenuUI : MonoBehaviour
     private Button resetSaveButton;
     private bool isStartingGame;
     private bool waitingForResetConfirmation;
+    private float nextHoverSoundTime;
+    private const float HoverSoundCooldown = 0.18f;
     private readonly Button[] levelButtons = new Button[4];
     private readonly RawImage[] levelThumbnails = new RawImage[4];
     private readonly string[] levelSceneNames = { "1bathroom1", "2Kitchen2", "3iving room3", "4bedroom4" };
@@ -57,6 +59,10 @@ public class MainMenuUI : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
         LoadFonts();
+
+        AudioClip sharedHoverClip = Resources.Load<AudioClip>("Audio/MenuHover");
+        if (sharedHoverClip != null)
+            hoverSound = sharedHoverClip;
 
         if (bgmClip != null && audioSource != null)
         {
@@ -617,7 +623,6 @@ public class MainMenuUI : MonoBehaviour
         button.targetGraphic = image;
         int selectedIndex = levelIndex;
         button.onClick.AddListener(() => SelectLevel(selectedIndex));
-        AddHoverSound(button);
         MenuButtonHoverMotion hover = card.AddComponent<MenuButtonHoverMotion>();
         hover.Configure(new Vector2(0f, 8f), 1.025f, 14f);
 
@@ -957,8 +962,15 @@ public class MainMenuUI : MonoBehaviour
 
     public void PlayHover()
     {
-        if (audioSource != null && hoverSound != null)
-            audioSource.PlayOneShot(hoverSound, 0.7f);
+        if (audioSource == null || hoverSound == null)
+            return;
+
+        // Prevent noisy repeats while the mouse passes across multiple buttons.
+        if (Time.unscaledTime < nextHoverSoundTime)
+            return;
+
+        nextHoverSoundTime = Time.unscaledTime + HoverSoundCooldown;
+        audioSource.PlayOneShot(hoverSound, 0.5f);
     }
 
     public void OpenHowToPlay()
