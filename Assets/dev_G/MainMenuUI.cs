@@ -19,18 +19,19 @@ public class MainMenuUI : MonoBehaviour
     public AudioClip bgmClip;
 
     private const string PremiumRootName = "AAA_MainMenu";
-    private const string BackgroundResourcePath = "UI/MainMenu_Character_Background";
+    // Minimal menu uses a clean navy backdrop instead of the old character illustration.
+    private const string BackgroundResourcePath = "";
     private const string LevelAtlasResourcePath = "UI/LevelSelect_RoomAtlas";
     private const string BackgroundVideoResourcePath = "UI/MainMenu_AAA_Background_Animated";
     private const bool UseAnimatedBackgroundVideo = false;
     private const string FallbackFontResourcePath = "Fonts & Materials/MiPancake SDF";
-    private const string UiFontResourcePath = "UI/Fonts/Kanit-SemiBold SDF";
+    private const string UiFontResourcePath = "Fonts & Materials/MiPancake SDF";
     private const string TitleFontResourcePath = "UI/Fonts/ChakraPetch-Bold SDF";
 
-    private readonly Color cyan = new Color(0.25f, 0.80f, 1f, 1f);
-    private readonly Color warmWhite = new Color(0.93f, 0.97f, 1f, 1f);
-    private readonly Color mutedWhite = new Color(0.69f, 0.76f, 0.82f, 1f);
-    private readonly Color panelNavy = new Color(0.012f, 0.028f, 0.052f, 0.96f);
+    private readonly Color cyan = new Color(0.49f, 0.90f, 1f, 1f);
+    private readonly Color warmWhite = new Color(0.94f, 0.99f, 1f, 1f);
+    private readonly Color mutedWhite = new Color(0.76f, 0.90f, 0.96f, 1f);
+    private readonly Color panelNavy = new Color(0.025f, 0.16f, 0.25f, 0.96f);
 
     private AudioSource audioSource;
     private TMP_FontAsset uiFont;
@@ -38,9 +39,11 @@ public class MainMenuUI : MonoBehaviour
     private GameObject premiumRoot;
     private GameObject howToPlayPanel;
     private GameObject levelSelectPanel;
+    private GameObject settingsPanel;
     private Button startButton;
     private Button howToButton;
     private Button closeHowToButton;
+    private Button closeSettingsButton;
     private Button resetSaveButton;
     private bool isStartingGame;
     private bool waitingForResetConfirmation;
@@ -68,7 +71,7 @@ public class MainMenuUI : MonoBehaviour
         {
             audioSource.clip = bgmClip;
             audioSource.loop = true;
-            audioSource.volume = 0.25f;
+            audioSource.volume = PlayerPrefs.GetFloat("BGMVolume", 0.25f);
             audioSource.Play();
         }
 
@@ -96,6 +99,9 @@ public class MainMenuUI : MonoBehaviour
 
         if (levelSelectPanel != null && levelSelectPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
             CloseLevelSelect();
+
+        if (settingsPanel != null && settingsPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+            CloseSettings();
     }
 
     void BuildPremiumMenu()
@@ -109,11 +115,7 @@ public class MainMenuUI : MonoBehaviour
 
         Transform existingRoot = targetCanvas.transform.Find(PremiumRootName);
         if (existingRoot != null)
-        {
-            HideLegacyMenuChildren(targetCanvas.transform, existingRoot);
-            premiumRoot = existingRoot.gameObject;
-            return;
-        }
+            Destroy(existingRoot.gameObject);
 
         HideLegacyMenuChildren(targetCanvas.transform, null);
 
@@ -124,6 +126,7 @@ public class MainMenuUI : MonoBehaviour
         BuildMainPanel(premiumRoot.transform);
         BuildHowToPlayPanel(premiumRoot.transform);
         BuildLevelSelectPanel(premiumRoot.transform);
+        BuildSettingsPanel(premiumRoot.transform);
     }
 
     void HideLegacyMenuChildren(Transform canvasRoot, Transform keepRoot)
@@ -177,7 +180,9 @@ public class MainMenuUI : MonoBehaviour
         background.raycastTarget = false;
         background.color = Color.white;
 
-        Texture2D backgroundTexture = Resources.Load<Texture2D>(BackgroundResourcePath);
+        Texture2D backgroundTexture = string.IsNullOrEmpty(BackgroundResourcePath)
+            ? null
+            : Resources.Load<Texture2D>(BackgroundResourcePath);
         if (backgroundTexture != null)
         {
             background.texture = backgroundTexture;
@@ -188,8 +193,7 @@ public class MainMenuUI : MonoBehaviour
         }
         else
         {
-            background.color = new Color(0.015f, 0.035f, 0.065f, 1f);
-            Debug.LogWarning($"MainMenuUI: ไม่พบภาพ Resources/{BackgroundResourcePath}");
+            background.color = new Color(0.08f, 0.36f, 0.54f, 1f);
         }
 
         VideoClip animatedBackground = UseAnimatedBackgroundVideo
@@ -216,22 +220,9 @@ public class MainMenuUI : MonoBehaviour
         GameObject motionObject = CreateUiObject("CinematicMotion", parent);
         Stretch(motionObject.GetComponent<RectTransform>());
 
-        GameObject sweepObject = CreateUiObject("MovingLightSweep", motionObject.transform);
-        RectTransform sweepRect = sweepObject.GetComponent<RectTransform>();
-        sweepRect.anchorMin = new Vector2(0f, 0.5f);
-        sweepRect.anchorMax = new Vector2(0f, 0.5f);
-        sweepRect.pivot = new Vector2(0.5f, 0.5f);
-        sweepRect.anchoredPosition = new Vector2(-420f, 0f);
-        sweepRect.sizeDelta = new Vector2(330f, 1450f);
-        sweepRect.localRotation = Quaternion.Euler(0f, 0f, -12f);
-
-        RawImage sweepImage = sweepObject.AddComponent<RawImage>();
-        sweepImage.color = new Color(0.18f, 0.76f, 1f, 0.10f);
-        sweepImage.raycastTarget = false;
-
         MainMenuBackgroundMotion backgroundMotion =
             motionObject.AddComponent<MainMenuBackgroundMotion>();
-        backgroundMotion.Configure(background, sweepImage);
+        backgroundMotion.Configure(background, null);
 
     }
 
@@ -239,10 +230,7 @@ public class MainMenuUI : MonoBehaviour
     {
         GameObject leftPanel = CreateUiObject("CommandPanel", parent);
         RectTransform panelRect = leftPanel.GetComponent<RectTransform>();
-        panelRect.anchorMin = Vector2.zero;
-        panelRect.anchorMax = new Vector2(0.48f, 1f);
-        panelRect.offsetMin = Vector2.zero;
-        panelRect.offsetMax = Vector2.zero;
+        Stretch(panelRect);
 
         TextMeshProUGUI operationLabel = CreateText(
             leftPanel.transform,
@@ -250,11 +238,11 @@ public class MainMenuUI : MonoBehaviour
             "CLEANING OPERATIONS  /  01",
             22f,
             cyan,
-            new Vector2(0f, 1f),
-            new Vector2(0f, 1f),
-            new Vector2(104f, -122f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 245f),
             new Vector2(670f, 42f),
-            TextAlignmentOptions.Left,
+            TextAlignmentOptions.Center,
             FontStyles.Bold,
             3f);
         operationLabel.font = titleFont;
@@ -265,11 +253,11 @@ public class MainMenuUI : MonoBehaviour
             "CLEAN & LEARN",
             72f,
             warmWhite,
-            new Vector2(0f, 1f),
-            new Vector2(0f, 1f),
-            new Vector2(98f, -172f),
-            new Vector2(740f, 105f),
-            TextAlignmentOptions.TopLeft,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 165f),
+            new Vector2(900f, 105f),
+            TextAlignmentOptions.Center,
             FontStyles.Bold,
             1.5f);
         title.font = titleFont;
@@ -281,18 +269,18 @@ public class MainMenuUI : MonoBehaviour
             "สำรวจคราบ  เลือกให้ถูก  แล้วจัดการทุกจุด",
             23f,
             mutedWhite,
-            new Vector2(0f, 1f),
-            new Vector2(0f, 1f),
-            new Vector2(104f, -292f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 85f),
             new Vector2(730f, 45f),
-            TextAlignmentOptions.Left);
+            TextAlignmentOptions.Center);
 
         startButton = CreateMenuButton(
             leftPanel.transform,
             "StartGameButton",
             "START MISSION",
             "01",
-            new Vector2(104f, -375f),
+            new Vector2(0f, 5f),
             StartGame);
 
         howToButton = CreateMenuButton(
@@ -300,15 +288,23 @@ public class MainMenuUI : MonoBehaviour
             "HowToPlayButton",
             "HOW TO PLAY",
             "02",
-            new Vector2(104f, -460f),
+            new Vector2(0f, -68f),
             OpenHowToPlay);
+
+        CreateMenuButton(
+            leftPanel.transform,
+            "SettingsButton",
+            "SETTINGS",
+            "03",
+            new Vector2(0f, -141f),
+            OpenSettings);
 
         CreateMenuButton(
             leftPanel.transform,
             "QuitGameButton",
             "QUIT GAME",
-            "03",
-            new Vector2(104f, -545f),
+            "04",
+            new Vector2(0f, -214f),
             QuitGame);
 
         CreateText(
@@ -317,20 +313,19 @@ public class MainMenuUI : MonoBehaviour
             "READY FOR DEPLOYMENT",
             17f,
             new Color(mutedWhite.r, mutedWhite.g, mutedWhite.b, 0.68f),
-            new Vector2(0f, 0f),
-            new Vector2(0f, 0f),
-            new Vector2(104f, 48f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(14f, -300f),
             new Vector2(460f, 34f),
-            TextAlignmentOptions.Left,
+            TextAlignmentOptions.Center,
             FontStyles.Bold,
             2f);
 
         GameObject statusDot = CreateUiObject("StatusDot", leftPanel.transform);
         RectTransform dotRect = statusDot.GetComponent<RectTransform>();
-        dotRect.anchorMin = Vector2.zero;
-        dotRect.anchorMax = Vector2.zero;
-        dotRect.pivot = Vector2.zero;
-        dotRect.anchoredPosition = new Vector2(78f, 59f);
+        dotRect.anchorMin = dotRect.anchorMax = new Vector2(0.5f, 0.5f);
+        dotRect.pivot = new Vector2(0.5f, 0.5f);
+        dotRect.anchoredPosition = new Vector2(-204f, -300f);
         dotRect.sizeDelta = new Vector2(10f, 10f);
         Image dotImage = statusDot.AddComponent<Image>();
         dotImage.color = cyan;
@@ -341,7 +336,7 @@ public class MainMenuUI : MonoBehaviour
             "BuildLabel",
             "CLEAN & LEARN  •  DEV BUILD",
             16f,
-            new Color(0.82f, 0.88f, 0.93f, 0.58f),
+            new Color(0.82f, 0.88f, 0.93f, 0f),
             new Vector2(1f, 0f),
             new Vector2(1f, 0f),
             new Vector2(-42f, 34f),
@@ -359,14 +354,14 @@ public class MainMenuUI : MonoBehaviour
     {
         GameObject buttonObject = CreateUiObject(objectName, parent);
         RectTransform buttonRect = buttonObject.GetComponent<RectTransform>();
-        buttonRect.anchorMin = new Vector2(0f, 1f);
-        buttonRect.anchorMax = new Vector2(0f, 1f);
-        buttonRect.pivot = new Vector2(0f, 1f);
+        buttonRect.anchorMin = new Vector2(0.5f, 0.5f);
+        buttonRect.anchorMax = new Vector2(0.5f, 0.5f);
+        buttonRect.pivot = new Vector2(0.5f, 0.5f);
         buttonRect.anchoredPosition = anchoredPosition;
-        buttonRect.sizeDelta = new Vector2(470f, 66f);
+        buttonRect.sizeDelta = new Vector2(440f, 58f);
 
         Image buttonImage = buttonObject.AddComponent<Image>();
-        buttonImage.color = new Color(0.025f, 0.065f, 0.105f, 0.78f);
+        buttonImage.color = new Color(0.025f, 0.17f, 0.27f, 0.88f);
 
         Button button = buttonObject.AddComponent<Button>();
         button.targetGraphic = buttonImage;
@@ -466,7 +461,7 @@ public class MainMenuUI : MonoBehaviour
             new Vector2(0f, 1f),
             new Vector2(0f, 1f),
             new Vector2(58f, -48f),
-            new Vector2(760f, 34f),
+            new Vector2(760f, 44f),
             TextAlignmentOptions.Left,
             FontStyles.Bold,
             2f);
@@ -480,7 +475,7 @@ public class MainMenuUI : MonoBehaviour
             new Vector2(0f, 1f),
             new Vector2(0f, 1f),
             new Vector2(54f, -91f),
-            new Vector2(800f, 60f),
+            new Vector2(800f, 78f),
             TextAlignmentOptions.Left,
             FontStyles.Bold);
 
@@ -513,7 +508,7 @@ public class MainMenuUI : MonoBehaviour
             new Vector2(0f, 1f),
             new Vector2(0f, 1f),
             new Vector2(58f, -199f),
-            new Vector2(390f, 40f),
+            new Vector2(390f, 54f),
             TextAlignmentOptions.Left,
             FontStyles.Bold);
 
@@ -531,7 +526,7 @@ public class MainMenuUI : MonoBehaviour
             new Vector2(0f, 1f),
             new Vector2(0f, 1f),
             new Vector2(570f, -199f),
-            new Vector2(450f, 40f),
+            new Vector2(450f, 54f),
             TextAlignmentOptions.Left,
             FontStyles.Bold);
 
@@ -545,7 +540,7 @@ public class MainMenuUI : MonoBehaviour
         missionRect.anchorMax = new Vector2(1f, 0f);
         missionRect.pivot = new Vector2(0.5f, 0f);
         missionRect.anchoredPosition = new Vector2(0f, 80f);
-        missionRect.sizeDelta = new Vector2(-108f, 132f);
+        missionRect.sizeDelta = new Vector2(-108f, 154f);
         Image missionImage = missionBox.AddComponent<Image>();
         missionImage.color = new Color(0.035f, 0.10f, 0.16f, 0.82f);
 
@@ -557,8 +552,8 @@ public class MainMenuUI : MonoBehaviour
             warmWhite,
             Vector2.zero,
             Vector2.one,
-            new Vector2(24f, 12f),
-            new Vector2(-204f, -12f),
+            new Vector2(24f, 16f),
+            new Vector2(-204f, -16f),
             TextAlignmentOptions.Left);
 
         Button understoodButton = CreateCompactButton(
@@ -572,6 +567,88 @@ public class MainMenuUI : MonoBehaviour
         closeHowToButton = understoodButton;
 
         howToPlayPanel.SetActive(false);
+    }
+
+    void BuildSettingsPanel(Transform parent)
+    {
+        settingsPanel = CreateUiObject("SettingsModal", parent);
+        Stretch(settingsPanel.GetComponent<RectTransform>());
+        Image dimmer = settingsPanel.AddComponent<Image>();
+        dimmer.color = new Color(0.02f, 0.16f, 0.24f, 0.76f);
+
+        GameObject modal = CreateUiObject("ModalWindow", settingsPanel.transform);
+        RectTransform modalRect = modal.GetComponent<RectTransform>();
+        modalRect.anchorMin = modalRect.anchorMax = new Vector2(0.5f, 0.5f);
+        modalRect.pivot = new Vector2(0.5f, 0.5f);
+        modalRect.sizeDelta = new Vector2(650f, 420f);
+        Image modalImage = modal.AddComponent<Image>();
+        modalImage.color = new Color(0.12f, 0.46f, 0.62f, 0.98f);
+        Outline outline = modal.AddComponent<Outline>();
+        outline.effectColor = cyan;
+        outline.effectDistance = new Vector2(1.2f, -1.2f);
+
+        TextMeshProUGUI title = CreateText(modal.transform, "Title", "SETTINGS", 40f, cyan,
+            new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -68f),
+            new Vector2(500f, 55f), TextAlignmentOptions.Center, FontStyles.Bold, 4f);
+        title.font = titleFont;
+        CreateText(modal.transform, "Subtitle", "AUDIO CONTROLS", 16f, mutedWhite,
+            new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -118f),
+            new Vector2(440f, 28f), TextAlignmentOptions.Center, FontStyles.Bold, 2f).font = titleFont;
+
+        CreateSettingsSlider(modal.transform, "Music", "MUSIC", -18f, "BGMVolume", true);
+        CreateSettingsSlider(modal.transform, "Sfx", "SFX", -94f, "SFXVolume", false);
+        closeSettingsButton = CreateCompactButton(modal.transform, "Close", "CLOSE", new Vector2(1f, 1f),
+            new Vector2(-56f, -36f), new Vector2(108f, 42f), CloseSettings);
+        settingsPanel.SetActive(false);
+    }
+
+    void CreateSettingsSlider(Transform parent, string objectName, string label, float y, string key, bool affectsBgm)
+    {
+        CreateText(parent, objectName + "Label", label, 19f, warmWhite,
+            new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-230f, y),
+            new Vector2(130f, 34f), TextAlignmentOptions.Left, FontStyles.Bold).font = titleFont;
+
+        GameObject sliderObject = CreateUiObject(objectName + "Slider", parent);
+        RectTransform rect = sliderObject.GetComponent<RectTransform>();
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = new Vector2(85f, y);
+        rect.sizeDelta = new Vector2(350f, 26f);
+        Slider slider = sliderObject.AddComponent<Slider>();
+        slider.minValue = 0f;
+        slider.maxValue = 1f;
+        slider.value = PlayerPrefs.GetFloat(key, affectsBgm ? 0.25f : 0.8f);
+
+        GameObject background = CreateUiObject("Background", sliderObject.transform);
+        Stretch(background.GetComponent<RectTransform>());
+        Image backgroundImage = background.AddComponent<Image>();
+        backgroundImage.color = new Color(0.06f, 0.13f, 0.20f, 1f);
+        slider.targetGraphic = backgroundImage;
+
+        GameObject fillArea = CreateUiObject("Fill Area", sliderObject.transform);
+        Stretch(fillArea.GetComponent<RectTransform>());
+        RectTransform fillAreaRect = fillArea.GetComponent<RectTransform>();
+        fillAreaRect.offsetMin = new Vector2(8f, 6f);
+        fillAreaRect.offsetMax = new Vector2(-8f, -6f);
+        GameObject fill = CreateUiObject("Fill", fillArea.transform);
+        Stretch(fill.GetComponent<RectTransform>());
+        Image fillImage = fill.AddComponent<Image>();
+        fillImage.color = cyan;
+        slider.fillRect = fill.GetComponent<RectTransform>();
+
+        GameObject handle = CreateUiObject("Handle", sliderObject.transform);
+        RectTransform handleRect = handle.GetComponent<RectTransform>();
+        handleRect.sizeDelta = new Vector2(18f, 36f);
+        Image handleImage = handle.AddComponent<Image>();
+        handleImage.color = warmWhite;
+        slider.handleRect = handleRect;
+        slider.direction = Slider.Direction.LeftToRight;
+        slider.onValueChanged.AddListener(value =>
+        {
+            PlayerPrefs.SetFloat(key, value);
+            if (affectsBgm && audioSource != null)
+                audioSource.volume = value;
+        });
     }
 
     void BuildLevelSelectPanel(Transform parent)
@@ -766,7 +843,7 @@ public class MainMenuUI : MonoBehaviour
         keyRect.anchorMax = new Vector2(0f, 1f);
         keyRect.pivot = new Vector2(0f, 1f);
         keyRect.anchoredPosition = anchoredPosition;
-        keyRect.sizeDelta = new Vector2(keyWidth, 44f);
+        keyRect.sizeDelta = new Vector2(keyWidth, 52f);
 
         Image keyImage = keyObject.AddComponent<Image>();
         keyImage.color = new Color(0.09f, 0.18f, 0.26f, 0.94f);
@@ -794,7 +871,7 @@ public class MainMenuUI : MonoBehaviour
             new Vector2(0f, 1f),
             new Vector2(0f, 1f),
             anchoredPosition + new Vector2(keyWidth + 18f, 0f),
-            new Vector2(330f, 44f),
+            new Vector2(330f, 56f),
             TextAlignmentOptions.Left);
     }
 
@@ -918,6 +995,8 @@ public class MainMenuUI : MonoBehaviour
         text.color = color;
         text.alignment = alignment;
         text.characterSpacing = characterSpacing;
+        text.extraPadding = false;
+        text.lineSpacing = content.IndexOf('\n') >= 0 ? 4f : 0f;
         text.enableWordWrapping = true;
         text.overflowMode = TextOverflowModes.Overflow;
         text.raycastTarget = false;
@@ -995,6 +1074,31 @@ public class MainMenuUI : MonoBehaviour
 
         if (EventSystem.current != null && howToButton != null)
             EventSystem.current.SetSelectedGameObject(howToButton.gameObject);
+    }
+
+    public void OpenSettings()
+    {
+        if (settingsPanel == null) return;
+        PlayClick();
+        settingsPanel.SetActive(true);
+        if (EventSystem.current != null && closeSettingsButton != null)
+            EventSystem.current.SetSelectedGameObject(closeSettingsButton.gameObject);
+    }
+
+    public void CloseSettings()
+    {
+        if (settingsPanel == null || !settingsPanel.activeSelf) return;
+        PlayerPrefs.Save();
+        PlayClick();
+        settingsPanel.SetActive(false);
+        if (EventSystem.current != null && startButton != null)
+            EventSystem.current.SetSelectedGameObject(startButton.gameObject);
+    }
+
+    public void OpenCredits()
+    {
+        PlayClick();
+        SceneManager.LoadScene("Credits");
     }
 
     public void StartGame()

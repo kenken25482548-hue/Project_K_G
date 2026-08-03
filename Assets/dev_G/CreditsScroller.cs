@@ -16,15 +16,15 @@ public class CreditsScroller : MonoBehaviour
     public float endY = 1200f;
 
     private const string PremiumRootName = "AAA_Credits";
-    private const string BackgroundResourcePath = "UI/Credits_Character_Background";
+    private const string BackgroundResourcePath = "";
     private const string BackgroundVideoResourcePath = "UI/MainMenu_AAA_Background_Animated";
     private const bool UseAnimatedBackgroundVideo = false;
     private const string UiFontResourcePath = "UI/Fonts/Kanit-SemiBold SDF";
     private const string TitleFontResourcePath = "UI/Fonts/ChakraPetch-Bold SDF";
 
-    private static readonly Color Cyan = new Color(0.20f, 0.80f, 1f, 1f);
-    private static readonly Color SoftWhite = new Color(0.91f, 0.95f, 0.98f, 1f);
-    private static readonly Color Muted = new Color(0.55f, 0.65f, 0.73f, 1f);
+    private static readonly Color Cyan = new Color(0.49f, 0.90f, 1f, 1f);
+    private static readonly Color SoftWhite = new Color(0.94f, 0.99f, 1f, 1f);
+    private static readonly Color Muted = new Color(0.76f, 0.90f, 0.96f, 1f);
 
     private sealed class FloatingElement
     {
@@ -68,7 +68,7 @@ public class CreditsScroller : MonoBehaviour
 
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             GoToMainMenu();
         }
@@ -112,17 +112,13 @@ public class CreditsScroller : MonoBehaviour
         RectTransform veilRect = veilObject.GetComponent<RectTransform>();
         Stretch(veilRect);
         Image veil = veilObject.AddComponent<Image>();
-        veil.color = new Color(0.005f, 0.015f, 0.04f, 0.72f);
+        veil.color = new Color(0.02f, 0.16f, 0.24f, 0.36f);
         veil.raycastTarget = false;
 
         contentRoot = CreateUiObject("CreditsContent", root).GetComponent<RectTransform>();
         Stretch(contentRoot);
-        contentRoot.anchoredPosition = new Vector2(-54f, 0f);
-
-        BuildHeader(contentRoot);
-        BuildTeamPanel(contentRoot);
-        BuildMissionSeal(contentRoot);
-        BuildFooter(contentRoot);
+        contentRoot.anchoredPosition = Vector2.zero;
+        BuildMinimalCredits(contentRoot);
     }
 
     void BuildBackground(RectTransform root)
@@ -132,10 +128,10 @@ public class CreditsScroller : MonoBehaviour
         Stretch(backgroundRect);
 
         RawImage background = backgroundObject.AddComponent<RawImage>();
-        background.texture = Resources.Load<Texture2D>(BackgroundResourcePath);
-        background.color = background.texture != null
-            ? Color.white
-            : new Color(0.015f, 0.055f, 0.10f, 1f);
+        background.texture = string.IsNullOrEmpty(BackgroundResourcePath)
+            ? null
+            : Resources.Load<Texture2D>(BackgroundResourcePath);
+        background.color = new Color(0.08f, 0.36f, 0.54f, 1f);
         background.raycastTarget = false;
 
         VideoClip animatedBackground = UseAnimatedBackgroundVideo
@@ -164,6 +160,92 @@ public class CreditsScroller : MonoBehaviour
         MainMenuBackgroundMotion motion =
             motionObject.AddComponent<MainMenuBackgroundMotion>();
         motion.Configure(background, sweep);
+    }
+
+    void BuildMinimalCredits(Transform parent)
+    {
+        TextMeshProUGUI gameTitle = CreateCenteredText(
+            parent, "GameTitle", "CLEAN & LEARN", 26f, Cyan,
+            new Vector2(520f, 44f), new Vector2(0f, 300f), FontStyles.Bold);
+        gameTitle.font = titleFont;
+        gameTitle.characterSpacing = 5f;
+
+        TextMeshProUGUI title = CreateCenteredText(
+            parent, "CreditsTitle", "CREDITS", 66f, Cyan,
+            new Vector2(820f, 100f), new Vector2(0f, 148f), FontStyles.Normal);
+        title.font = titleFont;
+        title.characterSpacing = 8f;
+
+        CreateCenteredRule(parent, "TitleRule", new Vector2(0f, 85f), 400f);
+
+        TextMeshProUGUI thankYou = CreateCenteredText(
+            parent, "ThankYou", "THANK YOU FOR PLAYING", 25f, SoftWhite,
+            new Vector2(720f, 44f), new Vector2(0f, 42f), FontStyles.Bold);
+        thankYou.font = titleFont;
+        thankYou.characterSpacing = 4f;
+
+        TextMeshProUGUI developedBy = CreateCenteredText(
+            parent, "DevelopedBy", "DEVELOPED BY", 17f, Cyan,
+            new Vector2(420f, 34f), new Vector2(0f, -40f), FontStyles.Bold);
+        developedBy.font = titleFont;
+        developedBy.characterSpacing = 3f;
+
+        CreateCenteredText(
+            parent, "DeveloperNames", "นายรัตนนิล พูนพวง\nนายกรวิช แพงชาลี", 27f, SoftWhite,
+            new Vector2(720f, 92f), new Vector2(0f, -92f), FontStyles.Bold);
+
+        TextMeshProUGUI madeWith = CreateCenteredText(
+            parent, "MadeWith", "MADE WITH", 18f, Cyan,
+            new Vector2(420f, 34f), new Vector2(0f, -168f), FontStyles.Bold);
+        madeWith.font = titleFont;
+        madeWith.characterSpacing = 4f;
+
+        TextMeshProUGUI tools = CreateCenteredText(
+            parent, "Tools", "UNITY  •  BLENDER  •  VISUAL STUDIO  •  GITHUB", 21f, SoftWhite,
+            new Vector2(1100f, 40f), new Vector2(0f, -214f), FontStyles.Normal);
+        tools.font = titleFont;
+        tools.characterSpacing = 2f;
+
+        CreateMinimalReturnButton(parent);
+    }
+
+    void CreateCenteredRule(Transform parent, string name, Vector2 position, float width)
+    {
+        GameObject ruleObject = CreateUiObject(name, parent);
+        RectTransform rect = ruleObject.GetComponent<RectTransform>();
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = position;
+        rect.sizeDelta = new Vector2(width, 2f);
+        Image image = ruleObject.AddComponent<Image>();
+        image.color = new Color(Cyan.r, Cyan.g, Cyan.b, 0.55f);
+        image.raycastTarget = false;
+    }
+
+    void CreateMinimalReturnButton(Transform parent)
+    {
+        GameObject buttonObject = CreateUiObject("ReturnButton", parent);
+        RectTransform rect = buttonObject.GetComponent<RectTransform>();
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = new Vector2(0f, -325f);
+        rect.sizeDelta = new Vector2(310f, 58f);
+
+        Image image = buttonObject.AddComponent<Image>();
+        image.color = new Color(0.025f, 0.17f, 0.27f, 0.92f);
+        Outline outline = buttonObject.AddComponent<Outline>();
+        outline.effectColor = Cyan;
+        outline.effectDistance = new Vector2(1.2f, -1.2f);
+
+        Button button = buttonObject.AddComponent<Button>();
+        button.targetGraphic = image;
+        button.onClick.AddListener(GoToMainMenu);
+
+        TextMeshProUGUI label = CreateCenteredText(
+            buttonObject.transform, "Label", "RETURN TO MENU", 19f, Cyan,
+            new Vector2(280f, 42f), Vector2.zero, FontStyles.Bold);
+        label.font = titleFont;
+        label.characterSpacing = 3f;
     }
 
     void BuildHeader(Transform parent)

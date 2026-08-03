@@ -62,12 +62,17 @@ public class MainMenuBackgroundMotion : MonoBehaviour
         float y = available * 0.5f + Mathf.Cos(time * 0.17f) * 0.006f;
         background.uvRect = new Rect(x, y, viewSize, viewSize);
 
-        float lightPulse = 0.965f + Mathf.Sin(time * 0.45f) * 0.035f;
-        background.color = new Color(
-            0.93f * lightPulse,
-            0.97f * lightPulse,
-            lightPulse,
-            1f);
+        // A blank RawImage is used by the minimal menu. Preserve its navy tint;
+        // only apply the bright photo pulse when a real background texture exists.
+        if (background.texture != null)
+        {
+            float lightPulse = 0.965f + Mathf.Sin(time * 0.45f) * 0.035f;
+            background.color = new Color(
+                0.93f * lightPulse,
+                0.97f * lightPulse,
+                lightPulse,
+                1f);
+        }
     }
 
     void AnimateLightSweep(float time)

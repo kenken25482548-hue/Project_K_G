@@ -14,10 +14,14 @@ public class LevelFlowManager : MonoBehaviour
 
     private bool levelEnded = false;
     private CleaningTarget[] stains;
+    private MinimalLevelEndUI minimalEndUi;
 
     void Start()
     {
         stains = FindObjectsOfType<CleaningTarget>();
+        minimalEndUi = GetComponent<MinimalLevelEndUI>();
+        if (minimalEndUi == null)
+            minimalEndUi = gameObject.AddComponent<MinimalLevelEndUI>();
 
         if (levelCompletePanel != null)
             levelCompletePanel.SetActive(false);
@@ -95,10 +99,14 @@ public class LevelFlowManager : MonoBehaviour
         GameProgress.UnlockLevel(Mathf.Max(0, missionIndex));
 
         if (levelCompletePanel != null)
-            levelCompletePanel.SetActive(true);
+            levelCompletePanel.SetActive(false);
 
         if (completeSubText != null)
             completeSubText.text = "ล้างคราบครบทั้งหมด " + clearedCount + " / " + totalCount + "\n\nกด N เพื่อไปด่านถัดไป\nกด R เพื่อเริ่มใหม่";
+
+        if (minimalEndUi != null)
+            minimalEndUi.ShowComplete(clearedCount, totalCount, LoadNextLevel,
+                () => SceneManager.LoadScene("0Mainmenu0"), RestartLevel);
 
         GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.successSfx : null, 1f);
     }
@@ -116,7 +124,8 @@ public class LevelFlowManager : MonoBehaviour
 
     void HandleEndInput()
     {
-        if (levelCompletePanel != null && levelCompletePanel.activeSelf)
+        if ((levelCompletePanel != null && levelCompletePanel.activeSelf) ||
+            (minimalEndUi != null && minimalEndUi.IsVisible))
         {
             if (Input.GetKeyDown(KeyCode.N))
                 LoadNextLevel();

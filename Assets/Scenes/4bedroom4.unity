@@ -3990,6 +3990,11 @@ PrefabInstance:
       propertyPath: maxUses
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6871233221990675584, guid: 01f1a2e0e3f98d941a975ba57c5c0b22, type: 3}
+      propertyPath: itemDescription
+      value: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E1A\u0E19\u0E1C\u0E49\u0E32\u0E41\u0E25\u0E30\u0E40\u0E1A\u0E32\u0E30\n
+        \u0E0A\u0E48\u0E27\u0E22\u0E2A\u0E25\u0E32\u0E22\u0E04\u0E23\u0E32\u0E1A\u0E1D\u0E31\u0E07\u0E41\u0E19\u0E48\u0E19"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
