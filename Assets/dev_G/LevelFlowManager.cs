@@ -23,6 +23,8 @@ public class LevelFlowManager : MonoBehaviour
         if (minimalEndUi == null)
             minimalEndUi = gameObject.AddComponent<MinimalLevelEndUI>();
 
+        ShowMissionBanner();
+
         if (levelCompletePanel != null)
             levelCompletePanel.SetActive(false);
 
@@ -155,5 +157,19 @@ public class LevelFlowManager : MonoBehaviour
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void ShowMissionBanner()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        string[] sceneNames = { "1bathroom1", "2Kitchen2", "3iving room3", "4bedroom4" };
+        string[] englishNames = { "BATHROOM", "KITCHEN", "LIVING ROOM", "BEDROOM" };
+        string[] thaiNames = { "ห้องน้ำ", "ห้องครัว", "ห้องนั่งเล่น", "ห้องนอน" };
+        int index = System.Array.IndexOf(sceneNames, sceneName);
+        if (index < 0) return;
+
+        GameObject bannerObject = new GameObject("LevelMissionBannerController");
+        LevelMissionBanner banner = bannerObject.AddComponent<LevelMissionBanner>();
+        banner.Show((index + 1).ToString("00"), englishNames[index], thaiNames[index]);
     }
 }

@@ -8,6 +8,9 @@ public class PauseMenuUI : MonoBehaviour
     public GameObject pauseOverlay;
     private bool isPaused = false;
     private TMP_FontAsset uiFont;
+    private TMP_FontAsset guideFont;
+    private GameObject pauseGuidePanel;
+    private GameObject themedPausePanel;
 
     private readonly Color cyan = new Color(0.22f, 0.83f, 1f, 1f);
     private readonly Color navy = new Color(0.015f, 0.10f, 0.15f, 0.97f);
@@ -34,7 +37,11 @@ public class PauseMenuUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!Input.GetKeyDown(KeyCode.Escape)) return;
+
+        if (isPaused && pauseGuidePanel != null && pauseGuidePanel.activeSelf)
+            ClosePauseGuide();
+        else
             TogglePause();
     }
 
@@ -105,7 +112,9 @@ public class PauseMenuUI : MonoBehaviour
         Transform existingPanel = pauseOverlay.transform.Find("ThemedPausePanel");
         if (existingPanel != null)
         {
+            themedPausePanel = existingPanel.gameObject;
             ApplyThaiFont(existingPanel);
+            BuildPauseGuide();
             return;
         }
 
@@ -117,10 +126,11 @@ public class PauseMenuUI : MonoBehaviour
         overlayImage.color = new Color(0.002f, 0.012f, 0.025f, 0.80f);
 
         GameObject panel = UiObject("ThemedPausePanel", pauseOverlay.transform);
+        themedPausePanel = panel;
         RectTransform panelRect = panel.GetComponent<RectTransform>();
         panelRect.anchorMin = panelRect.anchorMax = new Vector2(0.5f, 0.5f);
         panelRect.pivot = new Vector2(0.5f, 0.5f);
-        panelRect.sizeDelta = new Vector2(660f, 620f);
+        panelRect.sizeDelta = new Vector2(660f, 660f);
         Image panelImage = panel.AddComponent<Image>();
         panelImage.color = navy;
         Outline outline = panel.AddComponent<Outline>();
@@ -132,13 +142,81 @@ public class PauseMenuUI : MonoBehaviour
         Text(panel.transform, "Title", "GAME PAUSED", 42f, white, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -94f), new Vector2(560f, 60f), TextAlignmentOptions.Center, FontStyles.Bold);
         Text(panel.transform, "Hint", "PRESS ESC TO RESUME", 18f, new Color(0.66f, 0.77f, 0.85f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -137f), new Vector2(450f, 28f), TextAlignmentOptions.Center);
 
-        ThemedButton(panel.transform, "Resume", "RESUME", new Vector2(0f, 67f), ResumeGame, true);
-        ThemedButton(panel.transform, "Restart", "RESTART LEVEL", new Vector2(0f, 2f), RestartLevel, false);
-        ThemedButton(panel.transform, "MainMenu", "RETURN TO MAIN MENU", new Vector2(0f, -63f), ReturnToMainMenu, false);
+        ThemedButton(panel.transform, "Resume", "RESUME", new Vector2(0f, 94f), ResumeGame, true);
+        ThemedButton(panel.transform, "Restart", "RESTART LEVEL", new Vector2(0f, 29f), RestartLevel, false);
+        ThemedButton(panel.transform, "HowToPlay", "HOW TO PLAY", new Vector2(0f, -36f), OpenPauseGuide, false);
+        ThemedButton(panel.transform, "MainMenu", "RETURN TO MAIN MENU", new Vector2(0f, -101f), ReturnToMainMenu, false);
 
         Text(panel.transform, "AudioLabel", "AUDIO SETTINGS", 16f, cyan, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 133f), new Vector2(450f, 30f), TextAlignmentOptions.Center, FontStyles.Bold, 2f);
         CreateSliderRow(panel.transform, "MUSIC", new Vector2(0f, 88f), true);
         CreateSliderRow(panel.transform, "SFX", new Vector2(0f, 48f), false);
+        BuildPauseGuide();
+    }
+
+    public void OpenPauseGuide()
+    {
+        if (pauseGuidePanel == null) return;
+        pauseGuidePanel.SetActive(true);
+        if (themedPausePanel != null)
+            themedPausePanel.SetActive(false);
+    }
+
+    public void ClosePauseGuide()
+    {
+        if (pauseGuidePanel != null)
+            pauseGuidePanel.SetActive(false);
+        if (themedPausePanel != null)
+            themedPausePanel.SetActive(true);
+    }
+
+    private void BuildPauseGuide()
+    {
+        if (pauseOverlay == null || pauseGuidePanel != null) return;
+
+        guideFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
+        if (guideFont == null) guideFont = uiFont;
+
+        pauseGuidePanel = UiObject("PauseQuickGuide", pauseOverlay.transform);
+        RectTransform guideRect = pauseGuidePanel.GetComponent<RectTransform>();
+        guideRect.anchorMin = guideRect.anchorMax = new Vector2(0.5f, 0.5f);
+        guideRect.pivot = new Vector2(0.5f, 0.5f);
+        guideRect.sizeDelta = new Vector2(720f, 530f);
+        Image guideImage = pauseGuidePanel.AddComponent<Image>();
+        guideImage.color = navy;
+        Outline outline = pauseGuidePanel.AddComponent<Outline>();
+        outline.effectColor = new Color(cyan.r, cyan.g, cyan.b, 0.82f);
+        outline.effectDistance = new Vector2(2f, -2f);
+
+        Accent(pauseGuidePanel.transform, new Vector2(0f, 1f), new Vector2(1f, 1f), Vector2.zero, new Vector2(0f, 5f));
+        GuideText("Eyebrow", "QUICK GUIDE  /  วิธีเล่นแบบย่อ", 18f, cyan, new Vector2(0f, 197f), new Vector2(580f, 32f), TextAlignmentOptions.Center);
+        GuideText("Title", "วิธีการเล่น", 38f, white, new Vector2(0f, 145f), new Vector2(580f, 58f), TextAlignmentOptions.Center);
+        GuideText("Move", "เดินและเคลื่อนที่:  W A S D", 25f, white, new Vector2(0f, 70f), new Vector2(590f, 42f), TextAlignmentOptions.Left);
+        GuideText("Inspect", "สำรวจคราบ/ดูข้อมูล:  E", 25f, white, new Vector2(0f, 18f), new Vector2(590f, 42f), TextAlignmentOptions.Left);
+        GuideText("Use", "หยิบไอเทม/ใช้งาน:  F", 25f, white, new Vector2(0f, -34f), new Vector2(590f, 42f), TextAlignmentOptions.Left);
+        GuideText("Select", "เลือกช่องไอเทม:  1 - 5", 25f, white, new Vector2(0f, -86f), new Vector2(590f, 42f), TextAlignmentOptions.Left);
+        GuideText("Goal", "ตรวจสอบคราบให้ครบก่อน แล้วเลือกไอเทมให้ถูก\nใช้ไอเทมผิดจะเสียจำนวนการใช้ 1 ครั้ง", 22f, new Color(0.76f, 0.90f, 0.96f, 1f), new Vector2(0f, -151f), new Vector2(590f, 68f), TextAlignmentOptions.Center);
+        ThemedButton(pauseGuidePanel.transform, "Back", "BACK TO PAUSE MENU", new Vector2(0f, -215f), ClosePauseGuide, true);
+        pauseGuidePanel.SetActive(false);
+    }
+
+    private void GuideText(string name, string content, float size, Color color, Vector2 position, Vector2 dimensions, TextAlignmentOptions alignment)
+    {
+        GameObject item = UiObject(name, pauseGuidePanel.transform);
+        RectTransform rect = item.GetComponent<RectTransform>();
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = position;
+        rect.sizeDelta = dimensions;
+        TextMeshProUGUI text = item.AddComponent<TextMeshProUGUI>();
+        text.font = guideFont != null ? guideFont : TMP_Settings.defaultFontAsset;
+        text.text = content;
+        text.fontSize = size;
+        text.fontStyle = FontStyles.Bold;
+        text.color = color;
+        text.alignment = alignment;
+        text.lineSpacing = content.IndexOf('\n') >= 0 ? 4f : 0f;
+        text.enableWordWrapping = true;
+        text.raycastTarget = false;
     }
 
     private void LoadThaiPauseFont()
