@@ -15,15 +15,21 @@ public class LevelFlowManager : MonoBehaviour
     private bool levelEnded = false;
     private CleaningTarget[] stains;
     private MinimalLevelEndUI minimalEndUi;
+    private MissionDifficultyController difficultyController;
 
     void Start()
     {
+        difficultyController = GetComponent<MissionDifficultyController>();
+        if (difficultyController == null)
+            difficultyController = gameObject.AddComponent<MissionDifficultyController>();
+        difficultyController.Configure(this);
+
         stains = FindObjectsOfType<CleaningTarget>();
         minimalEndUi = GetComponent<MinimalLevelEndUI>();
         if (minimalEndUi == null)
             minimalEndUi = gameObject.AddComponent<MinimalLevelEndUI>();
 
-        ShowMissionBanner();
+        ShowMissionStory();
 
         if (levelCompletePanel != null)
             levelCompletePanel.SetActive(false);
@@ -34,7 +40,7 @@ public class LevelFlowManager : MonoBehaviour
 
     void Update()
     {
-        if (PauseMenuUI.IsPaused)
+        if (PauseMenuUI.IsPaused || MissionStoryUI.IsShowing)
             return;
 
         if (levelEnded)
@@ -48,6 +54,7 @@ public class LevelFlowManager : MonoBehaviour
 
     void CheckLevelState()
     {
+        stains = FindObjectsOfType<CleaningTarget>();
         if (stains == null || stains.Length == 0) return;
 
         int totalCount = 0;
@@ -79,7 +86,7 @@ public class LevelFlowManager : MonoBehaviour
 
     bool NoUsableItemsLeft()
     {
-        ItemData[] allItems = FindObjectsOfType<ItemData>(true);
+        ItemData[] allItems = FindObjectsOfType<ItemData>();
 
         if (allItems == null || allItems.Length == 0)
             return true;
@@ -98,7 +105,12 @@ public class LevelFlowManager : MonoBehaviour
         // Keep progress independent from build indices: the launch intro scene is before the menu.
         string[] missionScenes = { "1bathroom1", "2Kitchen2", "3iving room3", "4bedroom4" };
         int missionIndex = System.Array.IndexOf(missionScenes, SceneManager.GetActiveScene().name);
-        GameProgress.UnlockLevel(Mathf.Max(0, missionIndex));
+        missionIndex = Mathf.Max(0, missionIndex);
+        GameProgress.UnlockLevel(missionIndex);
+        GameProgress.MarkLevelCompleted(missionIndex);
+        GameProgress.UnlockEvidence(missionIndex);
+        int clearRank = difficultyController != null ? difficultyController.GetClearRank() : 1;
+        int bestRank = GameProgress.RecordRank(missionIndex, clearRank);
 
         if (levelCompletePanel != null)
             levelCompletePanel.SetActive(false);
@@ -106,8 +118,12 @@ public class LevelFlowManager : MonoBehaviour
         if (completeSubText != null)
             completeSubText.text = "ล้างคราบครบทั้งหมด " + clearedCount + " / " + totalCount + "\n\nกด N เพื่อไปด่านถัดไป\nกด R เพื่อเริ่มใหม่";
 
+        string recoveredMessage = "MISSION DATA RECOVERED";
+        if (MissionStoryCatalog.TryGet(SceneManager.GetActiveScene().name, out MissionStoryData mission))
+            recoveredMessage = mission.recoveredMessage;
+
         if (minimalEndUi != null)
-            minimalEndUi.ShowComplete(clearedCount, totalCount, LoadNextLevel,
+            minimalEndUi.ShowComplete(clearedCount, totalCount, recoveredMessage, difficultyController.CurrentLevel, clearRank, bestRank, LoadNextLevel,
                 () => SceneManager.LoadScene("0Mainmenu0"), RestartLevel);
 
         GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.successSfx : null, 1f);
@@ -122,6 +138,20 @@ public class LevelFlowManager : MonoBehaviour
             failSubText.text = "ภารกิจไม่สำเร็จ\nล้างคราบได้ " + clearedCount + " / " + totalCount + "\nไอเทมหมดแล้ว\nกด R เพื่อเริ่มใหม่";
 
         GameSFXManager.PlaySfx(GameSFXManager.Instance != null ? GameSFXManager.Instance.failSfx : null, 1f);
+    }
+
+    public void FailFromWrongUses(int wrongUses, int limit)
+    {
+        if (levelEnded) return;
+        levelEnded = true;
+        int total = 0;
+        int cleared = 0;
+        foreach (CleaningTarget stain in FindObjectsOfType<CleaningTarget>())
+        {
+            total++;
+            if (stain.isCleared) cleared++;
+        }
+        ShowLevelFail(cleared, total);
     }
 
     void HandleEndInput()
@@ -159,17 +189,12 @@ public class LevelFlowManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    void ShowMissionBanner()
+    void ShowMissionStory()
     {
-        string sceneName = SceneManager.GetActiveScene().name;
-        string[] sceneNames = { "1bathroom1", "2Kitchen2", "3iving room3", "4bedroom4" };
-        string[] englishNames = { "BATHROOM", "KITCHEN", "LIVING ROOM", "BEDROOM" };
-        string[] thaiNames = { "ห้องน้ำ", "ห้องครัว", "ห้องนั่งเล่น", "ห้องนอน" };
-        int index = System.Array.IndexOf(sceneNames, sceneName);
-        if (index < 0) return;
+        if (!MissionStoryCatalog.TryGet(SceneManager.GetActiveScene().name, out MissionStoryData mission))
+            return;
 
-        GameObject bannerObject = new GameObject("LevelMissionBannerController");
-        LevelMissionBanner banner = bannerObject.AddComponent<LevelMissionBanner>();
-        banner.Show((index + 1).ToString("00"), englishNames[index], thaiNames[index]);
+        GameObject storyObject = new GameObject("MissionStoryController");
+        storyObject.AddComponent<MissionStoryUI>().Show(mission);
     }
 }

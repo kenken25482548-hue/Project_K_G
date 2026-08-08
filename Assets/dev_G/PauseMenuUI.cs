@@ -37,6 +37,9 @@ public class PauseMenuUI : MonoBehaviour
 
     void Update()
     {
+        if (MissionStoryUI.IsShowing)
+            return;
+
         if (!Input.GetKeyDown(KeyCode.Escape)) return;
 
         if (isPaused && pauseGuidePanel != null && pauseGuidePanel.activeSelf)
@@ -221,15 +224,9 @@ public class PauseMenuUI : MonoBehaviour
 
     private void LoadThaiPauseFont()
     {
-        uiFont = Resources.Load<TMP_FontAsset>("UI/Fonts/ChakraPetch-SemiBold SDF");
+        uiFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
         if (uiFont == null)
-        {
-            Font tahoma = Font.CreateDynamicFontFromOSFont("Tahoma", 90);
-            if (tahoma != null)
-                uiFont = TMP_FontAsset.CreateFontAsset(tahoma);
-        }
-        if (uiFont == null)
-            uiFont = Resources.Load<TMP_FontAsset>("UI/Fonts/Kanit-SemiBold SDF");
+            uiFont = TMP_Settings.defaultFontAsset;
     }
 
     private void ApplyThaiFont(Transform panel)

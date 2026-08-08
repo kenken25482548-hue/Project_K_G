@@ -14,30 +14,37 @@ public class MinimalLevelEndUI : MonoBehaviour
 
     public bool IsVisible => root != null && root.activeSelf;
 
-    public void ShowComplete(int cleared, int total, UnityAction next, UnityAction menu, UnityAction restart)
+    public void ShowComplete(int cleared, int total, string recoveredMessage, MissionLevelData level, int clearRank, int bestRank, UnityAction next, UnityAction menu, UnityAction restart)
     {
         Build();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         root.SetActive(true);
         Transform window = root.transform.Find("Window");
-        CreateText(window, "Eyebrow", "CLEAN & LEARN", 18f, Cyan, new Vector2(0f, 178f), new Vector2(480f, 32f), FontStyles.Bold);
-        CreateText(window, "Title", "MISSION COMPLETE", 46f, White, new Vector2(0f, 95f), new Vector2(760f, 76f), FontStyles.Bold);
+        CreateText(window, "Eyebrow", "LEVEL " + level.number.ToString("00") + "  /  " + level.difficulty, 18f, Cyan, new Vector2(0f, 178f), new Vector2(480f, 32f), FontStyles.Bold);
+        CreateText(window, "Title", "LEVEL COMPLETE", 46f, White, new Vector2(0f, 95f), new Vector2(760f, 76f), FontStyles.Bold);
         CreateRule(window, new Vector2(0f, 42f), 340f);
-        CreateText(window, "Summary", "ALL STAINS CLEARED  " + cleared + " / " + total, 21f, new Color(0.62f, 0.74f, 0.82f, 1f), new Vector2(0f, -8f), new Vector2(600f, 42f), FontStyles.Bold);
-        CreateButton(window, "Next", "NEXT MISSION", new Vector2(-155f, -113f), next);
-        CreateButton(window, "Restart", "REPLAY", new Vector2(0f, -113f), restart);
-        CreateButton(window, "Menu", "MAIN MENU", new Vector2(155f, -113f), menu);
-        CreateText(window, "NextHint", "GO TO THE NEXT LEVEL", 11f, new Color(0.84f, 0.95f, 1f, 0.92f), new Vector2(-155f, -154f), new Vector2(160f, 24f), FontStyles.Normal);
-        CreateText(window, "RestartHint", "PLAY THIS LEVEL AGAIN", 11f, new Color(0.84f, 0.95f, 1f, 0.92f), new Vector2(0f, -154f), new Vector2(170f, 24f), FontStyles.Normal);
-        CreateText(window, "MenuHint", "RETURN TO MAIN MENU", 11f, new Color(0.84f, 0.95f, 1f, 0.92f), new Vector2(155f, -154f), new Vector2(165f, 24f), FontStyles.Normal);
-        CreateText(window, "ControlHint", "USE THE MOUSE TO SELECT", 14f, Cyan, new Vector2(0f, -210f), new Vector2(430f, 28f), FontStyles.Bold);
+        CreateText(window, "Summary", "ALL STAINS CLEARED  " + cleared + " / " + total, 21f, new Color(0.62f, 0.74f, 0.82f, 1f), new Vector2(0f, 0f), new Vector2(600f, 42f), FontStyles.Bold);
+        CreateText(window, "Recovered", recoveredMessage, 17f, new Color(0.76f, 0.90f, 0.96f, 1f), new Vector2(0f, -54f), new Vector2(700f, 54f), FontStyles.Normal);
+        TextMeshProUGUI rankText = CreateText(window, "Rank", "CLEAR RANK  " + RankLabel(clearRank) + "     BEST  " + RankLabel(bestRank), 18f, Cyan, new Vector2(0f, -94f), new Vector2(700f, 30f), FontStyles.Bold);
+        rankText.gameObject.AddComponent<RankRevealAnimation>().Configure(clearRank);
+        string nextLevel = level.number >= 4
+            ? "ALL FOUR LEVELS COMPLETE"
+            : "NEXT: LEVEL " + (level.number + 1).ToString("00") + "  /  " + MissionLevelCatalog.GetByIndex(level.number).difficulty;
+        CreateText(window, "NextLevel", nextLevel, 15f, new Color(0.70f, 0.90f, 0.98f, 1f), new Vector2(0f, -124f), new Vector2(700f, 26f), FontStyles.Bold);
+        CreateButton(window, "Next", "NEXT MISSION", new Vector2(-155f, -174f), next);
+        CreateButton(window, "Restart", "REPLAY", new Vector2(0f, -174f), restart);
+        CreateButton(window, "Menu", "MAIN MENU", new Vector2(155f, -174f), menu);
+        CreateText(window, "NextHint", "GO TO THE NEXT LEVEL", 11f, new Color(0.84f, 0.95f, 1f, 0.92f), new Vector2(-155f, -215f), new Vector2(160f, 24f), FontStyles.Normal);
+        CreateText(window, "RestartHint", "PLAY THIS LEVEL AGAIN", 11f, new Color(0.84f, 0.95f, 1f, 0.92f), new Vector2(0f, -215f), new Vector2(170f, 24f), FontStyles.Normal);
+        CreateText(window, "MenuHint", "RETURN TO MAIN MENU", 11f, new Color(0.84f, 0.95f, 1f, 0.92f), new Vector2(155f, -215f), new Vector2(165f, 24f), FontStyles.Normal);
+        CreateText(window, "ControlHint", "USE THE MOUSE TO SELECT", 14f, Cyan, new Vector2(0f, -255f), new Vector2(430f, 28f), FontStyles.Bold);
     }
 
     private void Build()
     {
         if (root != null) return;
-        font = Resources.Load<TMP_FontAsset>("UI/Fonts/ChakraPetch-Bold SDF");
+        font = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
         if (font == null) font = TMP_Settings.defaultFontAsset;
         Canvas canvas = FindFirstObjectByType<Canvas>();
         if (canvas == null) return;
@@ -49,7 +56,7 @@ public class MinimalLevelEndUI : MonoBehaviour
         RectTransform r = window.GetComponent<RectTransform>();
         r.anchorMin = r.anchorMax = new Vector2(0.5f, 0.5f);
         r.pivot = new Vector2(0.5f, 0.5f);
-        r.sizeDelta = new Vector2(900f, 500f);
+        r.sizeDelta = new Vector2(900f, 560f);
         Image image = window.AddComponent<Image>();
         image.color = new Color(0.12f, 0.46f, 0.62f, 0.98f);
         Outline outline = window.AddComponent<Outline>();
@@ -88,7 +95,7 @@ public class MinimalLevelEndUI : MonoBehaviour
         image.color = Cyan;
     }
 
-    private void CreateText(Transform parent, string name, string value, float size, Color color, Vector2 position, Vector2 bounds, FontStyles style)
+    private TextMeshProUGUI CreateText(Transform parent, string name, string value, float size, Color color, Vector2 position, Vector2 bounds, FontStyles style)
     {
         GameObject obj = CreateObject(name, parent);
         RectTransform r = obj.GetComponent<RectTransform>();
@@ -105,6 +112,7 @@ public class MinimalLevelEndUI : MonoBehaviour
         text.alignment = TextAlignmentOptions.Center;
         text.enableWordWrapping = false;
         text.raycastTarget = false;
+        return text;
     }
 
     private static GameObject CreateObject(string name, Transform parent)
@@ -120,5 +128,15 @@ public class MinimalLevelEndUI : MonoBehaviour
         rect.anchorMax = Vector2.one;
         rect.offsetMin = Vector2.zero;
         rect.offsetMax = Vector2.zero;
+    }
+
+    private static string RankLabel(int rank)
+    {
+        switch (rank)
+        {
+            case 3: return "S";
+            case 2: return "A";
+            default: return "B";
+        }
     }
 }

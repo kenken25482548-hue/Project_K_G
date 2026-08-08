@@ -122,7 +122,7 @@ public class BathroomHudPolish : MonoBehaviour
         rect.anchoredPosition = new Vector2(0f, 9f);
         rect.sizeDelta = new Vector2(34f, 26f);
         TextMeshProUGUI text = numberObject.GetComponent<TextMeshProUGUI>();
-        text.font = Resources.Load<TMP_FontAsset>("UI/Fonts/ChakraPetch-Bold SDF");
+        text.font = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
         text.text = number.ToString();
         text.fontSize = 17f;
         text.fontStyle = FontStyles.Bold;

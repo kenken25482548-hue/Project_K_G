@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class CleaningTarget : MonoBehaviour
 {
+    public static System.Action<CleaningTarget> WrongItemUsed;
+    public static System.Action<CleaningTarget> CorrectItemUsed;
     [Header("Stain Info")]
     public string stainName;
 
@@ -98,6 +100,7 @@ public class CleaningTarget : MonoBehaviour
         if (isCorrect)
         {
             isCleared = true;
+            CorrectItemUsed?.Invoke(this);
 
             HideDirtVisual();
 
@@ -113,6 +116,7 @@ public class CleaningTarget : MonoBehaviour
         else
         {
             GameSFXManager.PlayUseFeedback(GameSFXManager.Instance != null ? GameSFXManager.Instance.wrongUseSfx : null);
+            WrongItemUsed?.Invoke(this);
             ShowWrongPopup();
         }
 

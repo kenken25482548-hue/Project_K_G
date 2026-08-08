@@ -26,7 +26,7 @@ public class MainMenuUI : MonoBehaviour
     private const bool UseAnimatedBackgroundVideo = false;
     private const string FallbackFontResourcePath = "Fonts & Materials/MiPancake SDF";
     private const string UiFontResourcePath = "Fonts & Materials/MiPancake SDF";
-    private const string TitleFontResourcePath = "UI/Fonts/ChakraPetch-Bold SDF";
+    private const string TitleFontResourcePath = "Fonts & Materials/MiPancake SDF";
 
     private readonly Color cyan = new Color(0.49f, 0.90f, 1f, 1f);
     private readonly Color warmWhite = new Color(0.94f, 0.99f, 1f, 1f);
@@ -40,11 +40,14 @@ public class MainMenuUI : MonoBehaviour
     private GameObject howToPlayPanel;
     private GameObject levelSelectPanel;
     private GameObject settingsPanel;
+    private GameObject caseFilesPanel;
     private Button startButton;
     private Button howToButton;
     private Button closeHowToButton;
     private Button closeSettingsButton;
     private Button resetSaveButton;
+    private Button closeCaseFilesButton;
+    private Button challengeModeButton;
     private bool isStartingGame;
     private bool waitingForResetConfirmation;
     private float nextHoverSoundTime;
@@ -102,6 +105,9 @@ public class MainMenuUI : MonoBehaviour
 
         if (settingsPanel != null && settingsPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
             CloseSettings();
+
+        if (caseFilesPanel != null && caseFilesPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+            CloseCaseFiles();
     }
 
     void BuildPremiumMenu()
@@ -127,6 +133,7 @@ public class MainMenuUI : MonoBehaviour
         BuildHowToPlayPanel(premiumRoot.transform);
         BuildLevelSelectPanel(premiumRoot.transform);
         BuildSettingsPanel(premiumRoot.transform);
+        BuildCaseFilesPanel(premiumRoot.transform);
     }
 
     void HideLegacyMenuChildren(Transform canvasRoot, Transform keepRoot)
@@ -293,18 +300,26 @@ public class MainMenuUI : MonoBehaviour
 
         CreateMenuButton(
             leftPanel.transform,
-            "SettingsButton",
-            "SETTINGS",
+            "CaseFilesButton",
+            "CASE FILES",
             "03",
             new Vector2(0f, -141f),
+            OpenCaseFiles);
+
+        CreateMenuButton(
+            leftPanel.transform,
+            "SettingsButton",
+            "SETTINGS",
+            "04",
+            new Vector2(0f, -214f),
             OpenSettings);
 
         CreateMenuButton(
             leftPanel.transform,
             "QuitGameButton",
             "QUIT GAME",
-            "04",
-            new Vector2(0f, -214f),
+            "05",
+            new Vector2(0f, -287f),
             QuitGame);
 
         CreateText(
@@ -315,7 +330,7 @@ public class MainMenuUI : MonoBehaviour
             new Color(mutedWhite.r, mutedWhite.g, mutedWhite.b, 0.68f),
             new Vector2(0.5f, 0.5f),
             new Vector2(0.5f, 0.5f),
-            new Vector2(14f, -300f),
+            new Vector2(14f, -373f),
             new Vector2(460f, 34f),
             TextAlignmentOptions.Center,
             FontStyles.Bold,
@@ -325,7 +340,7 @@ public class MainMenuUI : MonoBehaviour
         RectTransform dotRect = statusDot.GetComponent<RectTransform>();
         dotRect.anchorMin = dotRect.anchorMax = new Vector2(0.5f, 0.5f);
         dotRect.pivot = new Vector2(0.5f, 0.5f);
-        dotRect.anchoredPosition = new Vector2(-204f, -300f);
+        dotRect.anchoredPosition = new Vector2(-204f, -373f);
         dotRect.sizeDelta = new Vector2(10f, 10f);
         Image dotImage = statusDot.AddComponent<Image>();
         dotImage.color = cyan;
@@ -675,7 +690,83 @@ public class MainMenuUI : MonoBehaviour
         resetSaveButton = CreateCompactButton(levelSelectPanel.transform, "ResetSaveButton", "RESET SAVE", new Vector2(1f, 0f),
             new Vector2(-116f, 122f), new Vector2(190f, 48f), RequestResetSave);
 
+        challengeModeButton = CreateCompactButton(levelSelectPanel.transform, "ChallengeModeButton", "CHALLENGE LOCKED", new Vector2(0f, 0f),
+            new Vector2(142f, 58f), new Vector2(280f, 48f), ToggleChallengeMode);
+
         levelSelectPanel.SetActive(false);
+    }
+
+    void BuildCaseFilesPanel(Transform parent)
+    {
+        caseFilesPanel = CreateUiObject("CaseFilesPanel", parent);
+        Stretch(caseFilesPanel.GetComponent<RectTransform>());
+        Image shade = caseFilesPanel.AddComponent<Image>();
+        shade.color = new Color(0.004f, 0.014f, 0.030f, 0.90f);
+
+        GameObject window = CreateUiObject("Window", caseFilesPanel.transform);
+        RectTransform windowRect = window.GetComponent<RectTransform>();
+        windowRect.anchorMin = windowRect.anchorMax = new Vector2(0.5f, 0.5f);
+        windowRect.pivot = new Vector2(0.5f, 0.5f);
+        windowRect.sizeDelta = new Vector2(920f, 650f);
+        Image windowImage = window.AddComponent<Image>();
+        windowImage.color = panelNavy;
+        Outline windowOutline = window.AddComponent<Outline>();
+        windowOutline.effectColor = cyan;
+        windowOutline.effectDistance = new Vector2(1.2f, -1.2f);
+
+        CreateText(window.transform, "Eyebrow", "EVIDENCE ARCHIVE  /  RECOVERED CASE FILES", 17f, cyan,
+            new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -48f),
+            new Vector2(760f, 32f), TextAlignmentOptions.Center, FontStyles.Bold, 2f).font = titleFont;
+        CreateText(window.transform, "Title", "CASE FILES", 42f, warmWhite,
+            new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -82f),
+            new Vector2(720f, 54f), TextAlignmentOptions.Center, FontStyles.Bold).font = titleFont;
+        CreateText(window.transform, "Hint", "CLEAR A MISSION TO RECOVER ITS NOTE", 14f, mutedWhite,
+            new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -145f),
+            new Vector2(720f, 25f), TextAlignmentOptions.Center, FontStyles.Bold, 1.5f);
+        closeCaseFilesButton = CreateCompactButton(window.transform, "CloseButton", "BACK", new Vector2(0.5f, 0f),
+            new Vector2(0f, 38f), new Vector2(160f, 46f), CloseCaseFiles);
+
+        string[] notes =
+        {
+            "FIRST TRACE RECOVERED. The system recorded a careful first cleanup.",
+            "AFTER HOURS RECOVERED. The kitchen pattern confirms deliberate choices.",
+            "QUIET ROOM RECOVERED. The missing record points to a repeated test.",
+            "FINAL ROOM RECOVERED. Every case is now connected and closed."
+        };
+        for (int i = 0; i < 4; i++)
+            CreateEvidenceEntry(window.transform, i, notes[i]);
+
+        caseFilesPanel.SetActive(false);
+    }
+
+    void CreateEvidenceEntry(Transform parent, int levelIndex, string note)
+    {
+        GameObject entry = CreateUiObject("Evidence_" + (levelIndex + 1), parent);
+        RectTransform rect = entry.GetComponent<RectTransform>();
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 1f);
+        rect.pivot = new Vector2(0.5f, 1f);
+        rect.anchoredPosition = new Vector2(0f, -190f - levelIndex * 82f);
+        rect.sizeDelta = new Vector2(770f, 78f);
+        Image image = entry.AddComponent<Image>();
+        bool recovered = GameProgress.HasEvidence(levelIndex);
+        image.color = recovered
+            ? new Color(0.035f, 0.20f, 0.29f, 0.96f)
+            : new Color(0.025f, 0.07f, 0.11f, 0.96f);
+
+        MissionLevelData level = MissionLevelCatalog.GetByIndex(levelIndex);
+        CreateText(entry.transform, "Number", "0" + level.number, 23f, recovered ? cyan : mutedWhite,
+            new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(28f, 0f),
+            new Vector2(70f, 38f), TextAlignmentOptions.Left, FontStyles.Bold).font = titleFont;
+        CreateText(entry.transform, "Name", levelLabels[levelIndex], 18f, warmWhite,
+            new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(108f, 16f),
+            new Vector2(220f, 30f), TextAlignmentOptions.Left, FontStyles.Bold).font = titleFont;
+        CreateText(entry.transform, "Status", recovered ? "EVIDENCE RECOVERED" : "DATA LOCKED", 13f, recovered ? new Color(0.37f, 1f, 0.75f, 1f) : mutedWhite,
+            new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(108f, -15f),
+            new Vector2(210f, 25f), TextAlignmentOptions.Left, FontStyles.Bold, 1f).font = titleFont;
+        CreateText(entry.transform, "Note", recovered ? note : "Complete this mission to recover the hidden case note.", 13f,
+            recovered ? new Color(0.78f, 0.91f, 0.97f, 1f) : new Color(0.50f, 0.62f, 0.70f, 1f),
+            new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(355f, 0f),
+            new Vector2(375f, 52f), TextAlignmentOptions.Left, FontStyles.Normal);
     }
 
     Button CreateLevelCard(Transform parent, int levelIndex)
@@ -723,6 +814,10 @@ public class MainMenuUI : MonoBehaviour
         CreateText(card.transform, "Name", levelLabels[levelIndex], 23f, warmWhite,
             new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(104f, 26f),
             new Vector2(-20f, 66f), TextAlignmentOptions.Left, FontStyles.Bold).font = titleFont;
+        MissionLevelData level = MissionLevelCatalog.GetByIndex(levelIndex);
+        CreateText(card.transform, "Difficulty", level.difficulty + "  //  " + level.challenge, 12f, mutedWhite,
+            new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(104f, 3f),
+            new Vector2(-20f, 28f), TextAlignmentOptions.Left, FontStyles.Bold, 1f).font = titleFont;
         TextMeshProUGUI state = CreateText(card.transform, "State", "", 20f, cyan,
             new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero,
             new Vector2(240f, 54f), TextAlignmentOptions.Center, FontStyles.Bold);
@@ -749,6 +844,7 @@ public class MainMenuUI : MonoBehaviour
         waitingForResetConfirmation = false;
         SetResetSaveLabel("RESET SAVE");
         UpdateLevelCards();
+        UpdateChallengeModeButton();
         levelSelectPanel.SetActive(true);
         if (EventSystem.current != null && levelButtons[0] != null)
             EventSystem.current.SetSelectedGameObject(levelButtons[0].gameObject);
@@ -778,6 +874,33 @@ public class MainMenuUI : MonoBehaviour
         waitingForResetConfirmation = false;
         SetResetSaveLabel("SAVE RESET!");
         UpdateLevelCards();
+        UpdateChallengeModeButton();
+    }
+
+    void ToggleChallengeMode()
+    {
+        if (!GameProgress.CanUseChallengeMode()) return;
+        GameProgress.SetChallengeMode(!GameProgress.IsChallengeMode);
+        PlayClick();
+        UpdateChallengeModeButton();
+        UpdateLevelCards();
+    }
+
+    void UpdateChallengeModeButton()
+    {
+        if (challengeModeButton == null) return;
+        bool available = GameProgress.CanUseChallengeMode();
+        challengeModeButton.interactable = available;
+        TMP_Text label = challengeModeButton.transform.Find("Label")?.GetComponent<TMP_Text>();
+        if (label != null)
+        {
+            label.text = available
+                ? (GameProgress.IsChallengeMode ? "CHALLENGE MODE: ON" : "CHALLENGE MODE: OFF")
+                : "CHALLENGE LOCKED";
+            label.color = available && GameProgress.IsChallengeMode
+                ? new Color(1f, 0.67f, 0.34f, 1f)
+                : warmWhite;
+        }
     }
 
     void SetResetSaveLabel(string label)
@@ -794,6 +917,7 @@ public class MainMenuUI : MonoBehaviour
             Button button = levelButtons[i];
             if (button == null) continue;
             bool unlocked = GameProgress.IsUnlocked(i);
+            bool completed = GameProgress.IsCompleted(i);
             button.interactable = unlocked;
             Image image = button.GetComponent<Image>();
             if (image != null) image.color = unlocked
@@ -806,10 +930,53 @@ public class MainMenuUI : MonoBehaviour
             TMP_Text state = button.transform.Find("State").GetComponent<TMP_Text>();
             if (state != null)
             {
-                state.text = unlocked ? "READY" : "LOCKED";
-                state.color = unlocked ? new Color(0.35f, 1f, 0.73f, 1f) : mutedWhite;
+                state.text = completed
+                    ? "CLEARED\nRANK " + RankLabel(GameProgress.GetBestRank(i))
+                    : (unlocked ? "READY" : "LOCKED");
+                state.color = completed
+                    ? new Color(0.49f, 0.90f, 1f, 1f)
+                    : (unlocked ? new Color(0.35f, 1f, 0.73f, 1f) : mutedWhite);
+            }
+            TMP_Text difficulty = button.transform.Find("Difficulty")?.GetComponent<TMP_Text>();
+            if (difficulty != null)
+            {
+                MissionLevelData level = MissionLevelCatalog.GetByIndex(i);
+                difficulty.text = GameProgress.IsChallengeMode
+                    ? "CHALLENGE  //  NO ROOM FOR ERROR"
+                    : level.difficulty + "  //  " + level.challenge;
+                difficulty.color = GameProgress.IsChallengeMode
+                    ? new Color(1f, 0.67f, 0.34f, 1f)
+                    : mutedWhite;
             }
         }
+    }
+
+    static string RankLabel(int rank)
+    {
+        switch (rank)
+        {
+            case 3: return "S";
+            case 2: return "A";
+            default: return "B";
+        }
+    }
+
+    void OpenCaseFiles()
+    {
+        if (caseFilesPanel == null) return;
+        PlayClick();
+        caseFilesPanel.SetActive(true);
+        if (EventSystem.current != null && closeCaseFilesButton != null)
+            EventSystem.current.SetSelectedGameObject(closeCaseFilesButton.gameObject);
+    }
+
+    void CloseCaseFiles()
+    {
+        if (caseFilesPanel == null || !caseFilesPanel.activeSelf) return;
+        PlayClick();
+        caseFilesPanel.SetActive(false);
+        if (EventSystem.current != null && startButton != null)
+            EventSystem.current.SetSelectedGameObject(startButton.gameObject);
     }
 
     void SelectLevel(int levelIndex)
@@ -997,7 +1164,7 @@ public class MainMenuUI : MonoBehaviour
         text.characterSpacing = characterSpacing;
         text.extraPadding = false;
         text.lineSpacing = content.IndexOf('\n') >= 0 ? 4f : 0f;
-        text.enableWordWrapping = true;
+        text.textWrappingMode = TextWrappingModes.Normal;
         text.overflowMode = TextOverflowModes.Overflow;
         text.raycastTarget = false;
 
