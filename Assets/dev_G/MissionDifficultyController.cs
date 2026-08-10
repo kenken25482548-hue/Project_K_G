@@ -86,7 +86,22 @@ public class MissionDifficultyController : MonoBehaviour
     private void ConfigureStains()
     {
         CleaningTarget[] found = FindObjectsOfType<CleaningTarget>();
-        var stains = new List<CleaningTarget>(found);
+        var stains = new List<CleaningTarget>();
+        Transform curatedRoot = GameObject.Find("GameplayStains_Level" + CurrentLevel.number.ToString("00"))?.transform;
+
+        foreach (CleaningTarget target in found)
+        {
+            bool belongsToCuratedSet = curatedRoot != null && target.transform.IsChildOf(curatedRoot);
+            if (curatedRoot != null && !belongsToCuratedSet)
+            {
+                // The old room stains remain in the scene for safety, but this new
+                // level curve only uses the curated set placed for the mission.
+                target.gameObject.SetActive(false);
+                continue;
+            }
+
+            stains.Add(target);
+        }
         stains.Sort((left, right) => string.Compare(left.stainName + left.name, right.stainName + right.name, System.StringComparison.Ordinal));
 
         int activeCount = Mathf.Min(CurrentLevel.stainTarget, stains.Count);
@@ -156,7 +171,7 @@ public class MissionDifficultyController : MonoBehaviour
         outline.effectColor = new Color(0.28f, 0.78f, 0.96f, 0.72f);
         outline.effectDistance = new Vector2(1f, -1f);
 
-        TMP_FontAsset font = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
+        TMP_FontAsset font = Resources.Load<TMP_FontAsset>("UI/Fonts/Sarabun-Bold SDF");
         if (font == null) font = TMP_Settings.defaultFontAsset;
         CreateText(panel.transform, "Level", "LEVEL " + CurrentLevel.number.ToString("00") + "  /  " + CurrentLevel.difficulty + "  /  " + CurrentLevel.challenge, 14f,
             new Color(0.41f, 0.88f, 1f, 1f), new Vector2(0f, 32f), new Vector2(540f, 22f), font, TextAlignmentOptions.Center);

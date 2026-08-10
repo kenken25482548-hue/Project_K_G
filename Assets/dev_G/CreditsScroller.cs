@@ -19,8 +19,8 @@ public class CreditsScroller : MonoBehaviour
     private const string BackgroundResourcePath = "";
     private const string BackgroundVideoResourcePath = "UI/MainMenu_AAA_Background_Animated";
     private const bool UseAnimatedBackgroundVideo = false;
-    private const string UiFontResourcePath = "Fonts & Materials/MiPancake SDF";
-    private const string TitleFontResourcePath = "Fonts & Materials/MiPancake SDF";
+    private const string UiFontResourcePath = "UI/Fonts/Sarabun-Bold SDF";
+    private const string TitleFontResourcePath = "UI/Fonts/ChakraPetch-Bold SDF";
 
     private static readonly Color Cyan = new Color(0.49f, 0.90f, 1f, 1f);
     private static readonly Color SoftWhite = new Color(0.94f, 0.99f, 1f, 1f);

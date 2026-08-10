@@ -50,7 +50,7 @@ public class MissionStoryUI : MonoBehaviour
 
         // Prefer the saved adjusted asset if it exists. The runtime adjustment
         // below also guarantees correct Thai marks in a fresh checkout.
-        thaiFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
+        thaiFont = Resources.Load<TMP_FontAsset>("UI/Fonts/Sarabun-Bold SDF");
         titleFont = thaiFont;
         if (thaiFont == null) thaiFont = TMP_Settings.defaultFontAsset;
         if (titleFont == null) titleFont = thaiFont;
