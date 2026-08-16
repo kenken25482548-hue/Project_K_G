@@ -9,6 +9,17 @@ using TMPro;
 /// <summary>Editor-only helper that lists room surfaces before stain placement.</summary>
 public static class SceneStainPlacementUtility
 {
+    [MenuItem("Clean & Learn/Remove Placed Mission Stains")]
+    public static void RemovePlacedMissionStains()
+    {
+        Remove("Assets/Scenes/2Kitchen2.unity", "GameplayStains_Level02");
+        Remove("Assets/Scenes/3iving room3.unity", "GameplayStains_Level03");
+        Remove("Assets/Scenes/4bedroom4.unity", "GameplayStains_Level04");
+
+        AssetDatabase.SaveAssets();
+        Debug.Log("Placed mission stains removed: Kitchen, Living Room, Bedroom.");
+    }
+
     [MenuItem("Clean & Learn/Place Mission Stains")]
     public static void PlaceMissionStains()
     {
@@ -100,6 +111,18 @@ public static class SceneStainPlacementUtility
 
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
+    }
+
+    private static void Remove(string scenePath, string rootName)
+    {
+        Scene scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+        GameObject root = GameObject.Find(rootName);
+        if (root != null)
+        {
+            UnityEngine.Object.DestroyImmediate(root);
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+        }
     }
 
     private readonly struct StainPlacement
