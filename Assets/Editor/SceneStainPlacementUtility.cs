@@ -57,34 +57,64 @@ public static class SceneStainPlacementUtility
         Debug.Log("Mission stains placed: Kitchen 5, Living Room 6, Bedroom 7.");
     }
 
-    [MenuItem("Clean & Learn/Fix Thai UI Font")]
-    public static void FixThaiUiFont()
+    [MenuItem("Clean & Learn/Set All Game Fonts To MiPancake")]
+    public static void SetAllGameFontsToMiPancake()
     {
-        TMP_FontAsset font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Resources/UI/Fonts/Sarabun-Bold SDF.asset");
+        TMP_FontAsset font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/TextMesh Pro/Resources/Fonts & Materials/MiPancake SDF.asset");
         if (font == null)
         {
-            Debug.LogError("Sarabun font asset is missing.");
+            Debug.LogError("MiPancake font asset is missing.");
             return;
         }
 
-        string[] scenes =
+        string[] sceneGuids = AssetDatabase.FindAssets("t:Scene", new[] { "Assets/Scenes" });
+        foreach (string sceneGuid in sceneGuids)
         {
-            "Assets/Scenes/1bathroom1.unity",
-            "Assets/Scenes/2Kitchen2.unity",
-            "Assets/Scenes/3iving room3.unity",
-            "Assets/Scenes/4bedroom4.unity"
-        };
-        foreach (string path in scenes)
-        {
+            string path = AssetDatabase.GUIDToAssetPath(sceneGuid);
             Scene scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+            bool changed = false;
             foreach (TMP_Text text in UnityEngine.Object.FindObjectsByType<TMP_Text>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                if (text.font == font)
+                    continue;
+
                 text.font = font;
-            EditorSceneManager.MarkSceneDirty(scene);
-            EditorSceneManager.SaveScene(scene);
+                changed = true;
+            }
+
+            if (changed)
+            {
+                EditorSceneManager.MarkSceneDirty(scene);
+                EditorSceneManager.SaveScene(scene);
+            }
+        }
+
+        string[] prefabGuids = AssetDatabase.FindAssets("t:Prefab", new[] { "Assets" });
+        foreach (string prefabGuid in prefabGuids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(prefabGuid);
+            if (path.StartsWith("Assets/TextMesh Pro/") || path.StartsWith("Assets/StarterAssets/"))
+                continue;
+
+            GameObject root = PrefabUtility.LoadPrefabContents(path);
+            bool changed = false;
+            foreach (TMP_Text text in root.GetComponentsInChildren<TMP_Text>(true))
+            {
+                if (text.font == font)
+                    continue;
+
+                text.font = font;
+                changed = true;
+            }
+
+            if (changed)
+                PrefabUtility.SaveAsPrefabAsset(root, path);
+
+            PrefabUtility.UnloadPrefabContents(root);
         }
 
         AssetDatabase.SaveAssets();
-        Debug.Log("Thai UI font updated in every gameplay scene.");
+        Debug.Log("MiPancake applied to every game scene, relevant prefab, and TMP default setting.");
     }
 
     private static void Place(string scenePath, string rootName, StainPlacement[] placements)

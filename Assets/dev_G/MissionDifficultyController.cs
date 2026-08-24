@@ -171,7 +171,7 @@ public class MissionDifficultyController : MonoBehaviour
         outline.effectColor = new Color(0.28f, 0.78f, 0.96f, 0.72f);
         outline.effectDistance = new Vector2(1f, -1f);
 
-        TMP_FontAsset font = Resources.Load<TMP_FontAsset>("UI/Fonts/Sarabun-Bold SDF");
+        TMP_FontAsset font = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
         if (font == null) font = TMP_Settings.defaultFontAsset;
         CreateText(panel.transform, "Level", "LEVEL " + CurrentLevel.number.ToString("00") + "  /  " + CurrentLevel.difficulty + "  /  " + CurrentLevel.challenge, 14f,
             new Color(0.41f, 0.88f, 1f, 1f), new Vector2(0f, 32f), new Vector2(540f, 22f), font, TextAlignmentOptions.Center);

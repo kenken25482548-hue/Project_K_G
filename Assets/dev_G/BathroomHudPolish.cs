@@ -13,6 +13,7 @@ public class BathroomHudPolish : MonoBehaviour
 
     Sprite roundedSprite;
     Texture2D roundedTexture;
+    static TMP_FontAsset miPancakeFont;
 
     void Start()
     {
@@ -122,7 +123,7 @@ public class BathroomHudPolish : MonoBehaviour
         rect.anchoredPosition = new Vector2(0f, 9f);
         rect.sizeDelta = new Vector2(34f, 26f);
         TextMeshProUGUI text = numberObject.GetComponent<TextMeshProUGUI>();
-        text.font = Resources.Load<TMP_FontAsset>("UI/Fonts/Sarabun-Bold SDF");
+        text.font = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
         text.text = number.ToString();
         text.fontSize = 17f;
         text.fontStyle = FontStyles.Bold;
@@ -134,6 +135,10 @@ public class BathroomHudPolish : MonoBehaviour
     static void StyleText(TMP_Text text, float size, Color color)
     {
         if (text == null) return;
+        if (miPancakeFont == null)
+            miPancakeFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
+        if (miPancakeFont != null)
+            text.font = miPancakeFont;
         text.fontSize = size;
         text.fontStyle = FontStyles.Bold;
         text.color = color;
@@ -345,6 +350,7 @@ public class BathroomHudPolish : MonoBehaviour
             bool isLivingRoomLevel = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "3iving room3";
             ThemePanel(items.infoPanel, "HudItemInfoAccent");
             ThemePanel(items.stainInfoPanel, "HudStainInfoAccent");
+            LayoutStainInfo(items);
 
             // Keep the complete item card at its original centred prefab position.
             // Only the description/remaining-use text is offset inside the card.
@@ -423,6 +429,48 @@ public class BathroomHudPolish : MonoBehaviour
             imageRect.pivot = new Vector2(0.5f, 0.5f);
             imageRect.anchoredPosition = new Vector2(-100f, 0f);
             imageRect.sizeDelta = new Vector2(140f, 140f);
+        }
+    }
+
+    static void LayoutStainInfo(PlayerItemSystem items)
+    {
+        if (items.stainInfoPanel != null)
+        {
+            RectTransform panelRect = items.stainInfoPanel.GetComponent<RectTransform>();
+            if (panelRect != null)
+                panelRect.sizeDelta = new Vector2(640f, 250f);
+        }
+
+        if (items.stainNameText != null)
+        {
+            RectTransform titleRect = items.stainNameText.rectTransform;
+            titleRect.anchorMin = titleRect.anchorMax = new Vector2(0f, 1f);
+            titleRect.pivot = new Vector2(0f, 1f);
+            titleRect.anchoredPosition = new Vector2(48f, -30f);
+            titleRect.sizeDelta = new Vector2(540f, 42f);
+            items.stainNameText.alignment = TextAlignmentOptions.Left;
+        }
+
+        if (items.stainDescriptionText != null)
+        {
+            RectTransform descriptionRect = items.stainDescriptionText.rectTransform;
+            descriptionRect.anchorMin = descriptionRect.anchorMax = new Vector2(0f, 0.5f);
+            descriptionRect.pivot = new Vector2(0f, 0.5f);
+            descriptionRect.anchoredPosition = new Vector2(48f, -5f);
+            descriptionRect.sizeDelta = new Vector2(535f, 112f);
+            items.stainDescriptionText.alignment = TextAlignmentOptions.MidlineLeft;
+            items.stainDescriptionText.enableWordWrapping = true;
+            items.stainDescriptionText.overflowMode = TextOverflowModes.Ellipsis;
+        }
+
+        if (items.stainStateText != null)
+        {
+            RectTransform stateRect = items.stainStateText.rectTransform;
+            stateRect.anchorMin = stateRect.anchorMax = new Vector2(0f, 0f);
+            stateRect.pivot = new Vector2(0f, 0f);
+            stateRect.anchoredPosition = new Vector2(48f, 28f);
+            stateRect.sizeDelta = new Vector2(500f, 36f);
+            items.stainStateText.alignment = TextAlignmentOptions.MidlineLeft;
         }
     }
 

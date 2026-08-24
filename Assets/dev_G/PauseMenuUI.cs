@@ -176,7 +176,7 @@ public class PauseMenuUI : MonoBehaviour
     {
         if (pauseOverlay == null || pauseGuidePanel != null) return;
 
-        guideFont = Resources.Load<TMP_FontAsset>("UI/Fonts/Sarabun-Bold SDF");
+        guideFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
         if (guideFont == null) guideFont = uiFont;
 
         pauseGuidePanel = UiObject("PauseQuickGuide", pauseOverlay.transform);
@@ -224,7 +224,7 @@ public class PauseMenuUI : MonoBehaviour
 
     private void LoadThaiPauseFont()
     {
-        uiFont = Resources.Load<TMP_FontAsset>("UI/Fonts/Sarabun-Bold SDF");
+        uiFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
         if (uiFont == null)
             uiFont = TMP_Settings.defaultFontAsset;
     }
