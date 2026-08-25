@@ -24,9 +24,9 @@ public class MainMenuUI : MonoBehaviour
     private const string LevelAtlasResourcePath = "UI/LevelSelect_RoomAtlas";
     private const string BackgroundVideoResourcePath = "UI/MainMenu_AAA_Background_Animated";
     private const bool UseAnimatedBackgroundVideo = false;
-    private const string FallbackFontResourcePath = "Fonts & Materials/MiPancake SDF";
-    private const string UiFontResourcePath = "Fonts & Materials/MiPancake SDF";
-    private const string TitleFontResourcePath = "Fonts & Materials/MiPancake SDF";
+    private const string FallbackFontResourcePath = "UI/Fonts/Kanit-SemiBold SDF";
+    private const string UiFontResourcePath = "UI/Fonts/Kanit-SemiBold SDF";
+    private const string TitleFontResourcePath = "UI/Fonts/Kanit-SemiBold SDF";
 
     private readonly Color cyan = new Color(0.49f, 0.90f, 1f, 1f);
     private readonly Color warmWhite = new Color(0.94f, 0.99f, 1f, 1f);

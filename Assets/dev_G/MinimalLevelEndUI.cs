@@ -44,7 +44,7 @@ public class MinimalLevelEndUI : MonoBehaviour
     private void Build()
     {
         if (root != null) return;
-        font = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
+        font = Resources.Load<TMP_FontAsset>("UI/Fonts/Kanit-SemiBold SDF");
         if (font == null) font = TMP_Settings.defaultFontAsset;
         Canvas canvas = FindFirstObjectByType<Canvas>();
         if (canvas == null) return;

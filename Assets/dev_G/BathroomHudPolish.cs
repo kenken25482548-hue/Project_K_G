@@ -13,7 +13,7 @@ public class BathroomHudPolish : MonoBehaviour
 
     Sprite roundedSprite;
     Texture2D roundedTexture;
-    static TMP_FontAsset miPancakeFont;
+    static TMP_FontAsset kanitFont;
 
     void Start()
     {
@@ -123,7 +123,7 @@ public class BathroomHudPolish : MonoBehaviour
         rect.anchoredPosition = new Vector2(0f, 9f);
         rect.sizeDelta = new Vector2(34f, 26f);
         TextMeshProUGUI text = numberObject.GetComponent<TextMeshProUGUI>();
-        text.font = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
+        text.font = Resources.Load<TMP_FontAsset>("UI/Fonts/Kanit-SemiBold SDF");
         text.text = number.ToString();
         text.fontSize = 17f;
         text.fontStyle = FontStyles.Bold;
@@ -135,12 +135,13 @@ public class BathroomHudPolish : MonoBehaviour
     static void StyleText(TMP_Text text, float size, Color color)
     {
         if (text == null) return;
-        if (miPancakeFont == null)
-            miPancakeFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
-        if (miPancakeFont != null)
-            text.font = miPancakeFont;
+        if (kanitFont == null)
+            kanitFont = Resources.Load<TMP_FontAsset>("UI/Fonts/Kanit-SemiBold SDF");
+        if (kanitFont != null)
+            text.font = kanitFont;
         text.fontSize = size;
-        text.fontStyle = FontStyles.Bold;
+        // Kanit SemiBold already has sufficient weight; simulated Bold makes Thai marks crowd together.
+        text.fontStyle = FontStyles.Normal;
         text.color = color;
         text.outlineWidth = 0f;
     }

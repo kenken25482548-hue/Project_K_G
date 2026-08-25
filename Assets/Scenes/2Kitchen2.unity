@@ -260,6 +260,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_ItemMarker_GoldenOrbit
       objectReference: {fileID: 0}
+    - target: {fileID: 3688407099297831760, guid: 3749f86e2374e1546aaa54dfe0b7291c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3910,7 +3914,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7180793831321608172, guid: d42d5711f7a060445837335ef2b6d02e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.651
+      value: 2.69
       objectReference: {fileID: 0}
     - target: {fileID: 7180793831321608172, guid: d42d5711f7a060445837335ef2b6d02e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3918,23 +3922,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7180793831321608172, guid: d42d5711f7a060445837335ef2b6d02e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.368
+      value: 4.185
       objectReference: {fileID: 0}
     - target: {fileID: 7180793831321608172, guid: d42d5711f7a060445837335ef2b6d02e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.650801
       objectReference: {fileID: 0}
     - target: {fileID: 7180793831321608172, guid: d42d5711f7a060445837335ef2b6d02e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7180793831321608172, guid: d42d5711f7a060445837335ef2b6d02e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7592484
       objectReference: {fileID: 0}
     - target: {fileID: 7180793831321608172, guid: d42d5711f7a060445837335ef2b6d02e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7180793831321608172, guid: d42d5711f7a060445837335ef2b6d02e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3942,7 +3946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7180793831321608172, guid: d42d5711f7a060445837335ef2b6d02e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 98.796
       objectReference: {fileID: 0}
     - target: {fileID: 7180793831321608172, guid: d42d5711f7a060445837335ef2b6d02e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -4011,8 +4015,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.282248, y: 2.2047205, z: 1.836955}
-  m_Center: {x: 0.16644904, y: 0.60236037, z: -0.78502405}
+  m_Size: {x: 2.2061255, y: 2.2047205, z: 0.68376166}
+  m_Center: {x: 0.62838745, y: 0.60236037, z: 0.0016105112}
 --- !u!1001 &1050758616
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6491,6 +6495,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19\u0E07"
       objectReference: {fileID: 0}
+    - target: {fileID: -4107826547503336208, guid: a5bd551fdbf036f48b11191c0314233d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8418447403592686864, guid: a5bd551fdbf036f48b11191c0314233d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3
@@ -6621,6 +6629,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_ItemMarker_GoldenOrbit
       objectReference: {fileID: 0}
+    - target: {fileID: 3688407099297831760, guid: 3749f86e2374e1546aaa54dfe0b7291c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6692,6 +6704,10 @@ PrefabInstance:
     - target: {fileID: 3688407099297831760, guid: 3749f86e2374e1546aaa54dfe0b7291c, type: 3}
       propertyPath: m_Name
       value: FX_ItemMarker_GoldenOrbit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688407099297831760, guid: 3749f86e2374e1546aaa54dfe0b7291c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7165,6 +7181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_ItemMarker_GoldenOrbit
       objectReference: {fileID: 0}
+    - target: {fileID: 3688407099297831760, guid: 3749f86e2374e1546aaa54dfe0b7291c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7420,31 +7440,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7148451361038950233, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.265
+      value: -4.4828
       objectReference: {fileID: 0}
     - target: {fileID: -7148451361038950233, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.14
+      value: 1.105
       objectReference: {fileID: 0}
     - target: {fileID: -7148451361038950233, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.042
+      value: 1.0053
       objectReference: {fileID: 0}
     - target: {fileID: -7148451361038950233, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.026486369
       objectReference: {fileID: 0}
     - target: {fileID: -7148451361038950233, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -7148451361038950233, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.9996492
       objectReference: {fileID: 0}
     - target: {fileID: -7148451361038950233, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -7148451361038950233, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7452,7 +7472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7148451361038950233, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -183.035
       objectReference: {fileID: 0}
     - target: {fileID: -7148451361038950233, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -7461,6 +7481,10 @@ PrefabInstance:
     - target: {fileID: 5021157603950299104, guid: f9d12290495243843a1b44940085dc20, type: 3}
       propertyPath: m_Name
       value: "\u0E22\u0E32\u0E01\u0E31\u0E19\u0E22\u0E38\u0E07"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021157603950299104, guid: f9d12290495243843a1b44940085dc20, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7505,8 +7529,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.9677252, y: 1.8022028, z: 0.9720394}
-  m_Center: {x: 0.42751887, y: 0.4011015, z: -0.030609567}
+  m_Size: {x: 3.2248769, y: 1.8022028, z: 0.9720394}
+  m_Center: {x: -0.2010556, y: 0.4011015, z: -0.030609569}
 --- !u!114 &1758054511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8195,6 +8219,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_ItemMarker_GoldenOrbit
       objectReference: {fileID: 0}
+    - target: {fileID: 3688407099297831760, guid: 3749f86e2374e1546aaa54dfe0b7291c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8587,6 +8615,10 @@ PrefabInstance:
     - target: {fileID: 3688407099297831760, guid: 3749f86e2374e1546aaa54dfe0b7291c, type: 3}
       propertyPath: m_Name
       value: FX_ItemMarker_GoldenOrbit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688407099297831760, guid: 3749f86e2374e1546aaa54dfe0b7291c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9174,6 +9206,10 @@ PrefabInstance:
     - target: {fileID: 1815407111425840515, guid: 01f1a2e0e3f98d941a975ba57c5c0b22, type: 3}
       propertyPath: m_Name
       value: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E0B\u0E31\u0E01\u0E1C\u0E49\u0E32"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3838018030325749382, guid: 01f1a2e0e3f98d941a975ba57c5c0b22, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6871233221990675584, guid: 01f1a2e0e3f98d941a975ba57c5c0b22, type: 3}
       propertyPath: itemDescription

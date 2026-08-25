@@ -57,13 +57,13 @@ public static class SceneStainPlacementUtility
         Debug.Log("Mission stains placed: Kitchen 5, Living Room 6, Bedroom 7.");
     }
 
-    [MenuItem("Clean & Learn/Set All Game Fonts To MiPancake")]
-    public static void SetAllGameFontsToMiPancake()
+    [MenuItem("Clean & Learn/Set All Game Fonts To Kanit")]
+    public static void SetAllGameFontsToKanit()
     {
-        TMP_FontAsset font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/TextMesh Pro/Resources/Fonts & Materials/MiPancake SDF.asset");
+        TMP_FontAsset font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Resources/UI/Fonts/Kanit-SemiBold SDF.asset");
         if (font == null)
         {
-            Debug.LogError("MiPancake font asset is missing.");
+            Debug.LogError("Kanit SemiBold font asset is missing.");
             return;
         }
 
@@ -114,7 +114,7 @@ public static class SceneStainPlacementUtility
         }
 
         AssetDatabase.SaveAssets();
-        Debug.Log("MiPancake applied to every game scene, relevant prefab, and TMP default setting.");
+        Debug.Log("Kanit SemiBold applied to every game scene and relevant prefab.");
     }
 
     private static void Place(string scenePath, string rootName, StainPlacement[] placements)

@@ -29,8 +29,8 @@ public class LevelMissionBanner : MonoBehaviour
         outline.effectDistance = new Vector2(1f, -1f);
         group = root.AddComponent<CanvasGroup>();
 
-        TMP_FontAsset thaiFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
-        TMP_FontAsset titleFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/MiPancake SDF");
+        TMP_FontAsset thaiFont = Resources.Load<TMP_FontAsset>("UI/Fonts/Kanit-SemiBold SDF");
+        TMP_FontAsset titleFont = Resources.Load<TMP_FontAsset>("UI/Fonts/Kanit-SemiBold SDF");
         CreateText(root.transform, "Mission", "MISSION " + missionNumber, 16f,
             new Color(0.49f, 0.90f, 1f, 1f), new Vector2(0f, 30f), new Vector2(420f, 28f), titleFont);
         CreateText(root.transform, "Name", englishName, 28f,

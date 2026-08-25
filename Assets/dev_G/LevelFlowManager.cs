@@ -197,4 +197,5 @@ public class LevelFlowManager : MonoBehaviour
         GameObject storyObject = new GameObject("MissionStoryController");
         storyObject.AddComponent<MissionStoryUI>().Show(mission);
     }
+
 }
