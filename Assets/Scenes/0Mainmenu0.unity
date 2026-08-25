@@ -418,8 +418,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E40\u0E01\u0E21"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c0d4cea8c45f1f147b7b1597a5c5d748, type: 2}
-  m_sharedMaterial: {fileID: -7152316178032560644, guid: c0d4cea8c45f1f147b7b1597a5c5d748, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47cd7ee08266d9c44bf3c8ead41391bd, type: 2}
+  m_sharedMaterial: {fileID: 5874616694490856064, guid: 47cd7ee08266d9c44bf3c8ead41391bd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -757,8 +757,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Clean & Learn
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c0d4cea8c45f1f147b7b1597a5c5d748, type: 2}
-  m_sharedMaterial: {fileID: -7152316178032560644, guid: c0d4cea8c45f1f147b7b1597a5c5d748, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47cd7ee08266d9c44bf3c8ead41391bd, type: 2}
+  m_sharedMaterial: {fileID: 5874616694490856064, guid: 47cd7ee08266d9c44bf3c8ead41391bd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1369,18 +1369,6 @@ MonoBehaviour:
   hoverSound: {fileID: 8300000, guid: 6383d989f4c349e4dbd7f87d57e8a70c, type: 3}
   clickSound: {fileID: 8300000, guid: f4b363c39a7ff154abc8256199b857e4, type: 3}
   bgmClip: {fileID: 8300000, guid: 44a5fe28c7696d142801ba822fe52730, type: 3}
-  audioSource: {fileID: 0}
-  uiFont: {fileID: 0}
-  titleFont: {fileID: 0}
-  premiumRoot: {fileID: 0}
-  howToPlayPanel: {fileID: 0}
-  levelSelectPanel: {fileID: 0}
-  startButton: {fileID: 0}
-  howToButton: {fileID: 0}
-  closeHowToButton: {fileID: 0}
-  resetSaveButton: {fileID: 0}
-  isStartingGame: 0
-  waitingForResetConfirmation: 0
 --- !u!4 &2019606360
 Transform:
   m_ObjectHideFlags: 0
@@ -1552,8 +1540,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u0E40\u0E23\u0E34\u0E48\u0E21\u0E40\u0E01\u0E21"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c0d4cea8c45f1f147b7b1597a5c5d748, type: 2}
-  m_sharedMaterial: {fileID: -7152316178032560644, guid: c0d4cea8c45f1f147b7b1597a5c5d748, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47cd7ee08266d9c44bf3c8ead41391bd, type: 2}
+  m_sharedMaterial: {fileID: 5874616694490856064, guid: 47cd7ee08266d9c44bf3c8ead41391bd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

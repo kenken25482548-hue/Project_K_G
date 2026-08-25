@@ -390,8 +390,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u0E01\u0E33\u0E25\u0E31\u0E07\u0E42\u0E2B\u0E25\u0E14..."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c0d4cea8c45f1f147b7b1597a5c5d748, type: 2}
-  m_sharedMaterial: {fileID: -7152316178032560644, guid: c0d4cea8c45f1f147b7b1597a5c5d748, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47cd7ee08266d9c44bf3c8ead41391bd, type: 2}
+  m_sharedMaterial: {fileID: 5874616694490856064, guid: 47cd7ee08266d9c44bf3c8ead41391bd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
