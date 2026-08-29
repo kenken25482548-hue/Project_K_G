@@ -6677,6 +6677,14 @@ PrefabInstance:
       propertyPath: radius
       value: 0.7
       objectReference: {fileID: 0}
+    - target: {fileID: 7591612427152459447, guid: 90f3bdac8893f794c97ba8c457c2e0c8, type: 3}
+      propertyPath: wrongPopup
+      value: 
+      objectReference: {fileID: 1963879713}
+    - target: {fileID: 7591612427152459447, guid: 90f3bdac8893f794c97ba8c457c2e0c8, type: 3}
+      propertyPath: wrongPopupText
+      value: 
+      objectReference: {fileID: 403209587}
     - target: {fileID: 9037105067499552067, guid: 90f3bdac8893f794c97ba8c457c2e0c8, type: 3}
       propertyPath: m_Radius
       value: 0.7

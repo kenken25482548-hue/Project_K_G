@@ -9055,6 +9055,14 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2089806537468950245, guid: b350d5272563de7438bcfd73e84634ed, type: 3}
+      propertyPath: wrongPopup
+      value: 
+      objectReference: {fileID: 1381090983}
+    - target: {fileID: 2089806537468950245, guid: b350d5272563de7438bcfd73e84634ed, type: 3}
+      propertyPath: wrongPopupText
+      value: 
+      objectReference: {fileID: 2028417948}
     - target: {fileID: 4085820159267567716, guid: b350d5272563de7438bcfd73e84634ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.952
