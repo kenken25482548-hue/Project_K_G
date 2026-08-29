@@ -7,7 +7,8 @@ using UnityEngine.UI;
 /// <summary>
 /// Converts the existing room scenes into a four-step difficulty curve without
 /// requiring per-scene wiring. Higher levels activate more stains, leave more
-/// decoy items available, and allow fewer incorrect item uses.
+/// decoy items available, allow fewer incorrect item uses, and configure each
+/// required cleaner with exactly enough charges for the active stains.
 /// </summary>
 public class MissionDifficultyController : MonoBehaviour
 {
@@ -112,10 +113,16 @@ public class MissionDifficultyController : MonoBehaviour
     private void ConfigureItems()
     {
         var requiredNames = new HashSet<string>();
+        var requiredUseCounts = new Dictionary<string, int>();
         foreach (CleaningTarget stain in FindObjectsOfType<CleaningTarget>())
         {
             if (!string.IsNullOrWhiteSpace(stain.requiredItemName))
+            {
                 requiredNames.Add(stain.requiredItemName);
+                if (!requiredUseCounts.ContainsKey(stain.requiredItemName))
+                    requiredUseCounts[stain.requiredItemName] = 0;
+                requiredUseCounts[stain.requiredItemName]++;
+            }
         }
 
         ItemData[] found = FindObjectsOfType<ItemData>();
@@ -130,6 +137,51 @@ public class MissionDifficultyController : MonoBehaviour
         int visibleDecoys = Mathf.Min(CurrentLevel.decoyItemCount, decoys.Count);
         for (int index = visibleDecoys; index < decoys.Count; index++)
             decoys[index].gameObject.SetActive(false);
+
+        ConfigureRequiredItemUses(requiredUseCounts);
+    }
+
+    private void ConfigureRequiredItemUses(Dictionary<string, int> requiredUseCounts)
+    {
+        var itemsByName = new Dictionary<string, List<ItemData>>();
+        foreach (ItemData item in FindObjectsOfType<ItemData>())
+        {
+            if (!requiredUseCounts.ContainsKey(item.itemName))
+                continue;
+
+            if (!itemsByName.TryGetValue(item.itemName, out List<ItemData> matchingItems))
+            {
+                matchingItems = new List<ItemData>();
+                itemsByName[item.itemName] = matchingItems;
+            }
+            matchingItems.Add(item);
+        }
+
+        foreach (KeyValuePair<string, int> requirement in requiredUseCounts)
+        {
+            if (!itemsByName.TryGetValue(requirement.Key, out List<ItemData> matchingItems) || matchingItems.Count == 0)
+            {
+                Debug.LogError("No active item is available for required cleaner: " + requirement.Key);
+                continue;
+            }
+
+            matchingItems.Sort((left, right) => string.Compare(left.name, right.name, System.StringComparison.Ordinal));
+            int remainingUses = requirement.Value;
+            for (int index = 0; index < matchingItems.Count; index++)
+            {
+                ItemData item = matchingItems[index];
+                int itemsRemaining = matchingItems.Count - index;
+                if (remainingUses <= 0)
+                {
+                    item.gameObject.SetActive(false);
+                    continue;
+                }
+
+                int itemUses = Mathf.CeilToInt((float)remainingUses / itemsRemaining);
+                item.ConfigureUses(itemUses);
+                remainingUses -= itemUses;
+            }
+        }
     }
 
     private void HandleWrongItemUsed(CleaningTarget _)

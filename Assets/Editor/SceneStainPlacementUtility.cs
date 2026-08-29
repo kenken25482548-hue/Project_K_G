@@ -213,9 +213,18 @@ public static class SceneStainPlacementUtility
         CleaningTarget[] stains = UnityEngine.Object.FindObjectsByType<CleaningTarget>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         ItemData[] items = UnityEngine.Object.FindObjectsByType<ItemData>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         List<string> issues = new List<string>();
+        Dictionary<string, int> requiredUseCounts = new Dictionary<string, int>(StringComparer.Ordinal);
+        Dictionary<string, int> availableUseCounts = new Dictionary<string, int>(StringComparer.Ordinal);
 
         foreach (CleaningTarget stain in stains)
         {
+            if (!string.IsNullOrWhiteSpace(stain.requiredItemName))
+            {
+                if (!requiredUseCounts.ContainsKey(stain.requiredItemName))
+                    requiredUseCounts[stain.requiredItemName] = 0;
+                requiredUseCounts[stain.requiredItemName]++;
+            }
+
             if (string.IsNullOrWhiteSpace(stain.stainName))
                 issues.Add(stain.name + " has no stain name");
             if (string.IsNullOrWhiteSpace(stain.requiredItemName))
@@ -238,12 +247,38 @@ public static class SceneStainPlacementUtility
                 issues.Add(stain.name + " needs missing item '" + stain.requiredItemName + "'");
         }
 
+        foreach (ItemData item in items)
+        {
+            if (item == null || string.IsNullOrWhiteSpace(item.itemName))
+                continue;
+
+            if (!availableUseCounts.ContainsKey(item.itemName))
+                availableUseCounts[item.itemName] = 0;
+            availableUseCounts[item.itemName] += Mathf.Max(1, item.maxUses);
+        }
+
+        foreach (KeyValuePair<string, int> requirement in requiredUseCounts)
+        {
+            int availableUses = availableUseCounts.TryGetValue(requirement.Key, out int uses) ? uses : 0;
+            if (availableUses < requirement.Value)
+                issues.Add(requirement.Key + " needs " + requirement.Value + " uses but only has " + availableUses);
+        }
+
         MissionLevelData level = controller.CurrentLevel;
         if (stains.Length != level.stainTarget)
             issues.Add("HUD target " + level.stainTarget + " but active stains " + stains.Length);
 
         string result = "[Mission Audit] " + SceneManager.GetActiveScene().name + " / " + level.difficulty
             + " : active stains=" + stains.Length + ", target=" + level.stainTarget + ", active items=" + items.Length;
+        List<string> itemUseReport = new List<string>();
+        foreach (KeyValuePair<string, int> requirement in requiredUseCounts)
+        {
+            int availableUses = availableUseCounts.TryGetValue(requirement.Key, out int uses) ? uses : 0;
+            itemUseReport.Add(requirement.Key + " " + requirement.Value + "/" + availableUses);
+        }
+        itemUseReport.Sort(StringComparer.Ordinal);
+        Debug.Log("[Mission Audit] " + SceneManager.GetActiveScene().name + " / " + level.difficulty
+            + " : item uses required/available = " + string.Join(", ", itemUseReport));
         if (issues.Count == 0)
             Debug.Log(result + " / PASS");
         else
