@@ -453,7 +453,7 @@ MonoBehaviour:
   itemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E16\u0E39\u0E1E\u0E37\u0E49\u0E19"
   itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E2A\u0E01\u0E1B\u0E23\u0E01
     \u0E1D\u0E38\u0E48\u0E19 \u0E41\u0E25\u0E30\u0E23\u0E2D\u0E22\u0E40\u0E1B\u0E37\u0E49\u0E2D\u0E19\u0E1A\u0E19\u0E1E\u0E37\u0E49\u0E19 "
-  itemSprite: {fileID: 21300000, guid: af72077f8a6a8d14aa6af82996d70725, type: 3}
+  itemSprite: {fileID: 21300000, guid: bd08eb51ee004d34fa4ebf2a0f5c90c5, type: 3}
   maxUses: 1
   isPicked: 0
   isUsed: 0
@@ -1228,8 +1228,7 @@ PrefabInstance:
       objectReference: {fileID: 2028417948}
     - target: {fileID: 2387974457298255339, guid: 7773efe662af24d4fa0f68bf6b1ad52b, type: 3}
       propertyPath: stainDescription
-      value: "\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19\u0E41\u0E25\u0E30\u0E40\u0E28\u0E29\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E44\u0E2B\u0E21\u0E49\u0E40\u0E01\u0E32\u0E30\u0E41\u0E19\u0E48\u0E19\u0E1A\u0E19\u0E40\u0E15\u0E32
-        \n\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E19\u0E49\u0E33\u0E22\u0E32\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19"
+      value: "\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19\u0E41\u0E25\u0E30\u0E40\u0E28\u0E29\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E44\u0E2B\u0E21\u0E49\u0E40\u0E01\u0E32\u0E30\u0E41\u0E19\u0E48\u0E19\u0E1A\u0E19\n\u0E40\u0E15\u0E32\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E19\u0E49\u0E33\u0E22\u0E32\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19"
       objectReference: {fileID: 0}
     - target: {fileID: 2664746830233343926, guid: 7773efe662af24d4fa0f68bf6b1ad52b, type: 3}
       propertyPath: radius
@@ -1353,7 +1352,7 @@ MonoBehaviour:
   itemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E25\u0E49\u0E32\u0E07\u0E08\u0E32\u0E19"
   itemDescription: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E21\u0E31\u0E19
     \u0E40\u0E28\u0E29\u0E2D\u0E32\u0E2B\u0E32\u0E23 \u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E0B\u0E2D\u0E2A\u0E17\u0E35\u0E48\u0E15\u0E34\u0E14\u0E2D\u0E22\u0E39\u0E48\u0E1A\u0E19\u0E20\u0E32\u0E0A\u0E19\u0E30"
-  itemSprite: {fileID: 21300000, guid: b9554712cea235949b04bbc6c6b5ec96, type: 3}
+  itemSprite: {fileID: 21300000, guid: f63b20799362dfc4db37a0b6e1e61cec, type: 3}
   maxUses: 2
   isPicked: 0
   isUsed: 0
@@ -2391,8 +2390,7 @@ PrefabInstance:
       objectReference: {fileID: 2028417948}
     - target: {fileID: 1111220799899617810, guid: b90bcd8cca4d447419728b8630b401f3, type: 3}
       propertyPath: stainDescription
-      value: "\u0E40\u0E28\u0E29\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E0B\u0E2D\u0E2A\u0E41\u0E2B\u0E49\u0E07\u0E15\u0E34\u0E14\u0E41\u0E19\u0E48\u0E19\u0E2D\u0E22\u0E39\u0E48\u0E1A\u0E19\u0E42\u0E15\u0E4A\u0E30\u0E04\u0E23\u0E31\u0E27
-        \u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E19\u0E49\u0E33\u0E22\u0E32\u0E25\u0E49\u0E32\u0E07\u0E08\u0E32\u0E19\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14"
+      value: "\u0E40\u0E28\u0E29\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E0B\u0E2D\u0E2A\u0E41\u0E2B\u0E49\u0E07\u0E15\u0E34\u0E14\u0E41\u0E19\u0E48\u0E19\n\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E19\u0E49\u0E33\u0E22\u0E32\u0E25\u0E49\u0E32\u0E07\u0E08\u0E32\u0E19\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14"
       objectReference: {fileID: 0}
     - target: {fileID: 2153744049127570900, guid: b90bcd8cca4d447419728b8630b401f3, type: 3}
       propertyPath: radius
@@ -3203,7 +3201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19"
   itemDescription: "\u0E43\u0E0A\u0E49\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E19\u0E49\u0E33\u0E21\u0E31\u0E19\u0E41\u0E25\u0E30\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19\u0E43\u0E19\n\u0E04\u0E23\u0E31\u0E27\u0E44\u0E14\u0E49\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E21\u0E35\u0E1B\u0E23\u0E30\u0E2A\u0E34\u0E17\u0E18\u0E34\u0E20\u0E32\u0E1E"
-  itemSprite: {fileID: 21300000, guid: d3d925e9fd2de6d4083f575d261582e0, type: 3}
+  itemSprite: {fileID: 21300000, guid: 19f13e4e9d5be09439596a577aa6a2bb, type: 3}
   maxUses: 1
   isPicked: 0
   isUsed: 0
@@ -3607,8 +3605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E19\u0E49\u0E33\u0E15\u0E32\u0E25"
-  itemDescription: "\u0E27\u0E31\u0E15\u0E16\u0E38\u0E14\u0E34\u0E1A\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E44\u0E21\u0E48\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E01\u0E31\u0E1A\u0E01\u0E32\u0E23\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14"
-  itemSprite: {fileID: 21300000, guid: 5a4d8b109fbc4a14a8e5ff9e4cbf616f, type: 3}
+  itemDescription: "\u0E27\u0E31\u0E15\u0E16\u0E38\u0E14\u0E34\u0E1A\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23\n\u0E44\u0E21\u0E48\u0E40\u0E2B\u0E21\u0E32\u0E30\u0E01\u0E31\u0E1A\u0E01\u0E32\u0E23\u0E17\u0E33\u0E04\u0E27\u0E32\u0E21\u0E2A\u0E30\u0E2D\u0E32\u0E14"
+  itemSprite: {fileID: 21300000, guid: 12c67917d759e0a45b9a5c41d498c49e, type: 3}
   maxUses: 1
   isPicked: 0
   isUsed: 0
@@ -3986,7 +3984,7 @@ MonoBehaviour:
   itemName: "\u0E19\u0E49\u0E33"
   itemDescription: "\u0E19\u0E49\u0E33\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E25\u0E49\u0E32\u0E07\u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E0A\u0E47\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E2A\u0E01\u0E1B\u0E23\u0E01
     \u0E17\u0E31\u0E48\u0E27\u0E44\u0E1B\u0E17\u0E35\u0E48\u0E44\u0E21\u0E48\u0E1D\u0E31\u0E07\u0E41\u0E19\u0E48\u0E19"
-  itemSprite: {fileID: 21300000, guid: e39d1bb586c778e47a4e9e7523d7557a, type: 3}
+  itemSprite: {fileID: 21300000, guid: 787fbbdebe305124cbf7d14b519afd63, type: 3}
   maxUses: 1
   isPicked: 0
   isUsed: 0
@@ -7644,7 +7642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: "\u0E22\u0E32\u0E44\u0E25\u0E48\u0E41\u0E21\u0E25\u0E07"
   itemDescription: "\u0E1B\u0E49\u0E2D\u0E07\u0E01\u0E31\u0E19\u0E41\u0E21\u0E25\u0E07\u0E41\u0E25\u0E30\u0E01\u0E33\u0E08\u0E31\u0E14\u0E41\u0E21\u0E25\u0E07"
-  itemSprite: {fileID: 21300000, guid: b7b8f6531c5798245926859ee2a45564, type: 3}
+  itemSprite: {fileID: 21300000, guid: b43486cce16d3d7488d66c4009408c32, type: 3}
   maxUses: 2
   isPicked: 0
   isUsed: 0
@@ -9063,6 +9061,10 @@ PrefabInstance:
       propertyPath: wrongPopupText
       value: 
       objectReference: {fileID: 2028417948}
+    - target: {fileID: 2089806537468950245, guid: b350d5272563de7438bcfd73e84634ed, type: 3}
+      propertyPath: stainDescription
+      value: "\u0E25\u0E30\u0E2D\u0E2D\u0E07\u0E19\u0E49\u0E33\u0E21\u0E31\u0E19\u0E41\u0E25\u0E30\u0E44\u0E02\u0E21\u0E31\u0E19\u0E01\u0E23\u0E30\u0E40\u0E14\u0E47\u0E19\u0E2A\u0E30\u0E2A\u0E21\u0E1A\u0E19\u0E1C\u0E19\u0E31\u0E07\u0E2B\u0E25\u0E31\u0E07\n\u0E40\u0E15\u0E32\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E19\u0E49\u0E33\u0E22\u0E32\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E44\u0E02\u0E21\u0E31\u0E19"
+      objectReference: {fileID: 0}
     - target: {fileID: 4085820159267567716, guid: b350d5272563de7438bcfd73e84634ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.952
@@ -9431,6 +9433,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6871233221990675584, guid: 01f1a2e0e3f98d941a975ba57c5c0b22, type: 3}
+      propertyPath: itemSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 88418694707a94e49a3fa3a894c89aa4, type: 3}
     - target: {fileID: 6871233221990675584, guid: 01f1a2e0e3f98d941a975ba57c5c0b22, type: 3}
       propertyPath: itemDescription
       value: "\u0E19\u0E49\u0E33\u0E22\u0E32\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E02\u0E08\u0E31\u0E14\u0E04\u0E23\u0E32\u0E1A\u0E1A\u0E19\u0E1C\u0E49\u0E32\u0E41\u0E25\u0E30\u0E40\u0E1A\u0E32\u0E30\n
