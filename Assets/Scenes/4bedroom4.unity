@@ -870,7 +870,7 @@ MonoBehaviour:
   itemDescription: "\u0E19\u0E49\u0E33\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E25\u0E49\u0E32\u0E07\u0E04\u0E23\u0E32\u0E1A\u0E17\u0E31\u0E48\u0E27\u0E44\u0E1B
     \u0E40\u0E0A\u0E48\u0E19 \u0E1D\u0E38\u0E48\u0E19 \u0E04\u0E23\u0E32\u0E1A\u0E19\u0E49\u0E33 "
   itemSprite: {fileID: 21300000, guid: 787fbbdebe305124cbf7d14b519afd63, type: 3}
-  maxUses: 1
+  maxUses: 3
   isPicked: 0
   isUsed: 0
   usesLeft: 0
@@ -3917,7 +3917,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 26393208476506880, guid: 9eea6b2ac76144c1ad933615ae86dd95, type: 3}
       propertyPath: m_Name
-      value: Stain_Bedroom_MakeupSmudge_Wall
+      value: stain_08
       objectReference: {fileID: 0}
     - target: {fileID: 4839805773429422871, guid: 9eea6b2ac76144c1ad933615ae86dd95, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6715,7 +6715,7 @@ PrefabInstance:
       objectReference: {fileID: 878454556}
     - target: {fileID: 5289087157815875345, guid: 4489ea49b9f6f45418d666a5cbfccbd9, type: 3}
       propertyPath: m_Name
-      value: Stain_Bedroom_WaterRing_BedsideTable
+      value: stain_07
       objectReference: {fileID: 0}
     - target: {fileID: 5321722084724353179, guid: 4489ea49b9f6f45418d666a5cbfccbd9, type: 3}
       propertyPath: radius
@@ -7176,11 +7176,11 @@ SceneRoots:
   - {fileID: 1658750725}
   - {fileID: 665142532}
   - {fileID: 591752005}
+  - {fileID: 1918484887}
+  - {fileID: 1259669589}
   - {fileID: 155723760}
   - {fileID: 698133789}
   - {fileID: 1231908943}
   - {fileID: 534596442}
   - {fileID: 129187007}
   - {fileID: 1298712863}
-  - {fileID: 1918484887}
-  - {fileID: 1259669589}

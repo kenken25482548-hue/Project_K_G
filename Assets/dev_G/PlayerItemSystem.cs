@@ -380,14 +380,10 @@ public class PlayerItemSystem : MonoBehaviour
         bool used = focusedCleaningTarget.TryUseItem(item);
         if (!used) return;
 
-        // Keep an item in the inventory until all of its mission-configured charges are spent.
-        if (item.isUsed)
-        {
-            inventory[currentSlot] = null;
+        inventory[currentSlot] = null;
 
-            if (inventoryUI != null)
-                inventoryUI.ClearSlot(currentSlot);
-        }
+        if (inventoryUI != null)
+            inventoryUI.ClearSlot(currentSlot);
 
         UpdateUsesUI();
     }

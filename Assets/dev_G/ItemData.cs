@@ -104,14 +104,12 @@ public class ItemData : MonoBehaviour
             usesLeft = 0;
             Deplete();
         }
+        else
+        {
+            ReturnToStart();
+        }
     }
 
-    /// <summary>Configures this item's charge count for the current mission mode.</summary>
-    public void ConfigureUses(int uses)
-    {
-        maxUses = Mathf.Max(1, uses);
-        usesLeft = maxUses;
-    }
 
     private void Deplete()
     {
