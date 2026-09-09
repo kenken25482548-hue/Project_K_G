@@ -677,10 +677,6 @@ public class MainMenuUI : MonoBehaviour
         CreateText(levelSelectPanel.transform, "LevelSelectTitle", "เลือกด่าน", 58f, cyan,
             new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(78f, -86f),
             new Vector2(500f, 80f), TextAlignmentOptions.Left, FontStyles.Bold).font = uiFont;
-        CreateText(levelSelectPanel.transform, "LevelSelectSub", "SELECT A MISSION", 20f, mutedWhite,
-            new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(84f, 52f),
-            new Vector2(400f, 38f), TextAlignmentOptions.Left, FontStyles.Bold, 3f).font = titleFont;
-
         for (int i = 0; i < levelButtons.Length; i++)
             levelButtons[i] = CreateLevelCard(levelSelectPanel.transform, i);
 
