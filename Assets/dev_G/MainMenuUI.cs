@@ -1166,14 +1166,26 @@ public class MainMenuUI : MonoBehaviour
         text.fontStyle = selectedFont != null ? style & ~FontStyles.Bold : style;
         text.color = color;
         text.alignment = alignment;
+        bool containsThai = ContainsThaiText(content);
         text.characterSpacing = characterSpacing;
+        text.wordSpacing = 0f;
+        text.enableKerning = true;
         text.extraPadding = false;
-        text.lineSpacing = content.IndexOf('\n') >= 0 ? 4f : 0f;
+        text.lineSpacing = content.IndexOf('\n') >= 0 ? (containsThai ? 7f : 4f) : 0f;
         text.textWrappingMode = TextWrappingModes.Normal;
         text.overflowMode = TextOverflowModes.Overflow;
         text.raycastTarget = false;
 
         return text;
+    }
+
+    static bool ContainsThaiText(string content)
+    {
+        foreach (char character in content)
+            if (character >= '\u0E00' && character <= '\u0E7F')
+                return true;
+
+        return false;
     }
 
     GameObject CreateUiObject(string objectName, Transform parent)
