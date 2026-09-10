@@ -25,8 +25,6 @@ public class MainMenuUI : MonoBehaviour
     private const string BackgroundVideoResourcePath = "UI/MainMenu_AAA_Background_Animated";
     private const bool UseAnimatedBackgroundVideo = false;
     private const string FallbackFontResourcePath = "UI/Fonts/Kanit-SemiBold SDF";
-    private const string UiFontResourcePath = "UI/Fonts/Kanit-SemiBold SDF";
-    private const string TitleFontResourcePath = "UI/Fonts/Kanit-SemiBold SDF";
 
     private readonly Color cyan = new Color(0.49f, 0.90f, 1f, 1f);
     private readonly Color warmWhite = new Color(0.94f, 0.99f, 1f, 1f);
@@ -168,14 +166,24 @@ public class MainMenuUI : MonoBehaviour
         if (uiFont != null && titleFont != null) return;
 
         TMP_FontAsset fallbackFont = Resources.Load<TMP_FontAsset>(FallbackFontResourcePath);
-        uiFont = Resources.Load<TMP_FontAsset>(UiFontResourcePath);
-        titleFont = Resources.Load<TMP_FontAsset>(TitleFontResourcePath);
+        uiFont = DogFontResources.Load("Regular");
+        titleFont = DogFontResources.Load("Bold");
 
         if (uiFont == null)
             uiFont = fallbackFont;
 
         if (titleFont == null)
             titleFont = uiFont;
+
+        // Kanit remains available for Thai characters or symbols DOG does not contain.
+        foreach (TMP_FontAsset font in new[] { uiFont, titleFont })
+        {
+            if (font == null || fallbackFont == null || font == fallbackFont) continue;
+            if (font.fallbackFontAssetTable == null)
+                font.fallbackFontAssetTable = new System.Collections.Generic.List<TMP_FontAsset>();
+            if (!font.fallbackFontAssetTable.Contains(fallbackFont))
+                font.fallbackFontAssetTable.Add(fallbackFont);
+        }
     }
 
     void BuildBackground(Transform parent)
@@ -1149,12 +1157,13 @@ public class MainMenuUI : MonoBehaviour
         }
 
         TextMeshProUGUI text = textObject.AddComponent<TextMeshProUGUI>();
-        if (uiFont != null)
-            text.font = uiFont;
+        TMP_FontAsset selectedFont = (style & FontStyles.Bold) != 0 ? titleFont : uiFont;
+        if (selectedFont != null)
+            text.font = selectedFont;
 
         text.text = content;
         text.fontSize = fontSize;
-        text.fontStyle = style;
+        text.fontStyle = selectedFont != null ? style & ~FontStyles.Bold : style;
         text.color = color;
         text.alignment = alignment;
         text.characterSpacing = characterSpacing;
