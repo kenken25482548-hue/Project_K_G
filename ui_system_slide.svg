@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs><style>
+@font-face{font-family:Mitr;src:url('C:/Users/Gbabuuuuuuu/Documents/GitHub/Project_K_G/Mitr-Regular.ttf');font-weight:400}text{font-family:Mitr,sans-serif;font-weight:400 !important}.title{font-size:58px;fill:#dea0ff}.sub{font-size:28px;fill:#50ddeb}.h{font-size:34px;fill:#50ddeb}.b{font-size:25px;fill:#f6f8fa}.m{font-size:22px;fill:#b5c5d0}.label{font-size:21px;fill:#d9edf3}.badge{font-size:18px;fill:#fff}
+</style><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#202d38"/><stop offset="1" stop-color="#17222b"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#020609" flood-opacity=".5"/></filter></defs>
+<rect width="1920" height="1080" fill="url(#bg)"/><path d="M0 115C480 0 860 175 1280 65S1690 20 1920 105M0 950C450 825 910 1000 1340 890S1690 850 1920 945" fill="none" stroke="#566572" stroke-opacity=".35" stroke-width="3"/>
+<text class="title" x="90" y="100">UI SYSTEM</text><text class="sub" x="90" y="155">HUD / STAIN INFORMATION / MISSION BRIEF / PLAYER FEEDBACK</text>
+<rect x="90" y="220" width="1140" height="650" rx="28" fill="#102f43" stroke="#50ddeb" stroke-width="4" filter="url(#s)"/>
+<text class="h" x="140" y="280">IN-GAME HUD</text><text class="m" x="140" y="320">ข้อมูลที่ผู้เล่นต้องเห็นตลอดเวลาระหว่างทำความสะอาด</text>
+<rect x="140" y="355" width="1040" height="390" rx="18" fill="#e8e5dc"/>
+<rect x="170" y="385" width="270" height="165" rx="12" fill="#17303d"/><text x="195" y="425" font-family="Mitr" font-size="18" font-weight="600" fill="#50ddeb">ภารกิจ</text><text x="195" y="465" font-family="Mitr" font-size="17" fill="#fff">ตรวจสอบคราบ 0 / 6</text><text x="195" y="500" font-family="Mitr" font-size="17" fill="#fff">ทำความสะอาด 0 / 6</text><text x="195" y="535" font-family="Mitr" font-size="16" fill="#e0af63">ข้อผิดพลาดเหลือ 3</text>
+<rect x="760" y="385" width="360" height="48" rx="8" fill="#0e4d68"/><text x="790" y="417" font-family="Mitr" font-size="16" font-weight="600" fill="#fff">STAIN FILE 02 / 06  •  ERROR LEFT: 3</text>
+<rect x="360" y="635" width="560" height="65" rx="12" fill="#193a4e"/>
+<g transform="translate(388 650)"><rect width="55" height="38" rx="7" fill="#0d6785"/><rect x="68" width="55" height="38" rx="7" fill="#0d6785"/><rect x="136" width="55" height="38" rx="7" fill="#0d6785" stroke="#dea0ff" stroke-width="3"/><rect x="204" width="55" height="38" rx="7" fill="#0d6785"/><rect x="272" width="55" height="38" rx="7" fill="#0d6785"/><rect x="345" width="125" height="38" rx="7" fill="#263747"/></g>
+<text x="395" y="726" font-family="Mitr" font-size="16" fill="#24475b">ITEM 1–5 / SELECTED ITEM / REMAINING USES</text>
+<g transform="translate(180 785)"><circle cx="0" cy="0" r="12" fill="#50ddeb"/><text class="label" x="24" y="8">OBJECTIVE</text><circle cx="310" cy="0" r="12" fill="#50ddeb"/><text class="label" x="334" y="8">STAIN COUNT</text><circle cx="650" cy="0" r="12" fill="#dea0ff"/><text class="label" x="674" y="8">ERROR LIMIT</text></g>
+<rect x="1300" y="220" width="530" height="650" rx="28" fill="#202842" stroke="#dea0ff" stroke-width="4" filter="url(#s)"/>
+<text x="1350" y="280" font-family="Mitr" font-size="34" font-weight="600" fill="#dea0ff">PLAYER GUIDANCE</text>
+<g transform="translate(1350 340)"><circle cx="34" cy="34" r="34" fill="#50ddeb"/><text x="18" y="45" font-family="Mitr" font-size="27" font-weight="600" fill="#163141">01</text><text class="h" x="90" y="25">MISSION BRIEF</text><text class="b" x="90" y="61">แจ้งเป้าหมายและเงื่อนไข</text></g>
+<path d="M1384 426v48" stroke="#50ddeb" stroke-width="5"/><path d="M1367 460l17 20 17-20" fill="none" stroke="#50ddeb" stroke-width="5"/>
+<g transform="translate(1350 500)"><circle cx="34" cy="34" r="34" fill="#50ddeb"/><text x="17" y="45" font-family="Mitr" font-size="27" font-weight="600" fill="#163141">02</text><text class="h" x="90" y="25">STAIN POP-UP</text><text class="b" x="90" y="61">อ่านชื่อ ลักษณะ และคำใบ้</text></g>
+<path d="M1384 586v48" stroke="#50ddeb" stroke-width="5"/><path d="M1367 620l17 20 17-20" fill="none" stroke="#50ddeb" stroke-width="5"/>
+<g transform="translate(1350 660)"><circle cx="34" cy="34" r="34" fill="#dea0ff"/><text x="17" y="45" font-family="Mitr" font-size="27" font-weight="600" fill="#202842">03</text><text x="90" y="25" font-family="Mitr" font-size="34" fill="#dea0ff">ACTION FEEDBACK</text><text class="b" x="90" y="61">ยืนยันถูก / เตือนเมื่อใช้ผิด</text></g>
+<text class="sub" x="90" y="950">DESIGN PURPOSE</text><text class="b" x="90" y="995">ทำให้ผู้เล่นรู้ว่า “ต้องทำอะไร / เหลือเท่าไร / ตัดสินใจถูกหรือผิด” โดยไม่ต้องเดา</text>
+</svg>

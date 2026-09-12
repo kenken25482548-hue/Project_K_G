@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <style>@font-face{font-family:Mitr;src:url('file:///C:/Users/Gbabuuuuuuu/Documents/GitHub/Project_K_G/Mitr-Regular.ttf')}text{font-family:Mitr !important;font-weight:400 !important}</style>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="9" stdDeviation="11" flood-color="#000" flood-opacity=".35"/></filter>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#55DCEA"/></marker>
+  </defs>
+  <rect width="1920" height="1080" fill="#202A34"/>
+  <path d="M0 115 C430 10 760 145 1050 60 C1360 -25 1620 20 1920 125" fill="none" stroke="#39444F" stroke-width="3" opacity=".7"/>
+  <path d="M0 965 C490 845 870 1065 1380 905 C1600 840 1780 835 1920 875" fill="none" stroke="#39444F" stroke-width="3" opacity=".65"/>
+
+  <text x="90" y="95" font-family="Arial, sans-serif" font-size="52" fill="#D99DF4">ITEM &amp; INVENTORY SYSTEM</text>
+  <text x="92" y="150" font-family="Leelawadee UI, Tahoma, sans-serif" font-size="24" font-weight="700" fill="#55DCEA">เก็บไอเทม / จัดเก็บในช่อง 1–5 / เลือกใช้และลดจำนวนคงเหลือ</text>
+
+  <rect x="80" y="220" width="1120" height="560" rx="20" fill="#172E40" stroke="#55DCEA" stroke-width="3" filter="url(#shadow)"/>
+  <text x="125" y="285" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#FFFFFF">5-SLOT INVENTORY</text>
+  <text x="125" y="325" font-family="Leelawadee UI, Tahoma, sans-serif" font-size="22" fill="#AFC7D6">ผู้เล่นเก็บน้ำยา เลือกช่องด้วยปุ่ม 1–5 และเห็นจำนวนครั้งที่ใช้ได้</text>
+
+  <g font-family="Leelawadee UI, Tahoma, sans-serif" text-anchor="middle">
+    <g transform="translate(120 385)"><rect width="190" height="290" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/><rect x="15" y="15" width="42" height="42" rx="9" fill="#55DCEA"/><text x="36" y="45" font-family="Arial" font-size="26" font-weight="700" fill="#102D42">1</text><image x="38" y="68" width="115" height="145" preserveAspectRatio="xMidYMid meet" xlink:href="file:///C:/Users/Gbabuuuuuuu/Documents/GitHub/Project_K_G/Assets/CleaningSystem/ItemIcons/Icon_Bleach_WhiteBlue.png"/><text x="95" y="247" font-size="19" fill="#FFFFFF">น้ำยาฟอกขาว</text><text x="95" y="276" font-family="Arial" font-size="18" fill="#55DCEA">USES x2</text></g>
+    <g transform="translate(330 385)"><rect width="190" height="290" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/><rect x="15" y="15" width="42" height="42" rx="9" fill="#55DCEA"/><text x="36" y="45" font-family="Arial" font-size="26" font-weight="700" fill="#102D42">2</text><image x="38" y="68" width="115" height="145" preserveAspectRatio="xMidYMid meet" xlink:href="file:///C:/Users/Gbabuuuuuuu/Documents/GitHub/Project_K_G/Assets/CleaningSystem/ItemIcons/Icon_DishCleaner_Yellow.png"/><text x="95" y="247" font-size="19" fill="#FFFFFF">น้ำยาล้างจาน</text><text x="95" y="276" font-family="Arial" font-size="18" fill="#55DCEA">USES x2</text></g>
+    <g transform="translate(540 385)"><rect width="190" height="290" rx="16" fill="#102D42" stroke="#D99DF4" stroke-width="5"/><rect x="15" y="15" width="42" height="42" rx="9" fill="#D99DF4"/><text x="36" y="45" font-family="Arial" font-size="26" font-weight="700" fill="#102D42">3</text><image x="38" y="68" width="115" height="145" preserveAspectRatio="xMidYMid meet" xlink:href="file:///C:/Users/Gbabuuuuuuu/Documents/GitHub/Project_K_G/Assets/CleaningSystem/ItemIcons/Icon_GlassCleaner_Blue.png"/><text x="95" y="247" font-size="19" fill="#FFFFFF">น้ำยาเช็ดกระจก</text><text x="95" y="276" font-family="Arial" font-size="18" fill="#D99DF4">SELECTED</text></g>
+    <g transform="translate(750 385)"><rect width="190" height="290" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/><rect x="15" y="15" width="42" height="42" rx="9" fill="#55DCEA"/><text x="36" y="45" font-family="Arial" font-size="26" font-weight="700" fill="#102D42">4</text><image x="38" y="68" width="115" height="145" preserveAspectRatio="xMidYMid meet" xlink:href="file:///C:/Users/Gbabuuuuuuu/Documents/GitHub/Project_K_G/icon_detergent_small.png"/><text x="95" y="247" font-size="19" fill="#FFFFFF">ผงซักฟอก</text><text x="95" y="276" font-family="Arial" font-size="18" fill="#55DCEA">USES x3</text></g>
+    <g transform="translate(960 385)"><rect width="190" height="290" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/><rect x="15" y="15" width="42" height="42" rx="9" fill="#55DCEA"/><text x="36" y="45" font-family="Arial" font-size="26" font-weight="700" fill="#102D42">5</text><g transform="translate(63 70)"><rect x="20" y="0" width="64" height="28" rx="12" fill="#191C20"/><rect x="10" y="22" width="84" height="125" rx="23" fill="#24C85A" stroke="#E8F6EE" stroke-width="4"/><path d="M13 58 H91 L70 92 H34 Z" fill="#E53935"/><circle cx="52" cy="113" r="18" fill="#F7FFF9"/><path d="M40 101 L64 125 M64 101 L40 125" stroke="#1A2630" stroke-width="4"/></g><text x="95" y="247" font-size="19" fill="#FFFFFF">ยาฆ่าแมลง</text><text x="95" y="276" font-family="Arial" font-size="18" fill="#55DCEA">USES x1</text></g>
+  </g>
+
+  <g font-family="Leelawadee UI, Tahoma, sans-serif" filter="url(#shadow)">
+    <rect x="1280" y="220" width="560" height="120" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/><text x="1320" y="270" font-family="Arial" font-size="27" font-weight="700" fill="#55DCEA">PICK UP</text><text x="1320" y="310" font-size="22" fill="#FFFFFF">เก็บไอเทมที่วางอยู่ภายในห้อง</text>
+    <rect x="1280" y="405" width="560" height="120" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/><text x="1320" y="455" font-family="Arial" font-size="27" font-weight="700" fill="#55DCEA">ADD TO SLOT</text><text x="1320" y="495" font-size="22" fill="#FFFFFF">เพิ่มไอเทมลงช่อง Inventory อัตโนมัติ</text>
+    <rect x="1280" y="590" width="560" height="120" rx="16" fill="#102D42" stroke="#D99DF4" stroke-width="3"/><text x="1320" y="640" font-family="Arial" font-size="27" font-weight="700" fill="#D99DF4">SELECT 1–5 &amp; USE</text><text x="1320" y="680" font-size="22" fill="#FFFFFF">เลือกช่อง ใช้กับคราบ และลดจำนวนคงเหลือ</text>
+  </g>
+  <g fill="none" stroke="#55DCEA" stroke-width="4" marker-end="url(#arrow)"><path d="M1560 342 V392"/><path d="M1560 527 V577"/></g>
+
+  <g font-family="Leelawadee UI, Tahoma, sans-serif">
+    <rect x="80" y="850" width="540" height="150" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/><text x="120" y="908" font-family="Arial" font-size="26" font-weight="700" fill="#55DCEA">5 SLOT HOTBAR</text><text x="120" y="952" font-size="21" fill="#FFFFFF">เลือกไอเทมได้รวดเร็วด้วยปุ่มตัวเลข</text>
+    <rect x="690" y="850" width="540" height="150" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/><text x="730" y="908" font-family="Arial" font-size="26" font-weight="700" fill="#55DCEA">ITEM USE COUNT</text><text x="730" y="952" font-size="21" fill="#FFFFFF">แสดงและควบคุมจำนวนครั้งที่ใช้ได้</text>
+    <rect x="1300" y="850" width="540" height="150" rx="16" fill="#102D42" stroke="#D99DF4" stroke-width="3"/><text x="1340" y="908" font-family="Arial" font-size="26" font-weight="700" fill="#D99DF4">PLAYER FEEDBACK</text><text x="1340" y="952" font-size="21" fill="#FFFFFF">กรอบช่องช่วยยืนยันไอเทมที่กำลังเลือก</text>
+  </g>
+</svg>

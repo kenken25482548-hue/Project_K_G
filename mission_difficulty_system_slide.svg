@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <style>
+      @font-face { font-family: Mitr; src: url('C:/Users/Gbabuuuuuuu/Documents/GitHub/Project_K_G/Mitr-Regular.ttf'); font-weight:400; }
+      @font-face { font-family: Mitr; src: url('C:/Users/Gbabuuuuuuu/Documents/GitHub/Project_K_G/Mitr-SemiBold.ttf'); font-weight:600; }
+      text { font-family: Mitr, sans-serif; }
+      .title { font-size: 58px; font-weight:600; fill:#dea0ff; letter-spacing:1px; }
+      .sub { font-size:28px; font-weight:600; fill:#50ddeb; }
+      .cardTitle { font-size:40px; font-weight:600; fill:#fff; }
+      .body { font-size:28px; font-weight:400; fill:#f4f8fb; }
+      .muted { font-size:24px; font-weight:400; fill:#b3c7d3; }
+      .num { font-size:56px; font-weight:600; fill:#50ddeb; }
+      .num2 { font-size:56px; font-weight:600; fill:#dea0ff; }
+      .small { font-size:22px; font-weight:400; fill:#50ddeb; }
+      text { font-weight:400 !important; }
+    </style>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#202d38"/><stop offset="1" stop-color="#17222b"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#03070a" flood-opacity=".48"/></filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <path d="M0 110 C400 20 700 130 960 80 S1550 0 1920 105" fill="none" stroke="#52616e" stroke-opacity=".36" stroke-width="3"/>
+  <path d="M0 960 C480 820 860 1030 1260 910 S1620 850 1920 940" fill="none" stroke="#52616e" stroke-opacity=".32" stroke-width="3"/>
+  <text class="title" x="90" y="100">MISSION DIFFICULTY SYSTEM</text>
+  <text class="sub" x="90" y="155">NORMAL MODE / CHALLENGE MODE / STAIN COUNT / ERROR LIMIT</text>
+
+  <rect x="90" y="225" width="810" height="575" rx="28" fill="#113145" stroke="#50ddeb" stroke-width="4" filter="url(#shadow)"/>
+  <text class="cardTitle" x="145" y="300">NORMAL MODE</text>
+  <text class="sub" x="145" y="342">LEARN THE CLEANING LOGIC</text>
+  <line x1="145" y1="378" x2="845" y2="378" stroke="#50ddeb" stroke-opacity=".5" stroke-width="2"/>
+  <circle cx="180" cy="455" r="43" fill="#50ddeb"/><text x="163" y="473" font-family="Mitr" font-size="35" font-weight="600" fill="#113145">01</text>
+  <text class="body" x="250" y="448">เริ่มจากคราบพื้นฐานในแต่ละห้อง</text>
+  <text class="muted" x="250" y="488">สังเกตข้อมูล เลือกน้ำยา และเข้าใจผลลัพธ์</text>
+  <circle cx="180" cy="585" r="43" fill="#50ddeb"/><text x="163" y="603" font-family="Mitr" font-size="35" font-weight="600" fill="#113145">02</text>
+  <text class="body" x="250" y="578">จำนวนคราบเพิ่มตามลำดับด่าน</text>
+  <text class="muted" x="250" y="618">Bathroom 3 → Kitchen 5 → Living 6 → Bedroom 7</text>
+  <rect x="145" y="678" width="700" height="78" rx="16" fill="#0b2637"/>
+  <text class="small" x="180" y="728">FOCUS: EXPLORE • OBSERVE • MATCH THE CORRECT ITEM</text>
+
+  <rect x="1020" y="225" width="810" height="575" rx="28" fill="#1e2841" stroke="#dea0ff" stroke-width="4" filter="url(#shadow)"/>
+  <text class="cardTitle" x="1075" y="300">CHALLENGE MODE</text>
+  <text x="1075" y="342" font-family="Mitr" font-size="28" font-weight="600" fill="#dea0ff">MORE STAINS / LIMITED ERRORS</text>
+  <line x1="1075" y1="378" x2="1775" y2="378" stroke="#dea0ff" stroke-opacity=".5" stroke-width="2"/>
+  <circle cx="1110" cy="455" r="43" fill="#dea0ff"/><text x="1093" y="473" font-family="Mitr" font-size="35" font-weight="600" fill="#1e2841">01</text>
+  <text class="body" x="1180" y="448">เพิ่มคราบในตำแหน่งที่ต้องสำรวจมากขึ้น</text>
+  <text class="muted" x="1180" y="488">ใช้ความรู้เดิมภายใต้แรงกดดันที่สูงกว่า</text>
+  <circle cx="1110" cy="585" r="43" fill="#dea0ff"/><text x="1093" y="603" font-family="Mitr" font-size="35" font-weight="600" fill="#1e2841">02</text>
+  <text class="body" x="1180" y="578">คราบเพิ่มขึ้น 1 จุดในทุกห้อง</text>
+  <text class="muted" x="1180" y="618">Bathroom 4 → Kitchen 6 → Living 7 → Bedroom 8</text>
+  <rect x="1075" y="678" width="700" height="78" rx="16" fill="#182137"/>
+  <text x="1110" y="728" font-family="Mitr" font-size="22" font-weight="600" fill="#dea0ff">FOCUS: PLAN ITEM USE • AVOID WRONG CHOICES</text>
+
+  <text class="sub" x="90" y="900">DIFFICULTY PROGRESSION</text>
+  <line x1="90" y1="935" x2="1830" y2="935" stroke="#50ddeb" stroke-opacity=".4" stroke-width="3"/>
+  <g transform="translate(160 975)"><text class="num" x="0" y="0">3 → 4</text><text class="muted" x="15" y="38">BATHROOM</text></g>
+  <g transform="translate(590 975)"><text class="num" x="0" y="0">5 → 6</text><text class="muted" x="25" y="38">KITCHEN</text></g>
+  <g transform="translate(1020 975)"><text class="num2" x="0" y="0">6 → 7</text><text class="muted" x="5" y="38">LIVING ROOM</text></g>
+  <g transform="translate(1450 975)"><text class="num2" x="0" y="0">7 → 8</text><text class="muted" x="25" y="38">BEDROOM</text></g>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#202A34"/>
+  <path d="M0 160 C470 20 760 150 1030 65 C1330 -25 1610 15 1920 130" fill="none" stroke="#39444F" stroke-width="3" opacity=".7"/>
+  <path d="M0 940 C430 820 860 1050 1360 900 C1600 830 1790 835 1920 880" fill="none" stroke="#39444F" stroke-width="3" opacity=".65"/>
+  <text x="960" y="505" text-anchor="middle" font-family="Arial, sans-serif" font-size="112" fill="#D99DF4">CREATIVE</text>
+  <text x="960" y="655" text-anchor="middle" font-family="Arial, sans-serif" font-size="112" fill="#55DCEA">WORKS</text>
+</svg>

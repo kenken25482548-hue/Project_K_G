@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <style>@font-face{font-family:Mitr;src:url('file:///C:/Users/Gbabuuuuuuu/Documents/GitHub/Project_K_G/Mitr-Regular.ttf')}text{font-family:Mitr !important;font-weight:400 !important}</style>
+    <clipPath id="shot"><rect x="90" y="220" width="1000" height="610" rx="18"/></clipPath>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity=".35"/></filter>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#55DCEA"/></marker>
+  </defs>
+  <rect width="1920" height="1080" fill="#202A34"/>
+  <path d="M0 105 C450 10 700 120 980 55 C1240 -5 1510 5 1920 120" fill="none" stroke="#39444F" stroke-width="2" opacity=".7"/>
+  <path d="M0 960 C480 850 900 1060 1380 910 C1600 845 1770 830 1920 870" fill="none" stroke="#39444F" stroke-width="2" opacity=".65"/>
+  <text x="90" y="95" font-family="Arial, sans-serif" font-size="52" fill="#D99DF4">CLEANING TARGET SYSTEM</text>
+  <text x="92" y="150" font-family="Leelawadee UI, Tahoma, sans-serif" font-size="24" font-weight="700" fill="#55DCEA">ตรวจสอบคราบ / เลือกไอเทม / ตรวจผลการทำความสะอาด</text>
+
+  <rect x="90" y="220" width="1000" height="610" rx="18" fill="#102D42" stroke="#55DCEA" stroke-width="3" filter="url(#shadow)"/>
+  <image x="90" y="220" width="1000" height="610" preserveAspectRatio="xMidYMid slice" clip-path="url(#shot)" xlink:href="file:///C:/Users/GBABUU~1/AppData/Local/Temp/codex-clipboard-1892cf54-36ef-4a14-9391-351886546fab.png"/>
+  <rect x="90" y="760" width="1000" height="70" fill="#102D42" opacity=".94"/>
+  <text x="120" y="805" font-family="Leelawadee UI, Tahoma, sans-serif" font-size="25" font-weight="700" fill="#FFFFFF">UNITY INSPECTOR — คอมโพเนนต์ CLEANING TARGET</text>
+
+  <g font-family="Arial, sans-serif" filter="url(#shadow)">
+    <rect x="1170" y="220" width="650" height="150" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/>
+    <circle cx="1235" cy="295" r="34" fill="#55DCEA"/><text x="1235" y="306" text-anchor="middle" font-size="30" font-weight="700" fill="#102D42">01</text>
+    <text x="1295" y="278" font-size="30" font-weight="700" fill="#55DCEA">INSPECT STAIN</text>
+    <text x="1295" y="320" font-family="Leelawadee UI, Tahoma, sans-serif" font-size="23" fill="#FFFFFF">อ่านชื่อคราบ คำใบ้ และตำแหน่ง</text>
+
+    <rect x="1170" y="425" width="650" height="150" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/>
+    <circle cx="1235" cy="500" r="34" fill="#55DCEA"/><text x="1235" y="511" text-anchor="middle" font-size="30" font-weight="700" fill="#102D42">02</text>
+    <text x="1295" y="483" font-size="30" font-weight="700" fill="#55DCEA">SELECT ITEM</text>
+    <text x="1295" y="525" font-family="Leelawadee UI, Tahoma, sans-serif" font-size="23" fill="#FFFFFF">เลือกน้ำยาจากช่อง Inventory 5 ช่อง</text>
+
+    <rect x="1170" y="630" width="650" height="150" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/>
+    <circle cx="1235" cy="705" r="34" fill="#55DCEA"/><text x="1235" y="716" text-anchor="middle" font-size="30" font-weight="700" fill="#102D42">03</text>
+    <text x="1295" y="688" font-size="30" font-weight="700" fill="#55DCEA">USE &amp; VALIDATE</text>
+    <text x="1295" y="730" font-family="Leelawadee UI, Tahoma, sans-serif" font-size="23" fill="#FFFFFF">ตรวจสอบว่าไอเทมตรงกับคราบหรือไม่</text>
+  </g>
+
+  <g fill="none" stroke="#55DCEA" stroke-width="4" marker-end="url(#arrow)"><path d="M1495 372 V415"/><path d="M1495 577 V620"/></g>
+
+  <rect x="90" y="885" width="830" height="120" rx="16" fill="#102D42" stroke="#55DCEA" stroke-width="3"/>
+  <text x="130" y="932" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#55DCEA">CORRECT ITEM</text>
+  <text x="130" y="973" font-family="Leelawadee UI, Tahoma, sans-serif" font-size="23" fill="#FFFFFF">คราบหาย  +  HUD อัปเดต  +  เล่นเสียงใช้ไอเทมถูก</text>
+  <rect x="1000" y="885" width="820" height="120" rx="16" fill="#102D42" stroke="#D99DF4" stroke-width="3"/>
+  <text x="1040" y="932" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#D99DF4">WRONG ITEM</text>
+  <text x="1040" y="973" font-family="Leelawadee UI, Tahoma, sans-serif" font-size="23" fill="#FFFFFF">เสียจำนวนการใช้ 1 ครั้ง  +  แจ้งเตือน  +  เล่นเสียงใช้ไอเทมผิด</text>
+</svg>
